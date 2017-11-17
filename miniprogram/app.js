@@ -25,5 +25,7 @@ App({
 
   globalData: {
     userInfo: null
-  }
+  },
+  
+  app_api_url: 'http://www.nbnbk.com/index.php?s=/'
 })

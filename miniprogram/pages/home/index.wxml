@@ -1,0 +1,5 @@
+<view class="mbanner-b mb10">
+<navigator url="/page/navigate/navigate?title=navigate" hover-class="navigator-hover">
+    <image src="../../images/banner.jpg"></image>
+</navigator>
+</view>

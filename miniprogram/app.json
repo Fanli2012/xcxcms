@@ -1,0 +1,46 @@
+{
+    "pages": [
+        "pages/home/index",
+        "pages/home/pages/category/index",
+        "pages/home/pages/detail/index",
+        "pages/home/pages/page/index",
+        "pages/home/pages/tagindex/index",
+        "pages/home/pages/taglist/index"
+    ],
+    "window": {
+        "backgroundTextStyle": "white",
+        "backgroundColor": "#FFF",
+        "navigationBarBackgroundColor": "#48C23D",
+        "navigationBarTitleText": "XCXCMS",
+        "navigationBarTextStyle": "white"
+    },
+    "tabBar": {
+        "selectedColor": "#48C23D",
+        "list": [
+            {
+                "pagePath": "pages/home/index",
+                "text": "首页",
+                "iconPath": "images/home_icon.png",
+                "selectedIconPath": "images/home_hover_icon.png"
+            },
+            {
+                "pagePath": "pages/home/pages/category/index",
+                "text": "动态",
+                "iconPath": "images/news_icon.png",
+                "selectedIconPath": "images/news_hover_icon.png"
+            },
+            {
+                "pagePath": "pages/home/pages/category/index",
+                "text": "产品",
+                "iconPath": "images/product_icon.png",
+                "selectedIconPath": "images/product_hover_icon.png"
+            },
+            {
+                "pagePath": "pages/home/pages/page/index",
+                "text": "联系",
+                "iconPath": "images/contact_icon.png",
+                "selectedIconPath": "images/contact_hover_icon.png"
+            }
+        ]
+    }
+}
