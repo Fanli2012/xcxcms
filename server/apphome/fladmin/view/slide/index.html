@@ -1,0 +1,28 @@
+{extend name="public/base" /}
+{block name="title"}轮播图列表{/block}
+
+{block name="content"}
+<h2 class="sub-header">轮播图管理</h2>[ <a href="/fladmin/Slide/add">添加轮播图</a> ]<br><br>
+
+<form name="listarc"><div class="table-responsive"><table class="table table-striped table-hover">
+<thead><tr>
+<th>图片</th>
+<th>标题</th>
+<th>链接网址</th>
+<th>排序</th>
+<th>是否显示</th>
+<th>管理</th>
+</tr></thead>
+<tbody>
+<?php foreach($posts as $row){ ?><tr>
+<td><img style="<?php if(empty($row["pic"]) || !imgmatch($row["pic"])){ echo "display:none;"; } ?>" src="<?php if(imgmatch($row["pic"])){echo $row["pic"];} ?>" width="90" height="60"></td>
+<td><?php echo $row["title"]; ?></td>
+<td><?php echo $row["url"]; ?></td>
+<td><?php echo $row["rank"]; ?></td>
+<td><?php if($row["is_show"]==0){echo "是";}else{echo "<font color=red>否</font>";} ?></td>
+<td><a href="/fladmin/Slide/edit?id=<?php echo $row["id"]; ?>">修改</a> | <a onclick="delconfirm('/fladmin/Slide/del?id=<?php echo $row["id"]; ?>')" href="javascript:;">删除</a></td>
+</tr><?php } ?>
+</tbody></table></div><!-- 表格结束 --></form><!-- 表单结束 -->
+
+<div class="backpages">{$page}</div>
+{/block}

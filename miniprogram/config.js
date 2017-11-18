@@ -34,7 +34,10 @@ var config = {
     uploadFileUrl: `https://${host}/upload`,
 
     // 下载示例图片接口
-    downloadExampleUrl: `https://${host}/static/weapp.jpg`
+    downloadExampleUrl: `https://${host}/static/weapp.jpg`,
+
+    // API 接口
+    appApiUrl: "http://www.xcxcms.com/api"
 };
 
 module.exports = config

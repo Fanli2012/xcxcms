@@ -1,0 +1,150 @@
+{extend name="public/base" /}
+{block name="title"}修改单页面{/block}
+
+{block name="content"}
+<h5 class="sub-header"><a href="/Fladmin/Page">页面列表</a> > 新建页面</h5>
+
+<form id="addarc" method="post" action="/Fladmin/Page/doedit" role="form" enctype="multipart/form-data" class="table-responsive">
+<table class="table table-striped table-bordered">
+<tbody>
+    <tr>
+        <td align="right">页面标题：</td>
+        <td><input name="title" type="text" id="title" value="<?php echo $row["title"]; ?>" class="required" style="width:60%" placeholder="在此输入标题"> <input style="display:none;" type="text" name="id" id="id" value="<?php echo $id; ?>"></td>
+    </tr>
+    <tr>
+        <td align="right">别名：</td>
+        <td><input name="filename" type="text" id="filename" class="required" value="<?php echo $row["filename"]; ?>" size="30"> </td>
+    </tr>
+    <tr>
+        <td align="right">模板文件名：</td>
+        <td><input name="template" type="text" id="template" value="<?php echo $row["template"]; ?>" size="30"></td>
+    </tr>
+    <tr>
+        <td align="right">seoTitle：</td>
+        <td><input name="seotitle" type="text" id="seotitle" value="<?php echo $row["seotitle"]; ?>" style="width:60%"></td>
+    </tr>
+    <tr>
+        <td align="right" style="vertical-align:middle;">缩略图：</td>
+        <td style="vertical-align:middle;"><input id="file_upload" value="选择文件" name="file_upload" type="file" multiple="true"> <input name="litpic" type="text" id="litpic" value="<?php echo $row["litpic"]; ?>" style="width:40%"> <img style="margin-left:20px;<?php if(empty($row["litpic"]) || !imgmatch($row["litpic"])){ echo "display:none;"; } ?>" src="<?php if(imgmatch($row["litpic"])){echo $row["litpic"];} ?>" width="120" height="80" id="picview" name="picview"></td>
+    </tr>
+<style>.uploadify{display:inline-block;}.uploadify-queue{display:none;}</style>
+<script type="text/javascript">
+    <?php $timestamp = time();?>
+    bidtype="选择文件";
+    $(function() {
+        $('#file_upload').uploadify({
+            'buttonText': bidtype,//按钮文字
+            'auto':true,//选择完图片以后是否自动上传
+            'multi': false,//是否开启一次性上传多个文件
+            'fileTypeExts': "*.jpg;*.png;*.gif;*.jpeg;",//允许的文件类型
+            'width': 60,//buttonImg的大小
+            'height': 26,
+            'formData'     : {
+                'timestamp' : '<?php echo $timestamp;?>',
+                'token'     : '<?php echo md5('unique_salt' . $timestamp);?>'
+            },
+            'swf'      : '/other/uploadify/uploadify.swf',//路径要正确
+            'uploader' : '/uploadImage.php',//路径要正确
+            'onUploadSuccess': function (file, data, response) {  //一个文件上传成功后的响应事件处理
+                $('#litpic').val(data);
+                $('#picview').attr("src",data).css("display","inline-block");
+            }
+        });
+    });
+</script>
+    <tr>
+        <td align="right">页面关键字：</td>
+        <td><input type="text" name="keywords" id="keywords" style="width:50%" value="<?php echo $row["keywords"]; ?>"> (用","分开)</td>
+    </tr>
+    <tr>
+        <td align="right" style="vertical-align:middle;">页面摘要信息：</td>
+        <td><textarea name="description" rows="5" id="description" style="width:80%;height:70px;vertical-align:middle;"><?php echo $row["description"]; ?></textarea></td>
+    </tr>
+    <tr>
+        <td colspan="2"><strong>页面内容：</strong></td>
+    </tr>
+    <tr>
+        <td colspan="2">
+<!-- 加载编辑器的容器 --><script id="container" name="body" type="text/plain"><?php echo $row["body"]; ?></script>
+<!-- 配置文件 --><script type="text/javascript" src="/other/flueditor/ueditor.config.js"></script>
+<!-- 编辑器源码文件 --><script type="text/javascript" src="/other/flueditor/ueditor.all.js"></script>
+<!-- 实例化编辑器 --><script type="text/javascript">var ue = UE.getEditor('container',{maximumWords:100000,initialFrameHeight:320,enableAutoSave:false});</script></td>
+    </tr>
+    <tr>
+        <td colspan="2"><button type="submit" class="btn btn-success" value="Submit">保存(Submit)</button>&nbsp;&nbsp;<button type="reset" class="btn btn-default" value="Reset">重置(Reset)</button><input type="hidden"></input></td>
+    </tr>
+</tbody></table></form><!-- 表单结束 -->
+
+<script>
+$(function(){
+    $(".required").blur(function(){
+        var $parent = $(this).parent();
+        $parent.find(".formtips").remove();
+        if(this.value=="")
+        {
+            $parent.append(' <small class="formtips onError"><font color="red">不能为空！</font></small>');
+        }
+        else
+        {
+            if( $(this).is('#filename') ){
+                var reg = /^[a-zA-Z]+[0-9]*[a-zA-Z0-9]*$/;//验证是否为字母、数字
+                if(!reg.test($("#filename").val()))
+                {
+                    $parent.append(' <small class="formtips onError"><font color="red">格式不正确！</font></small>');
+                }
+                else
+                {
+                    $parent.append(' <small class="formtips onSuccess"><font color="green">OK</font></small>');
+                }
+            }
+            else
+            {
+                $parent.append(' <small class="formtips onSuccess"><font color="green">OK</font></small>');
+            }
+        }
+    });
+
+    //重置
+    $('#addarc input[type="reset"]').click(function(){
+            $(".formtips").remove(); 
+    });
+
+    $("#addarc").submit(function(){
+        $(".required").trigger('blur');
+        var numError = $('#addarc .onError').length;
+        
+        if(numError){return false;}
+        
+        //$("#contents").val = ue.getContent();
+        //var datas = $('#addarc').serialize();//#form要在form里面
+        
+        //var content = ue.getContent();
+        
+        /* $.ajax({
+            url: "/Fladmin/Page/doedit",
+            type: "POST",
+            cache: false,
+            dataType: "json",
+            data: {
+                "id":$("#id").val(),
+                "template":$("#template").val(),
+                "filename":$("#filename").val(),
+                "litpic":$("#litpic").val(),
+                "title":$("#title").val(),
+                "seotitle":$("#seotitle").val(),
+                "keywords":$("#keywords").val(),
+                "description":$("#description").val(),
+                "content":content
+            },
+            success: function(data){
+                if(data.code==200)
+                {
+                    //alert(data.info);
+                    window.location.replace("/Fladmin/Page");
+                }
+            }
+        }); */
+    });
+});
+</script>
+{/block}

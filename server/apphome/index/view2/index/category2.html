@@ -1,0 +1,31 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title><?php if(empty($post["seotitle"])){echo $post["typename"];}else{echo $post["seotitle"];}if($page <> 0){echo '-第'.$_GET["page"].'页';} ?></title>
+<meta name="keywords" content="<?php echo $post["keywords"]; ?>"><meta name="description" content="<?php echo $post["description"]; ?>">
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/prettify.css">
+<link rel="stylesheet" href="/css/doc.css">
+<script src="/js/pc.js"></script>
+</head><body>
+<include file="./Flhome/Home/View/header.html" />
+
+<div class="container ue-docs-container">
+    <div class="row">
+        <div class="col-md-3">
+            <div id="guidebar" class="ue-sidebar hidden-print" role="complementary">
+                <ul class="nav ue-sidenav">
+				<li class="category active"><a href="javascript:void(0)">1. 开始使用</a><ul class="nav"><li><a href="http://fex.baidu.com/ueditor/#start-start">1.1 开始使用ueditor</a></li><li><a href="http://fex.baidu.com/ueditor/#start-toolbar">1.2 定制工具栏图标</a></li><li><a href="http://fex.baidu.com/ueditor/#start-config">1.3 前端配置项说明</a></li><li><a href="http://fex.baidu.com/ueditor/#start-dir">1.4 目录介绍</a></li><li><a href="http://fex.baidu.com/ueditor/#start-submit">1.5 提交表单</a></li><li><a href="http://fex.baidu.com/ueditor/#start-uparse">1.6 编辑内容展示</a></li><li><a href="http://fex.baidu.com/ueditor/#start-patch">1.7 如何使用补丁文件</a></li></ul></li>
+				<li class="category active"><a href="javascript:void(0)">2. 后端配置</a><ul class="nav"><li><a href="http://fex.baidu.com/ueditor/#server-deploy">2.1 后端部署说明</a></li><li><a href="http://fex.baidu.com/ueditor/#server-php">2.2 PHP 使用说明</a></li><li><a href="http://fex.baidu.com/ueditor/#server-asp">2.3 ASP 使用说明</a></li><li><a href="http://fex.baidu.com/ueditor/#server-net">2.4 ASP.NET 使用说明</a></li><li><a href="http://fex.baidu.com/ueditor/#server-jsp">2.5 JSP 使用说明</a></li><li><a href="http://fex.baidu.com/ueditor/#server-config">2.7 后端配置项说明</a></li><li><a href="http://fex.baidu.com/ueditor/#server-path">2.8 上传路径配置</a></li><li><a href="http://fex.baidu.com/ueditor/#server-video">2.9 上传视频</a></li></ul></li>
+				<li class="category active"><a href="javascript:void(0)">3. 二次开发</a><ul class="nav"><li><a href="http://fex.baidu.com/ueditor/#dev-developer">3.1 如何进行二次开发</a></li><li><a href="http://fex.baidu.com/ueditor/#dev-bale_width_grunt">3.2 使用grunt打包源代码</a></li><li><a href="http://fex.baidu.com/ueditor/#dev-request_specification">3.3 后端请求规范</a></li><li><a href="http://fex.baidu.com/ueditor/#dev-serverparam">3.4 自定义请求参数</a></li><li><a href="http://fex.baidu.com/ueditor/#dev-crossdomain">3.5 跨域支持说明</a></li></ul></li>
+				<li class="category active"><a href="javascript:void(0)">4. 常用API列表</a><ul class="nav"><li><a href="http://fex.baidu.com/ueditor/#api-common">4.1 常用API</a></li></ul></li>
+				<li class="category active"><a href="javascript:void(0)">5. 常见问题</a><ul class="nav"><li><a href="http://fex.baidu.com/ueditor/#qa-ready">5.1 实例创建后为什么直接执行接口报错</a></li><li><a href="http://fex.baidu.com/ueditor/#qa-customurl">5.2 如何自定义请求地址</a></li><li><a href="http://fex.baidu.com/ueditor/#qa-allowDivToP">5.3 如何阻止div变成p标签</a></li></ul></li></ul>
+            </div>
+        </div>
+        <div class="col-md-9 ue-docs-main" role="main">
+            <div id="show"><h1>关于72pcms</h1>
+				<p>72pcms是由“FLi”（网名）开发的一套简单实用的网站管理系统（cms），完全免费、开源，无授权限制，可任意修改代码。</p><p><br/></p><p>72pcms基于thinkphp开发，采用MVC模式开发，系统结构清晰明了，程序与模板分离，非常适合二次开发。</p><p><br/></p><p>72pcms主要包括以下功能：</p><p><br/></p><p><strong>站内搜索</strong>：按关键词搜索文档标题。</p><p><br/></p><p><strong>友情链接</strong>：支持文字形式的友情链接。</p><p><br/></p><p><strong>自定义变量</strong>：可以在网站任意处输出该变量内容。</p><p><br/></p><p><strong>Tags功能</strong>：支持tags标签功能，增加信息可以选择或者自动创建，每个tags标签也可以定义不同的模板。</p><p><br/></p><p><strong>自动、手动分词</strong>：增加、修改信息时，可以选择自动把正文或者标题提取为关键字功能。</p><p><br/></p><p><strong>删除非站内链接</strong></p><p><br/></p><p><strong>提取文档中的第一个图片为缩略图</strong></p><p><br/></p><p><strong>支持无限分类</strong></p><p><br/></p><p><strong>提取描述</strong>：添加文档时可以自动提取正文中的第一段为描述信息，有利于seo。</p><p><br/></p><p>开发72pcms主要用于学习和交流，所以72pcms是完全免费开源的，大家可以使用72pcms制作任何商业、非商业、个人网站。</p><p><br/></p><p>72pcms使用在线手册地址：<a href="http://www.72p.org/cat2.html" target="_blank" textvalue="http://www.72p.org/cat2.html">http://www.72p.org/cat2.html</a>里面包含里72pcms相关的所有教程，包括使用标签、目录结构、安装教程等。</p>
+			</div>
+		</div>
+    </div>
+</div>
+
+<include file="./Flhome/Home/View/footer.html" /></body></html>

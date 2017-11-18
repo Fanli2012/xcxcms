@@ -1,0 +1,1 @@
+<footer><p><?php echo CMS_POWERBY; ?></p></footer>

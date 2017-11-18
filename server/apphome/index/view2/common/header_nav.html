@@ -1,0 +1,15 @@
+<div class="breadcrumbs breadcrumbs-fixed" id="breadcrumbs">
+    <script type="text/javascript">
+        try{ace.settings.check('breadcrumbs' , 'fixed')}catch(e){}
+    </script>
+
+    <ul class="tnav">
+        {volist name="headNav" id="kk"}
+        <li class="font12 {if condition="$sysname == $kk['name']"}rigbg{/if}">
+            <a href="{:url($kk['name'],array('tid'=>$kk['id']))}">
+                {$kk.title}
+            </a>
+        </li>
+        {/volist}
+    </ul>
+</div>

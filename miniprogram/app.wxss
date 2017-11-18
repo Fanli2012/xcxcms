@@ -1,3 +1,14 @@
+/**app.wxss**/
+.container {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  padding: 200rpx 0;
+  box-sizing: border-box;
+} 
+
 .mbanner-b img{width: 100%;vertical-align: middle;}
 .mbox{margin:0px 0 10px 0;position: relative;overflow: hidden;background-color:#fafafa;box-shadow:0px 1px 2px -1px rgba(0,0,0,.1);-webkit-box-shadow:0px 1px 2px -1px rgba(0,0,0,.1);}
 .mbox .tit{border-top:2px solid #e94e45;border-bottom:1px solid #dcdee0;color:#e94e45;padding-left:10px;background-color:#fff;font-size: 16px;font-weight: 800;line-height: 36px;height: 36px;}
