@@ -10,8 +10,9 @@ Page({
     onLoad: function (options) {
         var that = this;
         var id = options.id;
-        
-        util.AJAX("/article/articledetail", function (res) {
+
+        // 详情
+        util.AJAX("/product/productdetail", function (res) {
             // 重新写入数据
             that.setData({
                 post: res.data.data

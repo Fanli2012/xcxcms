@@ -5,17 +5,17 @@ var app = getApp()
 
 Page({
     data: {
-        post: {}
+        dataList: []
     },
-    onLoad: function (options) {
+    onLoad: function () {
         var that = this;
-        var id = options.id;
-        
-        util.AJAX("/article/articledetail", function (res) {
+
+        // 产品列表
+        util.AJAX("/product/productlist", function (res) {
             // 重新写入数据
             that.setData({
-                post: res.data.data
+                dataList: res.data.data
             });
-        },{"id": id});
+        }, {"limit":20});
     }
 })

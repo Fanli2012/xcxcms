@@ -5,7 +5,7 @@ use think\Request;
 use app\common\lib\Token;
 use app\common\lib\ReturnData;
 
-class Article extends Base
+class Product extends Base
 {
 	public function _initialize()
 	{
@@ -14,16 +14,16 @@ class Article extends Base
         //Token::TokenAuth(request()); //TOKEN验证
     }
     
-    public function articleList()
+    public function productList()
 	{
         //参数
         $limit = input('param.limit',10);
         $offset = input('param.offset', 0);
         if(input('param.typeid', '') !== ''){$data['typeid'] = input('param.typeid');}
         if(input('param.keyword', '') !== ''){$data['title'] = ['like','%'.input('param.keyword').'%'];}
-        $data['ischeck'] = 0;
+        $data['status'] = 0;
         
-        $res = db('article')->where($data)->field('body',true)->limit("$offset,$limit")->select();
+        $res = db('product')->where($data)->field('body',true)->limit("$offset,$limit")->select();
 		
         foreach($res as $k=>$v)
         {
@@ -35,20 +35,20 @@ class Article extends Base
 		exit(json_encode(ReturnData::create(ReturnData::SUCCESS,$res)));
     }
     
-    public function articleDetail()
+    public function productDetail()
 	{
         //参数
         $data['id'] = input('param.id','');
         
         if($data['id'] == ''){exit(json_encode(ReturnData::create(ReturnData::PARAMS_ERROR)));}
         
-        $res = db('article')->where($data)->find();
+        $res = db('product')->where($data)->find();
 		
         $res['pubdate'] = date('Y-m-d',$res['pubdate']);
         $res['addtime'] = date('Y-m-d',$res['addtime']);
         if(!empty($res['litpic'])){$res['litpic'] = http_host().$res['litpic'];}
         
-        db('article')->where($data)->setInc('click', 1);
+        db('product')->where($data)->setInc('click', 1);
         
 		exit(json_encode(ReturnData::create(ReturnData::SUCCESS,$res)));
     }

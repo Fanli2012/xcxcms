@@ -1,12 +1,11 @@
-<view class="mbanner-b mb10">
-    <navigator url="/page/navigate/navigate?title=navigate" hover-class="navigator-hover">
-        <image src="../../../images/banner.jpg"></image>
-    </navigator>
+<view class="mbanner-b">
+    <image style="width:100%" mode="widthFix" src="../../../../images/banner.jpg"></image>
 </view>
 
-<view class="mbox cinfo">
-    <text class="tith">关于我们</text>
-    <view class="mabout-a">
-        接受一个数组，每一项都是字符串，来指定小程序由哪些页面组成。每一项代表对应页面的【路径+文件名】信息，数组的第一项代表小程序的初始页面。小程序中新增/减少页面，都需要对 pages 数组进行修改。
-    </view>
+<view class="tith">关于我们</view>
+
+<view class="box content">
+    <text>中国最具价值的品牌之一，英国《金融时报》将百度列为“中国十大世界级品牌”，成为这个榜单中最年轻的一家公司，也是唯一一家互联网公司。</text>
+    <text>对于一个人才，我们更多注重的是，你能不能够创造，为自身创造价值，给用户带来更好的体验，这是百度所关心的，所看重的。——李彦宏</text>
+    <text>地址：北京市海淀区上地十街10号百度大厦，邮编：100085，总机：(+86 10) 5992 8888</text>
 </view>

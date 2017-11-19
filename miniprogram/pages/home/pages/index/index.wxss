@@ -10,7 +10,7 @@
 .themes-box-subtitle{ font-size: 12px; color: #666; display: block; margin-top: 4px; }
 
 /* 日报列表 */
-.themes-list{ background: #FFF; display: block; margin-bottom: 20px; }
+.themes-list{ background: #FFF; display: block;}
 .themes-list-box{ display: block; position: relative; padding: 16px 20px; border-bottom: 1px solid #F2F2F2; }
 .themes-list-thumbnail{ position: absolute; left: 20px; top: 16px; height: 40px; width: 40px; }
 .themes-list-img{ width: 40px; height: 40px; border-radius: 4px; border: 1px solid #F2F2F2;}
@@ -19,10 +19,10 @@
 .themes-list-description{ font-size: 12px; color: #999; height: 20px; line-height: 20px; overflow: hidden; }
 
 .hot-box{ display: block; height: 100%; font-family: Helvetica, Arial, "Hiragino Sans GB", "Source Han Sans CN", "PingFang SC", Roboto, "微软雅黑", "Heiti SC", "Microsoft Yahei", sans-serif }
-.hot-box-main{ display: block; overflow: hidden; margin-bottom: 20px; background: #FFF; }
+.hot-box-main{ display: block; overflow: hidden;background: #FFF; }
 
-.hot-main{ height: 50px; background: url("../../static/001.jpg") #FFF no-repeat 0 50%; background-size: cover; padding: 30px 20px; position: relative; z-index: 1; }
-.hot-main::before{ position: absolute; top: 0; bottom: 0; left: 0; right: 0; content: ''; background-image: linear-gradient(180deg, rgba(0,0,0,0.05) 5%,rgba(0,0,0,0.85) 100%); }
+.hot-main{ height: 50px;background-color: #ea5a3d; /* background: url("../../static/001.jpg") #FFF no-repeat 0 50%; background-size: cover; */ padding: 30px 20px; position: relative; z-index: 1; }
+.hot-main::before{ /* position: absolute; top: 0; bottom: 0; left: 0; right: 0; content: ''; background-image: linear-gradient(180deg, rgba(0,0,0,0.05) 5%,rgba(0,0,0,0.85) 100%); */}
 
 .hot-main-box{ position: relative; z-index: 2; }
 .hot-main-title{ color: #FFF; font-size: 34rpx;  }
@@ -32,9 +32,9 @@
 .hot-box-title{ font-size: 32rpx; height: 30px; line-height: 32px; font-weight: 400; color: #444; padding: 5px 10px; border: 1px solid #444; }
 
 .list-box{ padding: 20px 20px 20px 40px; display: block; font-size: 30rpx; border-bottom: 1px solid #F6F6F6; position: relative;}
-.list-box::after{ display: block; content: ""; position: absolute; width: 6px; height: 6px; background: #ff6511; border-radius: 50%; top: 25px; left: 20px; }
+.list-box::after{ display: block; content: ""; position: absolute; width: 6px; height: 6px; background: #ff6511; border-radius: 50%; top: 28px; left: 20px; }
 .list-box-title{ font-weight: 400; line-height: 42rpx; }
 .list-box-sub{ font-size: 24rpx; color: #666; padding-top: 6px; }
 
-.hot-box-more{ text-align: center; font-size: 22rpx; color: #999; margin-bottom: 30px; }
+.hot-box-more{ text-align: center; font-size: 22rpx; color: #999;padding:16px 20px; }
 .hot-box-more image{ width: 80px; height: 16px; display: block; margin: 0 auto;}

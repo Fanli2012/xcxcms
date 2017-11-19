@@ -1,38 +1,19 @@
-<swiper class="swiper-boxs" indicator-dots autoplay duration="300">
+<swiper class="swiper-boxs" indicator-dots autoplay circular duration="300">
     <swiper-item wx:for="{{slideList}}">
-        <navigator url="../detail/detail?id={{slideList[index].id}}">
+        <navigator url="../{{slideList[index].id}}">
             <image mode="aspectFill" class="swiper-boxs-img" src="{{slideList[index].pic}}" />
         </navigator>
     </swiper-item>
 </swiper>
 
 <view class="themes-box-top">
-    <text class="themes-box-title">专栏</text>
-    <text class="themes-box-subtitle">你想要知道日报专栏</text>
+    <text class="themes-box-title">动态</text>
+    <text class="themes-box-subtitle">国内目前惟一专注于企业新闻的网络媒体。</text>
 </view>
 <!-- 图文列表 -->
-<view class="themes-list">
+<view class="themes-list mb10">
     <view class="themes-list-box" wx:for="{{newsList}}">
-        <navigator url="../themes/themes?id={{item.id}}">
-            <view class="themes-list-thumbnail">
-                <image class="themes-list-img" src="{{item.litpic}}" />
-            </view>
-            <view class="themes-list-main">
-                <view class="themes-list-name">{{item.title}}</view>
-                <view class="themes-list-description">{{item.description}}</view>
-            </view>
-        </navigator>
-    </view>
-</view>
-
-<view class="themes-box-top">
-    <text class="themes-box-title">专栏</text>
-    <text class="themes-box-subtitle">你想要知道日报专栏</text>
-</view>
-<!-- 文字列表 -->
-<view class="themes-list">
-    <view class="themes-list-box" wx:for="{{newsList}}">
-        <navigator url="../themes/themes?id={{item.id}}">
+        <navigator url="../detail/index?id={{item.id}}">
             <view class="themes-list-thumbnail">
                 <image class="themes-list-img" src="{{item.litpic}}" />
             </view>
@@ -53,7 +34,7 @@
 
 <view class="hot-box-main">
     <view wx:for="{{newsList}}" wx:for-index="i">
-        <navigator id="{{newsList[i].id}}" url="../detail/detail?id={{newsList[i].id}}">
+        <navigator id="{{newsList[i].id}}" url="../detail/index?id={{newsList[i].id}}">
                 <view class="list-box">
                     <view class="list-box-title">{{newsList[i].title}}</view>
                     <view class="list-box-sub">{{newsList[i].pubdate}}</view>
