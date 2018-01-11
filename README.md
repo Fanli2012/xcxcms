@@ -3,6 +3,12 @@
 
 ![alt text](/miniprogram/images/screenshots.png "截图")
 
+# 目录结构
+
+1、miniprogram，小程序目录
+
+2、server，小程序后端目录，基于ThinkPHP5
+
 
 # 小程序后端说明
 
