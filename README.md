@@ -12,13 +12,13 @@
 
 # 小程序后端说明
 
-1、基于ThinkPHP5
+1、基于ThinkPHP5，初始绑定的域名是www.xcxcms.com，自行修改成自己要绑定的域名，以下说明如果遇到www.xcxcms.com请修改成自己的域名
 
 2、PHP+Mysql
 
-3、后台登录：/fladmin/Login，账号：admin888，密码：admin
+3、后台登录：http://www.xcxcms.com/fladmin/Login，账号：admin888，密码：admin
 
-4、恢复后台默认账号密码：/fladmin/Login/recoverpwd
+4、恢复后台默认账号密码：http://www.xcxcms.com/fladmin/Login/recoverpwd
 
 
 # 安装
@@ -33,4 +33,8 @@
 
 打开/apphome/database.php文件,修改相关配置
 
-3、 登录后台->系统设置->系统配置参数，更新配置：fladmin/Index/upconfig
+3、 域名绑定到server/public目录
+
+4、 登录后台->系统设置->系统配置参数，更新配置：http://www.xcxcms.com/fladmin/Index/upconfig
+
+5、 打开miniprogram目录下的config.js文件，修改【appApiUrl: "http://www.xcxcms.com/api"】为【appApiUrl: "http://+域名/api"】，这个是为小程序提供数据的api接口路径
