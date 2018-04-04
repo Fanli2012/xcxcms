@@ -4,9 +4,9 @@
 <script src="/js/jquery.min.js"></script><script src="/js/ad.js"></script><script src="/js/bootstrap.min.js"></script><script type="text/javascript" src="/js/jquery.uploadify.min.js"></script></head><body>
 
 <div class="blog-masthead clearfix"><nav class="blog-nav">
-<a class="blog-nav-item active" href="/<?php echo FLADMIN; ?>"><span class="glyphicon glyphicon-star"></span> <strong>后台管理中心</strong> <span class="glyphicon glyphicon-star-empty"></span></a>
-<a class="blog-nav-item" href="/" target="_blank"><span class="glyphicon glyphicon-home"></span> 网站主页</a>
-<a class="blog-nav-item" href="/<?php echo FLADMIN; ?>/Index/upcache"><span class="glyphicon glyphicon-refresh"></span> 更新缓存</a>
-<a class="blog-nav-item" id="navexit" href="/<?php echo FLADMIN; ?>/Login/loginout"><span class="glyphicon glyphicon-off"></span> 注销</a>
+<a class="blog-nav-item active" href="{url($module_name)}"><span class="glyphicon glyphicon-star"></span> <strong>后台管理中心</strong> <span class="glyphicon glyphicon-star-empty"></span></a>
+<a class="blog-nav-item" href="<?php echo sysconfig('CMS_BASEHOST'); ?>" target="_blank"><span class="glyphicon glyphicon-home"></span> 网站主页</a>
+<a class="blog-nav-item" href="{url($module_name.'/index/upcache')}"><span class="glyphicon glyphicon-refresh"></span> 更新缓存</a>
+<a class="blog-nav-item" id="navexit" href="{url($module_name.'/login/loginout')}"><span class="glyphicon glyphicon-off"></span> 注销</a>
 <a class="blog-nav-item pull-right" href="javascript:;"><small>您好：<span class="glyphicon glyphicon-user"></span> <?php if(session('?admin_user_info')){echo session('admin_user_info')['username'].' ['.session('admin_user_info')['rolename'].']';} ?></small></a>
 </nav></div>

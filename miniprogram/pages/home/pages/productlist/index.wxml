@@ -2,13 +2,14 @@
 <view class="themes-list mb10">
     <view class="themes-list-box" wx:for="{{dataList}}">
         <navigator url="../productdetail/index?id={{item.id}}">
-            <view class="themes-list-thumbnail">
+            <view wx:if="{{item.litpic != ''}}" class="themes-list-thumbnail">
                 <image class="themes-list-img" src="{{item.litpic}}" />
             </view>
             <view class="themes-list-main">
                 <view class="themes-list-name">{{item.title}}</view>
-                <view class="themes-list-description">{{item.description}}</view>
+                <view class="themes-list-description"><text class="themes-list-price">价格：￥{{item.price}}</text> <text class="themes-list-originprice">市场价：${{item.origin_price}}</text></view>
             </view>
+            <view class="cl"></view>
         </navigator>
     </view>
 </view>

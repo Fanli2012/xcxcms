@@ -15,25 +15,7 @@ class Common extends Controller
      */
 	public function _initialize()
 	{
-		$request = Request::instance();
-		
-		// 批量赋值
-        $this->assign([
-            'action_name'  => $request->action(),
-            'controller_name' => $request->controller(),
-            'module_name' => $request->module()
-        ]);
-		
-		unset($request);
-		
-		/* if(!Session::has('admin_user_info'))
-		{
-			$this->error('您访问的页面不存在或已被删除！', '/',3);
-		}
-        else
-        {
-            $this->user_info = Session::get('admin_user_info');
-        } */
+        parent::_initialize();
     }
 	
     /**
@@ -55,7 +37,7 @@ class Common extends Controller
      *     - "img_url"              (string)：车图片url地址
      *     - "car_name"             (string)：车名称
      */
-    public function pageList($modelname, $map = '', $orderby = '', $field = '', $listRows = 15)
+	public function pageList($modelname, $map = null, $orderby = '', $field = '*', $listRows = 15)
     {
         //获取当前数据对象的【主键名称】
         $id = Db::getTableInfo(config('database.prefix').$modelname, 'pk');
@@ -63,15 +45,17 @@ class Common extends Controller
 		
         $orderby = !empty($orderby) ? $orderby : $id.' desc';
         
-		$request = Request::instance();
-		$param = $request->param();
+		$request = Request::instance();$param = $request->param(); //等价于$param = request()->param();
 		
+        $model = Db::name($modelname)->field($field);
+        if($map != null){$model = $model->where($map);}
+        
 		// 查询满足的数据，并且每页显示15条数据
-		$voList = Db::name($modelname)->where($map)->order($orderby)->paginate($listRows,false,array('query' => $param));
+		$voList = $model->order($orderby)->paginate($listRows,false,array('query' => $param));
 		
         return $voList;
     }
-	
+    
     //设置空操作
     public function _empty()
     {

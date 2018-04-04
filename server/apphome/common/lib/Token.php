@@ -28,7 +28,7 @@ class Token
      */
     public static function checkToken($token)
     {
-        $token = db('token')->where('token', $token)->find();
+        $token = db('token')->where(array('token'=>$token))->find();
 		
         if ($token)
 		{

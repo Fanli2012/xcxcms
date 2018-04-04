@@ -11,10 +11,10 @@ Page({
         var that = this;
 
         // 新闻列表
-        util.AJAX("/article/articlelist", function (res) {
+        util.AJAX("/article/index", function (res) {
             // 重新写入数据
             that.setData({
-                dataList: res.data.data
+                dataList: res.data.data.list
             });
         }, {"limit":20});
     }

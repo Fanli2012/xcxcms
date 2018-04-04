@@ -81,7 +81,7 @@ img:hover{filter:alpha(opacity=90);opacity:0.9;}
 .tagb dd{line-height:24px;padding-top:5px;}.tagb dd a{color:#666;display:inline-block;margin-right:10px;}
 
 .content{font:normal 18px/180% "Microsoft YaHei";color:#222;margin-bottom:15px;}
-.content p{/* margin-bottom:1.35em; */}.content u{color:#1570a6;text-decoration:none;}.content h2,.tagarct{font-size:22px;line-height:1.176;color:#22ac38;padding-top:15px;padding-bottom:10px;}.content strong,.content b{color:#22ac38;font-size:18px;}
+.content p{/* margin-bottom:1.35em; */}.content u{color:#0366d6;text-decoration:none;}.content h2,.tagarct{font-size:22px;line-height:1.176;color:#22ac38;padding-top:15px;padding-bottom:10px;}.content strong,.content b{color:#22ac38;font-size:18px;}
 .content img{max-width:640px;width:expression(this.width > 640 ? "640px" :this.width);height:auto;}
 .content blockquote{padding:.6em 1em;border-left:.4em solid #cad4f2;background:#f0f0f0;}
 .dinfo,.timely{color:#aaa;font-size:12px;line-height:1.5;font-family:SimSun;margin:5px 0 8px;}.dinfo a,.timely #atime{color:#22ac38;}

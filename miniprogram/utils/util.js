@@ -33,7 +33,17 @@ function getTime(timestamp) {
     s = t.getSeconds();     // 秒
 
     // 定义时间格式
-    return y
+    var res = new Array();
+    
+    res['Y'] = y;
+    res['m'] = (m < 10 ? '0' + m : m);
+    res['d'] = (d < 10 ? '0' + d : d);
+    res['H'] = (h < 10 ? '0' + h : h);
+    res['i'] = (i < 10 ? '0' + i : i);
+    res['s'] = (s < 10 ? '0' + s : s);
+    
+    return res;
+    /* return y
         + '-'
         + (m < 10 ? '0' + m : m)
         + '-'
@@ -43,7 +53,7 @@ function getTime(timestamp) {
         + ':'
         + (i < 10 ? '0' + i : i)
         + ':'
-        + (s < 10 ? '0' + s : s);
+        + (s < 10 ? '0' + s : s); */
 }
 
 module.exports = {

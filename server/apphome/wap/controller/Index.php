@@ -121,6 +121,34 @@ class Index extends Controller
 		return $this->fetch();
     }
     
+    //推荐页
+	public function tuijian()
+	{
+        $pagenow=input('page');
+        
+		if(empty($tag) || !preg_match('/[0-9]+/',$tag)){$this->error('您访问的页面不存在或已被删除！', '/' , 3);exit;}
+        
+        $where['tuijian'] = 1;
+        
+		$counts=db("article")->where($where)->count();
+		if($counts>sysconfig('CMS_MAXARC')){$counts=sysconfig('CMS_BASEHOST');}
+		$pagesize=sysconfig('CMS_PAGESIZE');$page=0;
+		if($counts % $pagesize){//取总数据量除以每页数的余数
+		$pages = intval($counts/$pagesize) + 1; //如果有余数，则页数等于总数据量除以每页数的结果取整再加一,如果没有余数，则页数等于总数据量除以每页数的结果
+		}else{$pages = $counts/$pagesize;}
+		if(!empty($pagenow)){if($pagenow==1 || $pagenow>$pages){header("HTTP/1.0 404 Not Found");$this->error('您访问的页面不存在或已被删除！');exit;}$page = $pagenow-1;$nextpage=$pagenow+1;$previouspage=$pagenow-1;}else{$page = 0;$nextpage=2;$previouspage=0;}
+		$this->assign('page',$page);
+		$this->assign('pages',$pages);
+		$this->assign('counts',$counts);
+		$start=$page*$pagesize;
+        
+        $posts = db('article')->where($where)->field('body',true)->order('id desc')->limit("$start,$pagesize")->select();
+		$this->assign('posts',$posts); //获取列表
+		$this->assign('pagenav',get_listnav(array("counts"=>$counts,"pagesize"=>$pagesize,"pagenow"=>$page+1))); //获取分页列表
+        
+		return $this->fetch($post['template']);
+    }
+    
     //搜索页
 	public function search()
 	{

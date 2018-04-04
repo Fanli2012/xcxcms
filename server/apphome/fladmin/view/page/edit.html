@@ -25,33 +25,36 @@
     </tr>
     <tr>
         <td align="right" style="vertical-align:middle;">缩略图：</td>
-        <td style="vertical-align:middle;"><input id="file_upload" value="选择文件" name="file_upload" type="file" multiple="true"> <input name="litpic" type="text" id="litpic" value="<?php echo $row["litpic"]; ?>" style="width:40%"> <img style="margin-left:20px;<?php if(empty($row["litpic"]) || !imgmatch($row["litpic"])){ echo "display:none;"; } ?>" src="<?php if(imgmatch($row["litpic"])){echo $row["litpic"];} ?>" width="120" height="80" id="picview" name="picview"></td>
+        <td style="vertical-align:middle;"><button type="button" onclick="upImage();">选择图片</button> <input name="litpic" type="text" id="litpic" value="<?php echo $row["litpic"]; ?>" style="width:40%"> <img style="margin-left:20px;<?php if(empty($row["litpic"]) || !imgmatch($row["litpic"])){ echo "display:none;"; } ?>" src="<?php if(imgmatch($row["litpic"])){echo $row["litpic"];} ?>" width="120" height="80" id="picview" name="picview"></td>
     </tr>
-<style>.uploadify{display:inline-block;}.uploadify-queue{display:none;}</style>
 <script type="text/javascript">
-    <?php $timestamp = time();?>
-    bidtype="选择文件";
-    $(function() {
-        $('#file_upload').uploadify({
-            'buttonText': bidtype,//按钮文字
-            'auto':true,//选择完图片以后是否自动上传
-            'multi': false,//是否开启一次性上传多个文件
-            'fileTypeExts': "*.jpg;*.png;*.gif;*.jpeg;",//允许的文件类型
-            'width': 60,//buttonImg的大小
-            'height': 26,
-            'formData'     : {
-                'timestamp' : '<?php echo $timestamp;?>',
-                'token'     : '<?php echo md5('unique_salt' . $timestamp);?>'
-            },
-            'swf'      : '/other/uploadify/uploadify.swf',//路径要正确
-            'uploader' : '/uploadImage.php',//路径要正确
-            'onUploadSuccess': function (file, data, response) {  //一个文件上传成功后的响应事件处理
-                $('#litpic').val(data);
-                $('#picview').attr("src",data).css("display","inline-block");
-            }
-        });
+var _editor;
+$(function() {
+    //重新实例化一个编辑器，防止在上面的editor编辑器中显示上传的图片或者文件
+    _editor = UE.getEditor('ueditorimg');
+    _editor.ready(function () {
+        //设置编辑器不可用
+        _editor.setDisabled('insertimage');
+        //隐藏编辑器，因为不会用到这个编辑器实例，所以要隐藏
+        _editor.hide();
+        //侦听图片上传
+        _editor.addListener('beforeInsertImage', function (t, arg) {
+            //将地址赋值给相应的input,只取第一张图片的路径
+			$('#litpic').val(arg[0].src);
+            //图片预览
+            $('#picview').attr("src",arg[0].src).css("display","inline-block");
+        })
     });
+});
+//弹出图片上传的对话框
+function upImage()
+{
+    var myImage = _editor.getDialog("insertimage");
+	myImage.render();
+    myImage.open();
+}
 </script>
+<script type="text/plain" id="ueditorimg"></script>
     <tr>
         <td align="right">页面关键字：</td>
         <td><input type="text" name="keywords" id="keywords" style="width:50%" value="<?php echo $row["keywords"]; ?>"> (用","分开)</td>
@@ -67,7 +70,7 @@
         <td colspan="2">
 <!-- 加载编辑器的容器 --><script id="container" name="body" type="text/plain"><?php echo $row["body"]; ?></script>
 <!-- 配置文件 --><script type="text/javascript" src="/other/flueditor/ueditor.config.js"></script>
-<!-- 编辑器源码文件 --><script type="text/javascript" src="/other/flueditor/ueditor.all.js"></script>
+<!-- 编辑器源码文件 --><script type="text/javascript" src="/other/flueditor/ueditor.all.min.js"></script>
 <!-- 实例化编辑器 --><script type="text/javascript">var ue = UE.getEditor('container',{maximumWords:100000,initialFrameHeight:320,enableAutoSave:false});</script></td>
     </tr>
     <tr>

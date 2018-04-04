@@ -27,16 +27,16 @@ class Login extends Controller
         if(!empty($_POST["username"])){$username = $_POST["username"];}else{$username='';}//用户名
         if(!empty($_POST["pwd"])){$pwd = md5($_POST["pwd"]);}else{$pwd='';}//密码
 		
-		$sql = "(username = '".$username."' and pwd = '".$pwd."') or (email = '".$username."' and pwd = '".$pwd."')";
-        $User = db("user")->where($sql)->find();
+		//$sql = "(username = '".$username."' and pwd = '".$pwd."') or (email = '".$username."' and pwd = '".$pwd."')";
+        $admin = db("admin")->where(function($query) use ($username,$pwd){$query->where('username',$username)->where('pwd',$pwd);})->whereOr(function($query) use ($username,$pwd){$query->where('email',$username)->where('pwd',$pwd);})->find();
         
-        if($User)
+        if($admin)
         {
-			$User['rolename'] = db("user_role")->where("id=".$User['role_id'])->find()['name'];
+			$admin['rolename'] = db("admin_role")->where("id=".$admin['role_id'])->find()['name'];
 			
-            Session::set("admin_user_info", $User);
+            Session::set("admin_user_info", $admin);
 			
-			db("user")->where("id=".$User['id'])->setField('logintime',time());
+			db("admin")->where("id=".$admin['id'])->setField('logintime',time());
 			
 			$this->success('登录成功！', CMS_ADMIN , 1);
         }
@@ -59,7 +59,7 @@ class Login extends Controller
         $data["username"] = "admin888";
         $data["pwd"] = "21232f297a57a5a743894a0e4a801fc3";
         
-        if(db('user')->where("id=1")->update($data))
+        if(db('admin')->where("id=1")->update($data))
         {
             $this->success('密码恢复成功！', CMS_ADMIN.'Login' , 1);
         }
@@ -84,6 +84,6 @@ class Login extends Controller
 			return 0;
 		}
         
-        return db("user")->where($map)->count();
+        return db("admin")->where($map)->count();
     }
 }

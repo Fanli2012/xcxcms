@@ -90,7 +90,7 @@ function arclist(array $param)
 	if(isset($param['orderby'])){$orderby=$param['orderby'];}else{$orderby='id desc';}
 	$article = db("article");
     if(isset($param['field'])){$article = $article->field($param['field']);}else{$article = $article->field('body',true);}
-    $article = db("article")->limit($limit);
+    $article = $article->limit($limit);
     
 	if(isset($param['sql']))
 	{
@@ -448,15 +448,11 @@ function get_keywords($keyword)
 }
 
 //获取二维码
-function get_erweima($url="")
+function get_erweima($url,$size=6)
 {
 	Vendor('phpqrcode.qrlib');
-	
-	$url = str_replace("%26","&",$url);
-	$url = str_replace("%3F","?",$url);
-	$url = str_replace("%3D","=",$url);
-	
-	return QRcode::png($url, false, "H", 6);
+	ob_end_clean();
+	return 'data:image/png;base64,'.base64_encode(\QRcode::png($url, false, "H", $size));
 }
 
 //根据栏目id获取栏目信息
@@ -836,7 +832,7 @@ if (! function_exists('dd')) {
      * @param  mixed
      * @return void
      */
-    function dd(...$args)
+    function dd($args)
     {
         echo '<pre>';
         foreach ($args as $x)
@@ -849,6 +845,7 @@ if (! function_exists('dd')) {
     }
 }
 
+//获取http(s)://+域名
 function http_host($flag=true)
 {
     $res = '';
@@ -863,4 +860,66 @@ function http_host($flag=true)
     }
     
     return $res;
+}
+
+/**
+ * 获取数据属性
+ * @param $dataModel 数据模型
+ * @param $data 数据
+ * @return array
+ */
+function getDataAttr($dataModel,$data = [])
+{
+    if(empty($dataModel) || empty($data))
+    {
+        return false;
+    }
+    
+    foreach($data as $k=>$v)
+    {
+        $_method_str=ucfirst(preg_replace_callback('/_([a-zA-Z])/', function ($match) {
+            return strtoupper($match[1]);
+        }, $k));
+        
+        $_method = 'get' . $_method_str . 'Attr';
+        
+        if(method_exists($dataModel, $_method))
+        {
+            $data[$k.'_text'] = $dataModel->$_method($data);
+        }
+    }
+    
+    return $data;
+}
+
+//根据当前网站获取上一页下一页网址
+function get_pagination_url($http_host,$query_string,$page=0)
+{
+    $res = '';
+    foreach(explode("&",$query_string) as $row)
+    {
+        if($row)
+        {
+            $canshu = explode("=",$row);
+            $res[$canshu[0]] = $canshu[1];
+        }
+    }
+    
+    if(isset($res['page']))
+    {
+        unset($res['page']);
+    }
+    
+    if($page==1 || $page==0){}else{$res['page'] = $page;}
+    
+    if($res){$res = $http_host.'?'.http_build_query($res);}
+    
+    return $res;
+}
+
+//输出json
+function echo_json($data)
+{
+    header("content-type:application/json");
+    exit(json_encode($data));
 }

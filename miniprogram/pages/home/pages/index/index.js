@@ -13,29 +13,38 @@ Page({
         productList: [],
 
         img: '../../images/logo.png',
-        title: "深圳市圆梦云科技有限公司",
-        intro: "深圳市圆梦云科技有限公司是一家具有创新思维的互联网公司，主要提供的服务有互联网软件开发，包括微信公众平台服务，企业社区，商城产品，教育培训等。公司由有多年互联网经验的人员组成，致力于提供优质的互联网产品和服务，是国内最具实力的微信开发商、社区开发商。旗下主要开源产品WeiPHP下载量达百万级别，被众多开发者安装使用。",
+        title: '繁橙工作室',
+        intro: '中小企业解决方案：PC+手机+微信网站+小程序+APP，专注于B2C商城网站建设、微信开发、网站设计开发服务为一体的互联网技术服务定制。',
         contab: "联系方式",
-        address: "深圳市龙岗区坂田街道中兴路10号",
-        mobile: "0755-23729769",
-        email: "weiphp@weiphp.cn"
+        address: "厦门软件园二期48号",
+        mobile: "15280719357",
+        email: "374861669@qq.com"
     },
     onLoad: function () {
         var that = this;
 
         // 幻灯片列表
-        util.AJAX("/slide/slidelist", function (res) {
+        util.AJAX("/slide/index", function (res) {
+            //console.log(res);
             // 重新写入数据
             that.setData({
-                slideList: res.data.data
+                slideList: res.data.data.list
             });
         });
 
         // 新闻列表
-        util.AJAX("/article/articlelist", function (res) {
+        util.AJAX("/article/index", function (res) {
+            var newsList = res.data.data.list; console.log(newsList);
+            if (newsList) {
+                for (var i = 0; i < newsList.length; i++) {
+                    var time = util.getTime(newsList[i]['pubdate']);
+                    newsList[i]['pubdate'] = time['Y'] + '-' + time['m'] + '-' + time['d'];
+                }
+            }
+
             // 重新写入数据
             that.setData({
-                newsList: res.data.data
+                newsList: newsList
             });
         });
 

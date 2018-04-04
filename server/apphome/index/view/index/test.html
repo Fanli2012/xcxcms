@@ -1,0 +1,12 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8" /><meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"><meta http-equiv="Cache-Control" content="no-siteapp" /><meta http-equiv="Cache-Control" content="no-transform" />
+<title><?php echo sysconfig('CMS_SEOTITLE'); ?></title><meta name="keywords" content="<?php echo sysconfig('CMS_KEYWORDS'); ?>" /><meta name="description" content="<?php echo sysconfig('CMS_DESCRIPTION'); ?>" /><link rel="stylesheet" href="<?php echo sysconfig('CMS_BASEHOST'); ?>/images/style.css" media="all"><script type="text/javascript" src="<?php echo sysconfig('CMS_BASEHOST'); ?>/js/jquery.min.js"></script><script type="text/javascript" src="<?php echo sysconfig('CMS_BASEHOST'); ?>/js/ad.js"></script></head><body><script>site();</script>
+{include file="common/header"/}
+
+<form action="{:url('api/image/multiplefileupload')}" method="post" enctype="multipart/form-data">
+<label for="file">Filename:</label>
+<input type="file" name="file" id="file" /> 
+<br />
+<input type="submit" name="submit" value="Submit" />
+</form>
+
+{include file="common/footer"/}</body></html>

@@ -2,7 +2,7 @@
 <view class="themes-list mb10">
     <view class="themes-list-box" wx:for="{{dataList}}">
         <navigator url="../detail/index?id={{item.id}}">
-            <view class="themes-list-thumbnail">
+            <view wx:if="{{item.litpic != ''}}" class="themes-list-thumbnail">
                 <image class="themes-list-img" src="{{item.litpic}}" />
             </view>
             <view class="themes-list-main">

@@ -1,4 +1,5 @@
 const util = require('../../../../utils/util.js');
+var WxParse = require('../../../../vendor/wxParse/wxParse.js');
 
 //获取应用实例
 var app = getApp()
@@ -12,7 +13,9 @@ Page({
         var id = options.id;
 
         // 详情
-        util.AJAX("/product/productdetail", function (res) {
+        util.AJAX("/product/detail", function (res) {
+            WxParse.wxParse('article', 'html', res.data.data.body, that, 5);
+            
             // 重新写入数据
             that.setData({
                 post: res.data.data

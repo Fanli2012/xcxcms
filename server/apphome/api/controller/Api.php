@@ -1,5 +1,5 @@
 <?php
-namespace app\flapi\controller;
+namespace app\api\controller;
 
 class Api extends Hprose
 {

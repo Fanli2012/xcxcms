@@ -11,11 +11,11 @@ Page({
         var that = this;
 
         // 产品列表
-        util.AJAX("/product/productlist", function (res) {
+        util.AJAX("/product/index", function (res) {console.log(res);
             // 重新写入数据
             that.setData({
-                dataList: res.data.data
+                dataList: res.data.data.list
             });
-        }, {"limit":20});
+        }, {"limit":10});
     }
 })

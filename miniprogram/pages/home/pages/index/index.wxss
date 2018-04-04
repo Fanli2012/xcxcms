@@ -12,10 +12,10 @@
 /* 日报列表 */
 .themes-list{ background: #FFF; display: block;}
 .themes-list-box{ display: block; position: relative; padding: 16px 20px; border-bottom: 1px solid #F2F2F2; }
-.themes-list-thumbnail{ position: absolute; left: 20px; top: 16px; height: 40px; width: 40px; }
-.themes-list-img{ width: 40px; height: 40px; border-radius: 4px; border: 1px solid #F2F2F2;}
-.themes-list-main{ margin-left: 50px; }
-.themes-list-name{ font-size: 14px; color: #444; height: 20px; line-height: 20px; overflow: hidden; }
+.themes-list-thumbnail{width: 40px;height: 40px;float: left;margin-right: 12px;}
+.themes-list-img{width: 40px;height: 40px;border-radius:2px; border: 1px solid #F2F2F2;}
+.themes-list-main{ }
+.themes-list-name{ font-size: 16px; color: #444; height: 20px; line-height: 20px; overflow: hidden; }
 .themes-list-description{ font-size: 12px; color: #999; height: 20px; line-height: 20px; overflow: hidden; }
 
 .hot-box{ display: block; height: 100%; font-family: Helvetica, Arial, "Hiragino Sans GB", "Source Han Sans CN", "PingFang SC", Roboto, "微软雅黑", "Heiti SC", "Microsoft Yahei", sans-serif }

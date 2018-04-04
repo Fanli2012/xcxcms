@@ -54,6 +54,7 @@ class Index extends Controller
 	{
         $id=input('id');
         if(empty($id) || !preg_match('/[0-9]+/',$id)){$this->error('您访问的页面不存在或已被删除！', '/' , 3);exit;}
+        $article = db('article');
 		
 		if(cache("detailid$id")){$post=cache("detailid$id");}else{$post = db('article')->where("id=$id")->find();if(empty($post)){$this->error('您访问的页面不存在或已被删除！', '/' , 3);exit;}$post['typename'] = db('arctype')->where("id=".$post['typeid'])->value('typename');cache("detailid$id",$post,2592000);}
 		if($post)
@@ -63,12 +64,20 @@ class Index extends Controller
             if(!empty($post['writer'])){$post['writertitle']=$post['title'].' '.$post['writer'];}
             
 			$this->assign('post',$post);
-            $this->assign('pre',get_article_prenext(array('aid'=>$post["id"],'typeid'=>$post["typeid"],'type'=>"pre")));
+            $pre = get_article_prenext(array('aid'=>$post["id"],'typeid'=>$post["typeid"],'type'=>"pre"));
+            $this->assign('pre',$pre);
         }
         else
         {
             $this->error('您访问的页面不存在或已被删除！', '/' , 3);exit;
         }
+        
+        //获取最新列表
+        $where = '';
+        if($pre){$where['typeid']=$post['typeid'];$where['id']=array('lt',$pre['id']);}
+        $latest_posts = $article->where($where)->field('body',true)->order('id desc')->limit(5)->select();
+        if(!$latest_posts){$latest_posts = $article->field('body',true)->order('id desc')->limit(5)->select();}
+        $this->assign('latest_posts',$latest_posts);
         
 		if(cache("catid$cat")){$post=cache("catid$cat");}else{$post = db('arctype')->where("id=$cat")->find();cache("catid$cat",$post,2592000);}
         
@@ -132,12 +141,38 @@ class Index extends Controller
 		return $this->fetch();
     }
     
+    //推荐页
+	public function tuijian()
+	{
+        $pagenow=input('page');
+        $where['tuijian'] = 1;
+        
+		$counts=db("article")->where($where)->count();
+		if($counts>sysconfig('CMS_MAXARC')){$counts=sysconfig('CMS_BASEHOST');}
+		$pagesize=sysconfig('CMS_PAGESIZE');$page=0;
+		if($counts % $pagesize){//取总数据量除以每页数的余数
+		$pages = intval($counts/$pagesize) + 1; //如果有余数，则页数等于总数据量除以每页数的结果取整再加一,如果没有余数，则页数等于总数据量除以每页数的结果
+		}else{$pages = $counts/$pagesize;}
+		if(!empty($pagenow)){if($pagenow==1 || $pagenow>$pages){header("HTTP/1.0 404 Not Found");$this->error('您访问的页面不存在或已被删除！');exit;}$page = $pagenow-1;$nextpage=$pagenow+1;$previouspage=$pagenow-1;}else{$page = 0;$nextpage=2;$previouspage=0;}
+		$this->assign('page',$page);
+		$this->assign('pages',$pages);
+		$this->assign('counts',$counts);
+		$start=$page*$pagesize;
+        
+        $posts = db('article')->where($where)->field('body',true)->order('id desc')->limit("$start,$pagesize")->select();
+		$this->assign('posts',$posts); //获取列表
+        $pagenav = '';if($nextpage<=$pages && $nextpage>0){$pagenav = get_pagination_url(http_host().'/tuijian',$_SERVER['QUERY_STRING'],$nextpage);} //获取上一页下一页网址
+		$this->assign('pagenav',$pagenav);
+        
+		return $this->fetch();
+    }
+    
     //搜索页
 	public function search()
 	{
-		if(!empty($_GET["keyword"]))
+		if(isset($_REQUEST["keyword"]) && !empty($_REQUEST["keyword"]))
 		{
-			$keyword = $_GET["keyword"]; //搜索的关键词
+			$keyword = $_REQUEST["keyword"]; //搜索的关键词
 			if(strstr($keyword,"&")) exit;
 			
 			$map['title'] = array('LIKE',"%$keyword%");
@@ -187,15 +222,18 @@ class Index extends Controller
     
 	public function test()
     {
+        //echo '<pre>';print_r(request());exit;
 		//echo (dirname('/images/uiui/1.jpg'));
 		//echo '<pre>';
-		$str='<p><img border="0" src="./images/1.jpg" alt=""/></p>';
+		//$str='<p><img border="0" src="./images/1.jpg" alt=""/></p>';
 		
 		//echo getfirstpic($str);
-		$imagepath='.'.getfirstpic($str);
-		$image = new \Think\Image(); 
-		$image->open($imagepath);
+		//$imagepath='.'.getfirstpic($str);
+		//$image = new \Think\Image(); 
+		//$image->open($imagepath);
 		// 按照原图的比例生成一个最大为240*180的缩略图并保存为thumb.jpg
-		$image->thumb(CMS_IMGWIDTH, CMS_IMGHEIGHT)->save('./images/1thumb.jpg');
+		//$image->thumb(CMS_IMGWIDTH, CMS_IMGHEIGHT)->save('./images/1thumb.jpg');
+        
+        return $this->fetch();
     }
 }

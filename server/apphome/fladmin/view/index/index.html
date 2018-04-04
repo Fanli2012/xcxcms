@@ -5,10 +5,10 @@
 <script src="<?php echo sysconfig('CMS_BASEHOST'); ?>/js/jquery.min.js"></script><script src="<?php echo sysconfig('CMS_BASEHOST'); ?>/js/respond.min.js"></script><script src="<?php echo sysconfig('CMS_BASEHOST'); ?>/js/ad.js"></script><script src="<?php echo sysconfig('CMS_BASEHOST'); ?>/js/bootstrap.min.js"></script></head><body>
 
 <div class="blog-masthead clearfix"><nav class="blog-nav">
-<a class="blog-nav-item active" href="<?php echo CMS_ADMIN; ?>"><span class="glyphicon glyphicon-star"></span> <strong>后台管理中心</strong> <span class="glyphicon glyphicon-star-empty"></span></a>
+<a class="blog-nav-item active" href="{:url($module_name.'/index/index')}"><span class="glyphicon glyphicon-star"></span> <strong>后台管理中心</strong> <span class="glyphicon glyphicon-star-empty"></span></a>
 <a class="blog-nav-item" href="<?php echo sysconfig('CMS_BASEHOST'); ?>" target="_blank"><span class="glyphicon glyphicon-home"></span> 网站主页</a>
-<a class="blog-nav-item" href="<?php echo CMS_ADMIN; ?>Index/upcache"><span class="glyphicon glyphicon-refresh"></span> 更新缓存</a>
-<a class="blog-nav-item" id="navexit" href="<?php echo CMS_ADMIN.'Login/loginout'; ?>"><span class="glyphicon glyphicon-off"></span> 注销</a>
+<a class="blog-nav-item" href="{:url($module_name.'/index/upcache')}"><span class="glyphicon glyphicon-refresh"></span> 更新缓存</a>
+<a class="blog-nav-item" id="navexit" href="{:url($module_name.'/login/loginout')}"><span class="glyphicon glyphicon-off"></span> 注销</a>
 <a class="blog-nav-item pull-right" href="javascript:;"><small>您好：<span class="glyphicon glyphicon-user"></span> <?php if(isset($admin_user_info)){echo $admin_user_info['username'].' ['.$admin_user_info['rolename'].']';} ?></small></a>
 </nav></div>
 <div class="container-fluid">

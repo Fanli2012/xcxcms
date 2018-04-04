@@ -3,7 +3,9 @@ namespace app\api\controller;
 use think\Db;
 use think\Request;
 use app\common\lib\Token;
+use app\common\lib\Helper;
 use app\common\lib\ReturnData;
+use app\common\logic\PageLogic;
 
 class Page extends Base
 {
@@ -12,43 +14,91 @@ class Page extends Base
 		parent::_initialize();
     }
     
-    public function sgpageList()
+    public function getLogic()
+    {
+        return new PageLogic();
+    }
+    
+    //列表
+    public function index()
 	{
         //参数
-        $limit = input('param.limit',10);
-        $offset = input('param.offset', 0);
-        if(input('param.keyword', '') !== ''){$data['title'] = ['like','%'.input('param.keyword').'%'];}
+        $where = array();
+        $limit = input('limit',10);
+        $offset = input('offset', 0);
+        if(input('keyword', null) !== null){$where['title'] = ['like','%'.input('keyword').'%'];}
+        $orderby = input('orderby','id desc');
         
-        $page = db('page');
-        if(isset($data)){$page->where($data);}
-        $res = $page->field('body',true)->limit("$offset,$limit")->select();
-        if(!$res){exit(json_encode(ReturnData::create(ReturnData::SUCCESS,$res)));}
-        
-        foreach($res as $k=>$v)
+        $res = $this->getLogic()->getList($where,$orderby,['body'],$offset,$limit);
+		
+        if($res['list'])
         {
-            $res[$k]['pubdate'] = date('Y-m-d',$v['pubdate']);
-            if(!empty($v['litpic'])){$res[$k]['litpic'] = http_host().$v['litpic'];}
+            foreach($res['list'] as $k=>$v)
+            {
+                $res['list'][$k]['url'] = http_host().get_front_url(array('pagename'=>$v['filename'],'type'=>'page'));
+                if(!empty($v['litpic'])){$res['list'][$k]['litpic'] = http_host().$v['litpic'];}
+            }
         }
         
 		exit(json_encode(ReturnData::create(ReturnData::SUCCESS,$res)));
     }
     
-    public function sgpageDetail()
+    //详情
+    public function detail()
 	{
         //参数
-        if(input('param.id', '') !== ''){$data['id'] = input('param.id');}
-        if(input('param.filename', '') !== ''){$data['filename'] = input('param.filename');}
+        if(input('id', null) !== null){$where['id'] = input('id');}
+        if(input('filename', null) !== null){$where['filename'] = input('filename');}
+        if(!isset($where)){exit(json_encode(ReturnData::create(ReturnData::PARAMS_ERROR)));}
         
-        if(!isset($data)){exit(json_encode(ReturnData::create(ReturnData::PARAMS_ERROR)));}
+		$res = $this->getLogic()->getOne($where);
+        if(!$res){exit(json_encode(ReturnData::create(ReturnData::PARAMS_ERROR)));}
         
-        $res = db('page')->where($data)->find();
-		if(!$res){exit(json_encode(ReturnData::create(ReturnData::SUCCESS,$res)));}
-        
-        $res['pubdate'] = date('Y-m-d',$res['pubdate']);
         if(!empty($res['litpic'])){$res['litpic'] = http_host().$res['litpic'];}
         
-        db('page')->where($data)->setInc('click', 1);
-        
 		exit(json_encode(ReturnData::create(ReturnData::SUCCESS,$res)));
+    }
+    
+    //添加
+    public function add()
+    {
+        if(Helper::isPostRequest())
+        {
+            $res = $this->getLogic()->add($_POST);
+            
+            exit(json_encode($res));
+        }
+    }
+    
+    //修改
+    public function edit()
+    {
+        if(input('id',null)!=null){$id = input('id');}else{$id="";}if(preg_match('/[0-9]*/',$id)){}else{exit(json_encode(ReturnData::create(ReturnData::PARAMS_ERROR)));}
+        
+        if(Helper::isPostRequest())
+        {
+            unset($_POST['id']);
+            $where['id'] = $id;
+            
+            $res = $this->getLogic()->edit($_POST,$where);
+            
+            exit(json_encode($res));
+        }
+    }
+    
+    //删除
+    public function del()
+    {
+        if(input('id',null)!=null){$id = input('id');}else{$id="";}if(preg_match('/[0-9]*/',$id)){}else{exit(json_encode(ReturnData::create(ReturnData::PARAMS_ERROR)));}
+        
+        if(Helper::isPostRequest())
+        {
+            unset($_POST['id']);
+            $where['id'] = $id;
+            
+            $res = $this->getLogic()->del($where);
+            
+            exit(json_encode($res));
+        }
     }
 }

@@ -1,6 +1,8 @@
 <?php
 namespace app\fladmin\controller;
 use think\Db;
+use app\common\lib\ReturnData;
+use app\common\logic\ArticleLogic;
 
 class Article extends Base
 {
@@ -9,6 +11,11 @@ class Article extends Base
 		parent::_initialize();
     }
 	
+    public function getLogic()
+    {
+        return new ArticleLogic();
+    }
+    
     public function index()
     {
 		$where = array();
@@ -30,16 +37,9 @@ class Article extends Base
             $where['ischeck'] = $_REQUEST["ischeck"]; //未审核过的文章
         }
         
-        $arclist = parent::pageList('article',$where);
-		$posts = array();
-		foreach($arclist as $key=>$value)
-        {
-            $info = db('arctype')->field('content',true)->where("id=".$value['typeid'])->find();
-            $value['typename'] = $info['typename'];
-			$posts[] = $value;
-        }
+        $posts = $this->getLogic()->getPaginate($where,'id desc',['body'],15);
 		
-		$this->assign('page',$arclist->render());
+		$this->assign('page',$posts->render());
         $this->assign('posts',$posts);
 		
 		return $this->fetch();
@@ -103,7 +103,7 @@ class Article extends Base
 				$_POST['keywords']=get_keywords($title);//标题分词
 			}
 		}
-		
+        
 		if(isset($_POST["dellink"]) && $_POST["dellink"]==1 && !empty($content)){$content=replacelinks($content,array(CMS_BASEHOST));} //删除非站内链接
 		$_POST['body']=$content;
 		
@@ -133,13 +133,31 @@ class Article extends Base
 		unset($_POST["dellink"]);
 		unset($_POST["autolitpic"]);
         if(isset($_POST['editorValue'])){unset($_POST['editorValue']);}
-		if(db('article')->insert($_POST))
+        if(!empty($_POST["tags"])){$tags = $_POST["tags"];}else{$tags = '';}unset($_POST["tags"]);
+        
+        $res = $this->getLogic()->add($_POST);
+		if($res['code']==ReturnData::SUCCESS)
         {
-            $this->success('添加成功！', CMS_ADMIN.'Article' , 1);
+            //Tag
+            if(!empty($tags))
+            {
+                $tags = explode(",",str_replace("，",",",$tags));
+                foreach($tags as $v)
+                {
+                    if($tagindex = db('tagindex')->where(array('tag'=>$v))->find())
+                    {
+                        $where['tid'] = $tagindex['id'];
+                        $where['aid'] = $res['data'];
+                        if(!db('taglist')->where($where)->find()){db('taglist')->insert($where);}
+                    }
+                }
+            }
+            
+            $this->success('添加成功！', url('index'), '', 1);
         }
 		else
 		{
-			$this->error('添加失败！请修改后重新添加', CMS_ADMIN.'Article/add' , 3);
+			$this->error($res['msg'], url('add'), '', 3);
 		}
     }
     
@@ -148,7 +166,19 @@ class Article extends Base
         if(!empty($_GET["id"])){$id = $_GET["id"];}else {$id="";}if(preg_match('/[0-9]*/',$id)){}else{exit;}
         
         $this->assign('id',$id);
-		$this->assign('post',db('article')->where("id=$id")->find());
+		$this->assign('post',$this->getLogic()->getOne("id=$id"));
+        
+        $tags = '';
+        $taglist = db('taglist')->where("aid=$id")->select();
+        if($taglist)
+        {
+            foreach($taglist as $k=>$v)
+            {
+                $tmp[] = db('tagindex')->where('id='.$v['tid'])->value('tag');
+            }
+            $tags = implode(',',$tmp);
+        }
+        $this->assign('tags',$tags);
         
         return $this->fetch();
     }
@@ -205,35 +235,56 @@ class Article extends Base
 		
 		unset($_POST["dellink"]);
 		unset($_POST["autolitpic"]);
+        
+        //Tag
+        if(!empty($_POST["tags"]))
+        {
+            $tags = explode(",",str_replace("，",",",$_POST["tags"]));
+            db('taglist')->where(array('aid'=>$id))->delete();
+            
+            foreach($tags as $v)
+            {
+                if($tagindex = db('tagindex')->where(array('tag'=>$v))->find())
+                {
+                    $where['tid'] = $tagindex['id'];
+                    $where['aid'] = $id;
+                    if(!db('taglist')->where($where)->find()){db('taglist')->insert($where);}
+                }
+            }
+        }
+        unset($_POST["tags"]);
+        
         if(isset($_POST['editorValue'])){unset($_POST['editorValue']);}
-        if(db('article')->where("id=$id")->update($_POST))
+        $res = $this->getLogic()->edit($_POST,array('id'=>$id));
+        if($res['code']==ReturnData::SUCCESS)
         {
             if(!empty($_POST['ischeck']))
             {
-                $this->success('修改成功！', CMS_ADMIN.'Article?ischeck=1' , 1);
+                $this->success('修改成功！', url('index',array('ischeck'=>1)), '', 1);
             }
             else
             {
-                $this->success('修改成功！', CMS_ADMIN.'Article' , 1);
+                $this->success('修改成功！', url('index'), '', 1);
             }
         }
 		else
 		{
-			$this->error('修改失败！', CMS_ADMIN.'Article/edit?id='.$id, 3);
+			$this->error($res['msg'], url('edit',array('id'=>$id)), '', 3);
 		}
     }
     
     public function del()
     {
-		if(!empty($_GET["id"])){$id = $_GET["id"];}else{$this->error('删除失败！请重新提交',CMS_ADMIN.'Article' , 3);}
+		if(!empty($_GET["id"])){$id = $_GET["id"];}else{$this->error('参数错误', url('index'), '', 3);}
 		
-		if(db("article")->where("id in ($id)")->delete())
+        $res = model('Article')->del("id in ($id)");
+		if($res['code']==ReturnData::SUCCESS)
         {
-            $this->success("$id ,删除成功", CMS_ADMIN.'Article' , 1);
+            $this->success("$id ,删除成功", url('index'), '', 1);
         }
 		else
 		{
-			$this->error("$id ,删除失败！请重新提交", CMS_ADMIN.'Article', 3);
+			$this->error($res['msg'], url('index'), '', 3);
 		}
     }
     
@@ -246,17 +297,18 @@ class Article extends Base
 	
 	public function recommendarc()
     {
-		if(!empty($_GET["id"])){$id = $_GET["id"];}else{$this->error('删除失败！请重新提交',CMS_ADMIN.'Article' , 3);} //if(preg_match('/[0-9]*/',$id)){}else{exit;}
+		if(!empty($_GET["id"])){$id = $_GET["id"];}else{$this->error('参数错误', url('index'), '', 3);} //if(preg_match('/[0-9]*/',$id)){}else{exit;}
 		
 		$data['tuijian'] = 1;
 		
-        if(db("article")->where("id in ($id)")->update($data))
+        $res = $this->getLogic()->edit($data, "id in ($id)");
+		if($res['code']==ReturnData::SUCCESS)
         {
-            $this->success("$id ,推荐成功", CMS_ADMIN.'Article', 1);
+            $this->success("$id ,推荐成功", url('index'), '', 1);
         }
 		else
 		{
-			$this->error("$id ,推荐失败！请重新提交", CMS_ADMIN.'Article', 3);
+			$this->error("$id ,推荐失败！请重新提交", url('index'), '', 3);
 		}
     }
     

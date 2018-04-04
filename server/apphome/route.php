@@ -30,6 +30,9 @@ Route::domain('m',	function(){
         'tag<tag>/<page>'   => array('wap/Index/tag',array('tag'=>'\d+','page'=>'\d+')), //标签页，分页
         'tag<tag>'          => array('wap/Index/tag',array('tag'=>'\d+')), //标签页
         
+        'tuijian/<page>'   => array('wap/Index/tuijian',array('page'=>'\d+')), //推荐页，分页
+        'tuijian'          => 'wap/Index/tuijian', //推荐页
+        
         'page/<id>'         => array('wap/Index/page',array('ext'=>'html'),array('id'=>'[a-zA-Z0-9]+')),
         
         //api路由
@@ -47,10 +50,13 @@ return [
     
     'p/<id>'            => array('index/Index/detail',array()), //详情页
     'cat<cat>/<page>'   => array('index/Index/category',array(),array('cat'=>'\d+','page'=>'\d+')), //分类页，分页
-    'cat<cat>'          => ['index/Index/category',array(),['cat'=>'\d+']], //分类页
+    'cat<cat>'          => array('index/Index/category',array(),['cat'=>'\d+']), //分类页
     
     'tag<tag>/<page>'   => array('index/Index/tag',array('tag'=>'\d+','page'=>'\d+')), //标签页，分页
     'tag<tag>'          => array('index/Index/tag',array('tag'=>'\d+')), //标签页
+    
+    'tuijian/<page>'   => array('index/Index/tuijian',array('page'=>'\d+')), //推荐页，分页
+    'tuijian'          => 'index/Index/tuijian', //推荐页
     
     'page/<id>'         => array('index/Index/page',array('ext'=>'html'),array('id'=>'[a-zA-Z0-9]+')),
     

@@ -1,9 +1,8 @@
 <?php
-namespace app\api\controller;
+namespace app\flapi\controller;
 /**
  * ThinkPHP Hprose控制器类
  */
-
 class Hprose
 {
     protected $allowMethodList  =   '';
