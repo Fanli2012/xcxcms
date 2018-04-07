@@ -113,7 +113,20 @@ class SmsLog extends Base
      */
     public function getOne($where, $field = '*')
     {
-        return $this->getDb()->where($where)->field($field)->find();
+        $res = $this->getDb()->where($where);
+        
+        if(is_array($field))
+        {
+            $res = $res->field($field[0],true);
+        }
+        else
+        {
+            $res = $res->field($field);
+        }
+        
+        $res = $res->find();
+        
+        return $res;
     }
     
     /**

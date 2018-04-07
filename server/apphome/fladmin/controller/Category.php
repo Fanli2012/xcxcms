@@ -1,11 +1,18 @@
 <?php
 namespace app\fladmin\controller;
+use app\common\lib\ReturnData;
+use app\common\logic\ArctypeLogic;
 
 class Category extends Base
 {
 	public function _initialize()
 	{
 		parent::_initialize();
+    }
+    
+    public function getLogic()
+    {
+        return new ArctypeLogic();
     }
     
     public function index()
@@ -15,9 +22,9 @@ class Category extends Base
     
     public function add()
     {
-        if(!empty($_GET["reid"]))
+        if(input('reid',null)!=null)
         {
-            $id = $_GET["reid"];
+            $id = input('reid');
             if(preg_match('/[0-9]*/',$id)){}else{exit;}
             if($id!=0)
             {
@@ -36,7 +43,7 @@ class Category extends Base
     
     public function doadd()
     {
-        if(!empty($_POST["prid"])){if($_POST["prid"]=="top"){$_POST['reid']=0;}else{$_POST['reid'] = $_POST["prid"];}}//父级栏目id
+        if(!empty($_POST["prid"])){if($_POST["prid"]=="top"){$_POST['parent_id']=0;}else{$_POST['parent_id'] = $_POST["prid"];}}//父级栏目id
         $_POST['addtime'] = time();//添加时间
 		unset($_POST["prid"]);
 		
@@ -82,7 +89,7 @@ class Category extends Base
     {
 		if(!empty($_REQUEST["id"])){$id = $_REQUEST["id"];}else{$this->error('删除失败！请重新提交',CMS_ADMIN.'Category' , 3);} //if(preg_match('/[0-9]*/',$id)){}else{exit;}
 		
-		if(db('arctype')->where("reid=$id")->find())
+		if(db('arctype')->where("parent_id=$id")->find())
 		{
 			$this->error('删除失败！请先删除子栏目', CMS_ADMIN.'Category', 3);
 		}

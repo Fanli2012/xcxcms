@@ -1,3 +1,4 @@
 {
-    "navigationBarTitleText": "最新动态"
+    "navigationBarTitleText": "最新动态",
+    "enablePullDownRefresh": true
 }

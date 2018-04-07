@@ -63,9 +63,9 @@ class ArticleLogic extends BaseLogic
     }
     
     //详情
-    public function getOne($where = array())
+    public function getOne($where = array(), $field = '*')
     {
-        $res = $this->getModel()->getOne($where);
+        $res = $this->getModel()->getOne($where, $field);
         if(!$res){return false;}
         
         $res = $this->getDataView($res);

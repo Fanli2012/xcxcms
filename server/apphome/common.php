@@ -497,7 +497,7 @@ function get_category($modelname,$parent_id=0,$pad=0)
 {
     $arr=array();
     
-    $cats = db($modelname)->where("reid=$parent_id")->order('id asc')->select();
+    $cats = db($modelname)->where("parent_id=$parent_id")->order('id asc')->select();
     
     if($cats)
     {
@@ -510,25 +510,27 @@ function get_category($modelname,$parent_id=0,$pad=0)
             }
             $arr[] = $row;
         }
+        
         return $arr;
     }
 }
 
-function tree($list,$pid=0)
+function tree($list,$parent_id=0)
 {
     global $temp;
     if(!empty($list))
     {
         foreach($list as $v)
         {
-            $temp[] = array("id"=>$v['id'],"deep"=>$v['deep'],"typename"=>$v['typename'],"reid"=>$v['reid'],"typedir"=>$v['typedir'],"addtime"=>$v['addtime']);
+            $temp[] = array("id"=>$v['id'],"deep"=>$v['deep'],"name"=>$v['name'],"parent_id"=>$v['parent_id'],"typedir"=>$v['typedir'],"addtime"=>$v['addtime']);
             //echo $v['id'];
             if(array_key_exists("child",$v))
             {
-                tree($v['child'],$v['reid']);
+                tree($v['child'],$v['parent_id']);
             }
         }
     }
+    
     return $temp;
 }
 
@@ -537,13 +539,13 @@ function get_cat_path($cat)
 {
     global $temp;
     
-    $row = db("arctype")->field('typename,reid,id')->where("id=$cat")->find();
+    $row = db("arctype")->field('name,parent_id,id')->where("id=$cat")->find();
     
-    $temp = '<a href="'.get_front_url(array("type"=>"list","catid"=>$row["id"])).'">'.$row["typename"]."</a> > ".$temp;
+    $temp = '<a href="'.get_front_url(array("type"=>"list","catid"=>$row["id"])).'">'.$row["name"]."</a> > ".$temp;
     
-    if($row["reid"]<>0)
+    if($row["parent_id"]<>0)
     {
-        get_cat_path($row["reid"]);
+        get_cat_path($row["parent_id"]);
     }
     
     return $temp;

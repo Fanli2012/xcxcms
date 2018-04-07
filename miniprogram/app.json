@@ -3,8 +3,8 @@
         "pages/home/pages/index/index",
         "pages/home/pages/category/index",
         "pages/home/pages/detail/index",
-        "pages/home/pages/productlist/index",
-        "pages/home/pages/productdetail/index",
+        "pages/home/pages/goodslist/index",
+        "pages/home/pages/goodsdetail/index",
         "pages/home/pages/page/index",
         "pages/home/pages/tagindex/index",
         "pages/home/pages/taglist/index"
@@ -33,7 +33,7 @@
                 "selectedIconPath": "images/news_hover_icon.png"
             },
             {
-                "pagePath": "pages/home/pages/productlist/index",
+                "pagePath": "pages/home/pages/goodslist/index",
                 "text": "产品",
                 "iconPath": "images/product_icon.png",
                 "selectedIconPath": "images/product_hover_icon.png"

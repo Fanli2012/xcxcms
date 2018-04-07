@@ -25,7 +25,7 @@ class Index extends Controller
         $this->assign('post',$post);
         
 		$subcat="";$sql="";
-		$post2=db('arctype')->field('id')->where("reid=$cat")->select();
+		$post2=db('arctype')->field('id')->where("parent_id=$cat")->select();
 		if(!empty($post2)){foreach($post2 as $row){$subcat=$subcat."typeid=".$row["id"]." or ";}}
 		$subcat=$subcat."typeid=".$cat;
 		$sql=$subcat." or typeid2 in (".$cat.")";//echo $subcat2;exit;
@@ -59,7 +59,7 @@ class Index extends Controller
         $id=input('id');
         if(empty($id) || !preg_match('/[0-9]+/',$id)){$this->error('您访问的页面不存在或已被删除！', '/' , 3);exit;}
 		
-		if(cache("detailid$id")){$post=cache("detailid$id");}else{$post = db('Article')->where("id=$id")->find();if(empty($post)){$this->error('您访问的页面不存在或已被删除！', '/' , 3);exit;}$post['typename'] = db('arctype')->where("id=".$post['typeid'])->value('typename');cache("detailid$id",$post,2592000);}
+		if(cache("detailid$id")){$post=cache("detailid$id");}else{$post = db('Article')->where("id=$id")->find();if(empty($post)){$this->error('您访问的页面不存在或已被删除！', '/' , 3);exit;}$post['name'] = db('arctype')->where("id=".$post['typeid'])->value('name');cache("detailid$id",$post,2592000);}
 		if($post)
         {
 			$cat=$post['typeid'];

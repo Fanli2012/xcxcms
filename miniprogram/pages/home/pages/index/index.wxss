@@ -16,7 +16,7 @@
 .themes-list-img{width: 40px;height: 40px;border-radius:2px; border: 1px solid #F2F2F2;}
 .themes-list-main{ }
 .themes-list-name{ font-size: 16px; color: #444; height: 20px; line-height: 20px; overflow: hidden; }
-.themes-list-description{ font-size: 12px; color: #999; height: 20px; line-height: 20px; overflow: hidden; }
+.themes-list-description{ font-size: 24rpx; color: #999; height: 20px; line-height: 20px; overflow: hidden; }
 
 .hot-box{ display: block; height: 100%; font-family: Helvetica, Arial, "Hiragino Sans GB", "Source Han Sans CN", "PingFang SC", Roboto, "微软雅黑", "Heiti SC", "Microsoft Yahei", sans-serif }
 .hot-box-main{ display: block; overflow: hidden;background: #FFF; }
@@ -33,8 +33,8 @@
 
 .list-box{ padding: 20px 20px 20px 40px; display: block; font-size: 30rpx; border-bottom: 1px solid #F6F6F6; position: relative;}
 .list-box::after{ display: block; content: ""; position: absolute; width: 6px; height: 6px; background: #ff6511; border-radius: 50%; top: 28px; left: 20px; }
-.list-box-title{ font-weight: 400; line-height: 42rpx; }
+.list-box-title{ font-size: 16px; font-weight: 400; line-height: 42rpx; }
 .list-box-sub{ font-size: 24rpx; color: #666; padding-top: 6px; }
 
-.hot-box-more{ text-align: center; font-size: 22rpx; color: #999;padding:16px 20px; }
+.hot-box-more{ text-align: center; font-size: 32rpx; color: #999;padding:16px 20px; }
 .hot-box-more image{ width: 80px; height: 16px; display: block; margin: 0 auto;}

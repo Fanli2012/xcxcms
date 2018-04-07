@@ -28,16 +28,16 @@ class Menu extends Base
     
     public function doadd()
     {
-		$menuid = db('menu')->insert($_POST);
+		$menuid = db('menu')->strict(false)->insertGetId($_POST);
 		if($menuid)
         {
-			if(!db('access')->where(['role_id' => 1, 'menu_id' => $menuid])->find()){db('access')->insert(['role_id' => 1, 'menu_id' => $menuid]);}
+			if(!db('access')->where(['role_id' => 1, 'menu_id' => $menuid])->find()){db('access')->strict(false)->insertGetId(['role_id' => 1, 'menu_id' => $menuid]);}
 			
-			$this->success('添加成功！', CMS_ADMIN.'Menu' , 1);
+			$this->success('添加成功！', url('index'), 1);
         }
 		else
 		{
-			$this->error('添加失败！请修改后重新添加', CMS_ADMIN.'Menu/add' , 3);
+			$this->error('添加失败！请修改后重新添加');
 		}
     }
     
@@ -59,11 +59,11 @@ class Menu extends Base
         
 		if(db('menu')->where('id='.$id)->update($_POST))
         {
-            $this->success('修改成功！', CMS_ADMIN.'Menu' , 1);
+            $this->success('修改成功！', url('index'), 1);
         }
 		else
 		{
-			$this->error('修改失败！', CMS_ADMIN.'Menu' , 3);
+			$this->error('修改失败！');
 		}
     }
 	

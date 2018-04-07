@@ -34,7 +34,7 @@ Page({
 
         // 新闻列表
         util.AJAX("/article/index", function (res) {
-            var newsList = res.data.data.list; console.log(newsList);
+            var newsList = res.data.data.list;
             if (newsList) {
                 for (var i = 0; i < newsList.length; i++) {
                     var time = util.getTime(newsList[i]['pubdate']);

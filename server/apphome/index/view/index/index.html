@@ -31,7 +31,7 @@ function getmore(condition)
     //var typeid = "";
     $.post(url,condition,function(res){
         if(res.code==0)
-        {
+        {console.log(res);
             var json = res.data.list; //数组
             var str = '';
             $.each(json, function (index) {
