@@ -1,0 +1,4 @@
+.block-tit {border-top: 2px solid #48C23D;border-bottom: 1px solid #dcdee0;color: #48C23D;padding-left: 10px;background-color: #fff;font-size: 16px;font-weight: 800;line-height: 36px;height: 36px;}
+
+.ulist view{color:#333;border-bottom:1px solid #eee;overflow:hidden;margin-left:10px;margin-right:10px;padding-top:10px;padding-bottom:10px;line-height:24px;}
+.ulist view navigator{color:#333;display:block;/* font-size:1.125em; */}.ulist view:last-child{border-bottom:0}

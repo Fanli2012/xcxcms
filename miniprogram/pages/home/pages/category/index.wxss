@@ -15,7 +15,7 @@
 }
 
 .tips {
-    font-size: 28rpx;
+    font-size: 32rpx;
     text-align: center;
     padding:20rpx 40rpx 50rpx 40rpx;
     color: #ccc;

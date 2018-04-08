@@ -1,0 +1,9 @@
+<map style="width: 100%; height: 300px;" latitude="{{latitude}}" longitude="{{longitude}}" markers="{{markers}}"></map>
+
+<view class="block-tit mt10">联系我们</view>
+<view class="ulist clear">
+    <view><text style="color:#999;">联系人：</text>{{contact}}</view>
+    <view><text style="color:#999;">电子邮箱：</text>{{email}}</view>
+    <view bindtap="makePhoneCall"><text style="color:#999;">联系方式：</text>{{mobile}}</view>
+    <view><navigator url="../map/index"><text style="color:#999;">地址：</text>{{address}}</navigator></view>
+</view>

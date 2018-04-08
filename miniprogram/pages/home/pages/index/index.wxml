@@ -6,10 +6,18 @@
     </swiper-item>
 </swiper>
 
-<view class="themes-box-top">
-    <text class="themes-box-title">动态</text>
-    <text class="themes-box-subtitle">最新动态新闻资讯、事件报道及深度分析。</text>
+<view class="banner_headline"><view class="title"><text class="htit">产品中心</text></view></view>
+
+<view class="page-section-spacing" style="margin-bottom:20px;">
+    <scroll-view class="scroll-view_H" scroll-x="true" style="width: 100%">
+        <view class="scroll-view-item_H demo-text-1"><image style="width: 150px; height: 100px; background-color: #eeeeee;" src="http://www.xcxcms.com/images/2.jpg"></image></view>
+        <view class="scroll-view-item_H demo-text-2"><image style="width: 150px; height: 100px; background-color: #eeeeee;" src="http://www.xcxcms.com/images/2.jpg"></image></view>
+        <view class="scroll-view-item_H demo-text-3"><image style="width: 150px; height: 100px; background-color: #eeeeee;" src="http://www.xcxcms.com/images/2.jpg"></image></view>
+    </scroll-view>
 </view>
+
+<view class="block-tit">最新动态</view>
+
 <!-- 图文列表 -->
 <view class="themes-list mb10">
     <view class="themes-list-box" wx:for="{{newsList}}" wx:key="unique">
@@ -24,6 +32,14 @@
         </navigator>
     </view>
 </view>
+
+<view class="block-tit">演示样例</view>
+
+<view class="ulist clear">
+<view>
+<navigator class="gpic" href="http://m.1104.org/cat88/id4253"><image src="http://www.1104.org/uploads/allimg/1703/1-1F330000RB11-lp.jpg"></image></navigator>
+<navigator url="http://m.1104.org/cat50/id4262">一个操盘手自白：揭密操盘内幕</navigator>
+</view><view><navigator url="http://m.1104.org/cat60/id4261">新股配号怎么查询</navigator></view><view><navigator url="http://m.1104.org/cat14/id4260">如何学习股票财经知识？</navigator></view><view><navigator url="http://m.1104.org/cat13/id4259">雄安新区概念股</navigator></view><view><navigator url="http://m.1104.org/cat2/id4258">送股与转增股本的区别</navigator></view><view><navigator url="http://m.1104.org/cat2/id4257">美联储降息如何影响我国A股市场，如何影响银行类金融股？</navigator></view><view><navigator url="http://m.1104.org/cat66/id4256">价值投资的自问式思考</navigator></view><view><navigator url="http://m.1104.org/cat66/id4255">赛思·卡拉曼投资经典语录</navigator></view><view><navigator url="http://m.1104.org/cat42/id4254">如何快速熟悉股市？</navigator></view><view><navigator url="http://m.1104.org/cat88/id4253">波浪理论三大铁律</navigator></view><view><navigator url="http://m.1104.org/cat7/id4252">成交量的状态</navigator></view><view><navigator url="http://m.1104.org/cat44/id4251">缩量涨停战法</navigator></view><view></view></view>
 
 <view class="hot-main">
     <view class="hot-main-box">
@@ -43,12 +59,16 @@
     </view>
 </view>
 
-<!-- 没有更多的时候 -->
-<view hidden="{{hotshidden}}" class="hot-box-more">
-    <view wx:if="{{hothidden}}">
-        <image src="/static/loading.gif" mode="aspectFill" />
-    </view>
-    <view wx:else>
-        <text> 没有更多了 </text>
-    </view>
+<view class="block-tit">联系我们</view>
+<view class="ulist clear">
+    <view><text style="color:#999;">联系人：</text>{{contact}}</view>
+    <view><text style="color:#999;">电子邮箱：</text>{{email}}</view>
+    <view bindtap="makePhoneCall"><text style="color:#999;">联系方式：</text>{{mobile}}</view>
+    <view><navigator url="../map/index"><text style="color:#999;">地址：</text>{{address}}</navigator></view>
+</view>
+
+<view class="block-tit">演示样例</view>
+<view class="box mt10 mb10">
+    <image class="ewmimg" src="http://m.1104.org/images/logo.png"></image>
+    <text>{{intro}}</text>
 </view>
