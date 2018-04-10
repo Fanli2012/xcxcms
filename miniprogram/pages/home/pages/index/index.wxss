@@ -64,6 +64,6 @@
 
 .banner-tit {font-size: 18px;font-weight: 400;background-color: #fff;color: #f23030;height: 46px;line-height: 46px;padding-left: 10px;padding-right: 10px;border-bottom: 1px solid #eee;text-align: center;}
 
-.block-tit {border-top: 2px solid #48C23D;border-bottom: 1px solid #dcdee0;color: #48C23D;padding-left: 10px;background-color: #fff;font-size: 16px;font-weight: 800;line-height: 36px;height: 36px;}
+.block-tit {border-top: 2px solid #48C23D;border-bottom: 1px solid #dcdee0;color: #48C23D;padding-left: 10px;background-color: #fff;font-size: 16px;font-weight: 800;line-height: 40px;height: 40px;}
 
 .ewmimg {border: 1px solid #efefef;float: left;padding: 2px;margin-right: 10px;width: 88px;height: 88px;}

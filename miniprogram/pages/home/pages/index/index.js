@@ -10,7 +10,7 @@ Page({
         // 最新动态列表
         newsList: [],
         // 产品列表
-        productList: [],
+        goodsList: [],
 
         img: '../../images/logo.png',
         title: '繁橙工作室',
@@ -19,9 +19,19 @@ Page({
         mobile: "15280719357",
         email: "374861669@qq.com",
         address: "厦门软件园二期48号",
+        windowWidth: wx.getSystemInfoSync().windowWidth, // 宽度,
+        windowHeight: wx.getSystemInfoSync().windowHeight, // 高度,
     },
     onLoad: function () {
         var that = this;
+        /* wx.getSystemInfo({
+            success: function (res) {
+                that.setData({
+                    windowHeight: res.windowHeight + "px",
+                    windowWidth: res.windowWidth + "px",
+                });
+            }
+        }); */
 
         // 幻灯片列表
         util.AJAX("/slide/index", function (res) {
@@ -49,12 +59,20 @@ Page({
         });
 
         // 产品列表
-        // util.AJAX("/slide/slidelist", function (res) {
-        //     // 重新写入数据
-        //     that.setData({
-        //         slideList: res.data.data
-        //     });
-        // });
+        util.AJAX("/goods/index", function (res) {
+            var goodsList = res.data.data.list;
+            if (goodsList) {
+                for (var i = 0; i < goodsList.length; i++) {
+                    var time = util.getTime(goodsList[i]['pubdate']);
+                    goodsList[i]['pubdate'] = time['Y'] + '-' + time['m'] + '-' + time['d'];
+                }
+            }
+
+            // 重新写入数据
+            that.setData({
+                goodsList: goodsList
+            });
+        }, { "limit": 8 });
     },
     //打电话
     makePhoneCall: function () {
