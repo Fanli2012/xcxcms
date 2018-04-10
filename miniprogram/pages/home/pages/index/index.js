@@ -40,7 +40,7 @@ Page({
             that.setData({
                 slideList: res.data.data.list
             });
-        });
+        }, { "limit": 5 });
 
         // 新闻列表
         util.AJAX("/article/index", function (res) {

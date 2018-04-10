@@ -13,13 +13,13 @@
     "window": {
         "backgroundTextStyle": "white",
         "backgroundColor": "#FFF",
-        "navigationBarBackgroundColor": "#48C23D",
+        "navigationBarBackgroundColor": "#393a3f",
         "navigationBarTitleText": "XCXCMS",
         "navigationBarTextStyle": "white"
     },
     "tabBar": {
         "borderStyle": "black",
-        "selectedColor": "#48C23D",
+        "selectedColor": "#1AAD19",
         "list": [
             {
                 "pagePath": "pages/home/pages/index/index",
