@@ -35,7 +35,7 @@ Page({
 
         // 幻灯片列表
         util.AJAX("/slide/index", function (res) {
-            //console.log(res);
+            //console.log(JSON.stringify(res));
             // 重新写入数据
             that.setData({
                 slideList: res.data.data.list
