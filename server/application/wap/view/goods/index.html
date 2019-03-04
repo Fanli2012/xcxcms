@@ -1,0 +1,84 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,viewport-fit=cover">
+<title><?php echo $title; if( input('page',1) > 1 ){ echo '_第'.input('page').'页'; } echo '-'.sysconfig('CMS_WEBNAME'); ?></title>
+<meta name="keywords" content="<?php echo $post['keywords']; ?>" /><meta name="description" content="<?php echo $post['description']; ?>" />
+<link rel="stylesheet" href="<?php echo sysconfig('CMS_BASEHOST'); ?>/css/wap/weui.min.css"/>
+<link rel="stylesheet" href="<?php echo sysconfig('CMS_BASEHOST'); ?>/css/wap/style.css"/>
+<script type="text/javascript" src="<?php echo sysconfig('CMS_BASEHOST'); ?>/js/wap/jquery.min.js"></script>
+<script type="text/javascript" src="<?php echo sysconfig('CMS_BASEHOST'); ?>/js/wap/ad.js"></script>
+</head><body>
+<ul class="goods_list" id="list"><?php if($list){foreach($list as $k=>$v){ ?>
+    <li>
+        <a href="<?php echo model('Goods')->getGoodsDetailUrl(array('id'=>$v['id'])); ?>">
+            <img src="<?php echo $v['litpic']; ?>" alt="<?php echo $v['title']; ?>" />
+            <div class="goods_info">
+                <div class="goods_tit"><?php echo $v['title']; ?></div>
+                <div class="goods_price">￥<?php echo $v['price']; ?></div>
+            </div>
+        </a>
+    </li><?php }} ?>
+</ul>
+<script>
+$(function(){
+    var ajaxload  = false;
+    var maxpage   = false;
+    var startpage = 1;
+    var totalpage = <?php echo $totalpage; ?>;
+    
+    var tmp_url   = window.location.href;
+    msg = tmp_url.split("#");
+    tmp_url = msg[0];
+    
+    $(window).scroll(function ()
+    {
+        var listheight = $("#list").outerHeight(); 
+        
+        if ($(document).scrollTop() + $(window).height() >= listheight)
+        {
+            if(startpage >= totalpage)
+            {
+                //$("#submit_bt_one").html("已是最后一页，没有更多数据");
+                return false;
+            }
+            
+            if(!ajaxload && !maxpage)
+            {
+                ajaxload = true;
+                //$("#submit_bt_one").html("努力加载中...");
+                var url = tmp_url;
+                var nextpage = startpage+1;
+                
+                $.get(url,{page_ajax:1,page:nextpage},function(res)
+                {
+                    if(res)
+                    {
+                        $("#list").append(res);
+                        startpage++;
+                        
+                        if(startpage >= totalpage)
+                        {
+                            maxpage = true;
+                            //$("#submit_bt_one").html("已是最后一页，没有更多数据");
+                            $("#list").append('<div style="text-align:center;padding:20px;">暂无记录</div>');
+                        }
+                        else
+                        {
+                            //$("#submit_bt_one").html("点击加载更多");
+                        }
+                        
+                        ajaxload = false;
+                    }
+                    else
+                    {
+                        //$("#submit_bt_one").html("请求失败，请稍后再试");
+                        ajaxload = false;
+                    }
+                },'json');
+            }
+        }
+    });
+});
+</script>
+
+{include file="common/footer"/}
+</body></html>

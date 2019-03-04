@@ -1,21 +1,22 @@
 const util = require('../../../../utils/util.js');
+var WxParse = require('../../../../vendor/wxParse/wxParse.js');
 
 //获取应用实例
 var app = getApp()
 
 Page({
-  data: {
-    motto: 'Hello World',
-    userInfo: {}
-  },
-  onLoad: function () {
-    var that = this;
-    //调用应用实例的方法获取全局数据
-    app.getUserInfo(function(userInfo){
-      //更新数据
-      that.setData({
-        userInfo:userInfo
-      })
-    })
-  }
+    data: {
+        motto: 'Hello World',
+        shopDetail: {}
+    },
+    onLoad: function () {
+        var that = this;
+        var shopDetail = wx.getStorageSync('shopDetail');
+        // 店铺详情
+        that.setData({
+            shopDetail: shopDetail
+        });
+        
+        WxParse.wxParse('article', 'html', shopDetail.content, that, 5);
+    }
 })

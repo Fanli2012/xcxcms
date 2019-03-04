@@ -1,0 +1,67 @@
+{extend name="public/base" /}
+{block name="title"}企业列表{/block}
+
+{block name="content"}
+<h2 class="sub-header">企业列表</h2>[ <a href="<?php echo url('add'); ?>">添加企业</a> ]<br><br>
+
+<div class="table-responsive">
+<table class="table table-striped table-hover">
+  <thead>
+	<tr>
+	  <th>ID</th>
+	  <th>用户名</th>
+	  <th>名称</th>
+	  <th>状态</th>
+      <th>文章数</th>
+      <th>分类</th>
+	  <th>是否推荐</th>
+	  <th>注册时间</th>
+      <th>点击</th><th>操作</th>
+	</tr>
+  </thead>
+  <tbody>
+  <?php foreach($posts as $row){ ?>
+	<tr>
+	  <td><?php echo $row["id"]; ?></td>
+	  <td><?php echo $row["user_name"]; ?></td>
+	  <td>{$row["company_name"]|default="-"}</td>
+	  <td>{$row["status_text"]|default="-"}</td>
+	  <td>{$row["article_count"]|default="-"}</td>
+	  <td><a href="{:url('fladmin/Shop/index')}?category_id=<?php echo $row["category_id"]; ?>">{$row["category_text"]|default="-"}</a></td>
+	  <td><a style="<?php if($row["tuijian"]==1){echo 'color:#09BB07;';} ?>" href="{:url('fladmin/Shop/index')}?tuijian=<?php echo $row["tuijian"]; ?>">{$row["tuijian_text"]|default="-"}</a></td>
+	  <td><?php if($row["add_time"]==0){echo '-';}else{echo date('Y-m-d',$row["add_time"]);} ?></td>
+	  <td><?php echo $row["click"]; ?></td><td><a target="_blank" href="/store/<?php echo $row["id"]; ?>">预览</a>&nbsp;<a href="{:url('fladmin/Shop/edit')}?id=<?php echo $row["id"]; ?>">修改</a>&nbsp;<a onclick="delconfirm('{:url('fladmin/Shop/del')}?id=<?php echo $row["id"]; ?>')" href="javascript:;">删除</a>&nbsp;<?php if($row["tuijian"]==0){ ?><a href="{:url('fladmin/Shop/tuijian')}?tuijian=1&id=<?php echo $row["id"]; ?>">推荐</a>&nbsp;<?php }else{ ?><a href="{:url('fladmin/Shop/tuijian')}?tuijian=0&id=<?php echo $row["id"]; ?>">取消推荐</a>&nbsp;<?php } ?><?php if($row["status"]==3){ ?><a onclick="delconfirm('{:url('fladmin/Shop/tongguo')}?id=<?php echo $row["id"]; ?>')" href="javascript:;">通过</a>&nbsp;<?php } ?></td>
+	</tr>
+	<?php } ?>
+  </tbody>
+</table>
+</div><!-- 表格结束 -->
+
+<form id="searcharc" class="navbar-form" action="{:url('index')}" method="get">
+<div class="form-group"><input type="text" name="keyword" id="keyword" class="form-control required" placeholder="搜索关键词..."></div>
+<button type="submit" class="btn btn-info" value="Submit">搜索一下</button></form>
+
+<div class="backpages">{$page}</div>
+
+<script>
+$(function(){
+	$('.required').on('focus', function() {
+		$(this).removeClass('input-error');
+	});
+	
+    $("#searcharc").submit(function(e){
+		$(this).find('.required').each(function(){
+			if( $(this).val() == "" )
+			{
+				e.preventDefault();
+				$(this).addClass('input-error');
+			}
+			else
+			{
+				$(this).removeClass('input-error');
+			}
+		});
+    });
+});
+</script>
+{/block}

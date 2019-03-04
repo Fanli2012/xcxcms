@@ -36,8 +36,10 @@ var config = {
     // 下载示例图片接口
     downloadExampleUrl: `https://${host}/static/weapp.jpg`,
 
+    // 店铺ID
+    appShopId: 14,
     // API 接口
-    appApiUrl: "http://www.xcxcms.com/api"
+    appApiUrl: "http://www.nbnbk3.com/api"
 };
 
 module.exports = config

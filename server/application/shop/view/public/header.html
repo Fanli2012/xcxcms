@@ -1,0 +1,38 @@
+<!-- 导航 -->
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container">
+        <!--小屏幕导航按钮和logo-->
+        <div class="navbar-header">
+            <button class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="{:url('shop/Index/index')}" class="navbar-brand"> 管理中心</a>
+        </div>
+        <!--小屏幕导航按钮和logo-->
+        <!--导航-->
+        <div class="navbar-collapse collapse">
+            <ul class="nav navbar-nav">
+                <li><a href="<?php echo model('Shop')->getShopDetailUrl(['id'=>$login_info['id']]); ?>" target="_blank"><span class="glyphicon glyphicon-home"></span>&nbsp;&nbsp;店铺预览</a></li>
+                <li<?php if(request()->controller()=='Article'){echo ' class="active"';} ?>><a href="{:url('shop/Article/index')}"><span class="glyphicon glyphicon-list-alt"></span>&nbsp;&nbsp;文章管理</a></li>
+                <li<?php if(request()->controller()=='Goods'){echo ' class="active"';} ?>><a href="{:url('shop/Goods/index')}"><span class="glyphicon glyphicon-gift"></span>&nbsp;&nbsp;商品管理</a></li>
+                <li<?php if(request()->controller()=='Guestbook'){echo ' class="active"';} ?>><a href="{:url('shop/Guestbook/index')}"><span class="glyphicon glyphicon-envelope"></span>&nbsp;&nbsp;留言管理</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a id="dLabel" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <span class="glyphicon glyphicon-user"></span>&nbsp;&nbsp;<?php if($login_info['mobile']){echo $login_info['mobile'];}else{echo $login_info['user_name'];} ?>
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="dLabel">
+                        <li><a href="{:url('shop/Shop/setting')}"><span class="glyphicon glyphicon-cog"></span>&nbsp;&nbsp;设置中心</a></li>
+                    </ul>
+                </li>
+                <li><a href="{:url('shop/Login/loginout')}"><span class="glyphicon glyphicon-off"></span>&nbsp;&nbsp;退出</a></li>
+            </ul>
+        </div>
+        <!--导航-->
+    </div>
+</nav>
+<!-- 导航 -->

@@ -1,0 +1,17 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,viewport-fit=cover">
+<title><?php if($post['seotitle']){echo $post['seotitle'];}else{echo $post['title'].'-'.sysconfig('CMS_WEBNAME');} ?></title>
+<meta name="keywords" content="<?php echo $post['keywords']; ?>" /><meta name="description" content="<?php echo $post['description']; ?>" />
+<link rel="stylesheet" href="<?php echo sysconfig('CMS_BASEHOST'); ?>/css/wap/weui.min.css"/>
+<link rel="stylesheet" href="<?php echo sysconfig('CMS_BASEHOST'); ?>/css/wap/style.css"/>
+<script type="text/javascript" src="<?php echo sysconfig('CMS_BASEHOST'); ?>/js/wap/ad.js"></script>
+</head><body style="background:#fff;">
+<div class="weui-article">
+    <h1><?php echo $post['title']; ?></h1>
+    <div class="weui-article__p" style="color:#b2b2b2;"><?php echo date('m-d',$post['update_time']); ?> <a style="display:inline-block;margin-left:6px;color:#586C94;" href="<?php echo model('ArticleType')->getArticleTypeUrl(array('key'=>'f'.$post['type_id'])); ?>"><?php echo $post['type_name_text']; ?></a></div>
+    <section><?php echo $post['content']; ?></section>
+    <div class="weui-article__p" style="color:#b2b2b2;">阅读(<?php echo $post['click']; ?>)</div>
+</div>
+
+{include file="common/footer"/}
+</body></html>

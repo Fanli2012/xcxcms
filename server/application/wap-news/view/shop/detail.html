@@ -1,0 +1,89 @@
+<!DOCTYPE html><html lang="zh-tw"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8" /><meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport">
+<title><?php echo $post['company_name'].'-'.sysconfig('CMS_WEBNAME'); ?></title><meta name="keywords" content="<?php echo $post['company_name']; ?>" /><meta name="description" content="<?php echo $post['introduction']; ?>" /><?php if(isset($post['province_text']) && !empty($post['province_text'])){ ?><meta name="location" content="province=<?php echo $post['province_text']; ?>;city=<?php echo $post['city_text']; ?>;coord="><?php } ?><link rel="stylesheet" href="<?php echo sysconfig('CMS_BASEHOST'); ?>/css/style.css" media="all"><script type="text/javascript" src="<?php echo sysconfig('CMS_BASEHOST'); ?>/js/jquery.min.js"></script><script type="text/javascript" src="<?php echo sysconfig('CMS_BASEHOST'); ?>/js/ad.js"></script></head><body><script>site();</script>
+{include file="common/header"/}<div id="tad"><script>tjs();</script></div>
+
+<div class="box mt10"><div class="fl_640">
+<div id="arclist">
+<?php if($list){foreach($list as $row){ ?><div class="list"><?php if(!empty($row['litpic'])){ ?><a class="limg" href="/p/<?php echo $row['id']; ?>"><img alt="<?php echo $row['title']; ?>" src="<?php echo $row['litpic']; ?>"></a><?php } ?>
+<strong class="tit"><a href="/p/<?php echo $row['id']; ?>" target="_blank"><?php echo $row['title']; ?></a></strong><p><?php echo mb_strcut($row['description'],0,150,'UTF-8'); ?>..</p>
+<div class="cl"></div></div><?php }}else{ ?><div style="text-align:center;padding:20px;">暫無記錄</div><?php } ?>
+</div></div><!-- fl_640 end -->
+
+<div class="fr_300"><div id="rad1"><script>rjs1();</script></div>
+<div class="side"><div class="stit"><h2>簡介</h2><a href="/articlelist/f<?php echo $post['category_id']; ?>" class="more"><?php echo $post['category_text']; ?></a><div class="cl"></div></div>
+<div class="uli2" id="xglike">
+<div class="suli"><?php if($post['head_img']){ ?><a class="limg" href="/store/<?php echo $post['id']; ?>"><img alt="<?php echo $post['company_name']; ?>" src="<?php echo $post['head_img']; ?>"></a><?php } ?><a href="/store/<?php echo $post['id']; ?>"><?php echo $post['company_name']; ?></a><div class="sulii"><span class="time">文章<?php echo $post['article_count']; ?></span> 閱讀(<?php echo $post['click']; ?>)</div><div class="cl"></div></div>
+<div class="suli" style="color:#999;padding:10px 8px;line-height:1.5"><?php echo $post['introduction']; ?><div class="cl"></div></div><div class="cl"></div></div></div>
+
+<?php if($tuijian_list){ ?><div class="side"><div class="stit"><h2>推薦閱讀</h2><a href="/articlelist" class="more">更多</a><div class="cl"></div></div>	
+<ul class="uli chs" id="xglist"><?php foreach($tuijian_list as $row){ ?><li><a target="_blank" href="/p/<?php echo $row['id']; ?>"><?php echo $row['title']; ?></a></li><?php } ?></ul><div class="cl"></div></div><?php } ?>
+
+<?php if($zuixin_list){ ?><div id="rad3"><script>rjs3();</script></div>
+<div class="side"><div class="stit"><h2>猜你喜歡</h2><a href="/shoplist" class="more">更多</a><div class="cl"></div></div>
+<div class="uli2" id="xglike"><?php foreach($zuixin_list as $row){ ?><div class="suli"><?php if($row['head_img']){ ?><a class="limg" href="/store/<?php echo $row['id']; ?>"><img alt="<?php echo $row['company_name']; ?>" src="<?php echo $row['head_img']; ?>"></a><?php } ?><a target="_blank" href="/store/<?php echo $row['id']; ?>"><?php echo $row['company_name']; ?></a><div class="sulii"><span class="time">文章<?php echo $row['article_count']; ?></span> 閱讀(<?php echo $row['click']; ?>)</div><div class="cl"></div></div><?php } ?><div class="cl"></div></div></div><?php } ?>
+
+<div id="rad2"><script>rjs2();</script></div></div><!-- fr_300 end --></div><!-- box end -->
+
+<script>
+$(function(){
+    var ajaxload  = false;
+    var maxpage   = false;
+    var startpage = 1;
+    var totalpage = <?php echo $totalpage; ?>;
+    
+    var tmp_url   = window.location.href;
+    msg = tmp_url.split("#");
+    tmp_url = msg[0];
+    
+    $(window).scroll(function ()
+    {
+        var listheight = $("#arclist").outerHeight(); 
+        
+        if ($(document).scrollTop() + $(window).height() >= listheight)
+        {
+            if(startpage >= totalpage)
+            {
+                //$("#submit_bt_one").html("已是最後一頁，沒有更多數據！");
+                return false;
+            }
+            
+            if(!ajaxload && !maxpage)
+            {
+                ajaxload = true;
+                //$("#submit_bt_one").html("努力加載中...");
+                var url = tmp_url;
+                var nextpage = startpage+1;
+                
+                $.get(url,{page_ajax:1,page:nextpage},function(res)
+                {
+                    if(res)
+                    {
+                        $("#arclist").append(res);
+                        startpage++;
+                        
+                        if(startpage >= totalpage)
+                        {
+                            maxpage = true;
+                            //$("#submit_bt_one").html("已是最後一頁，沒有更多數據！");
+                            $("#arclist").append('<div style="text-align:center;padding:20px;">暫無記錄</div>');
+                        }
+                        else
+                        {
+                            //$("#submit_bt_one").html("點擊加載更多");
+                        }
+                        
+                        ajaxload = false;
+                    }
+                    else
+                    {
+                        //$("#submit_bt_one").html("請求失敗，請稍候再試！");
+                        ajaxload = false;
+                    }
+                },'json');
+            }
+        }
+    });
+});
+</script>
+
+{include file="common/footer"/}</body></html>

@@ -1,0 +1,3 @@
+@import "../../../../vendor/wxParse/wxParse.wxss";
+
+page{background: #fff;}

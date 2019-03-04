@@ -1,13 +1,9 @@
-<view class="mbanner-b">
-    <image style="width:100%" mode="widthFix" src="../../../../images/banner.jpg"></image>
-</view>
+<import src="../../../../vendor/wxParse/wxParse.wxml"/>
+<!-- 封面 -->
+<image style="width:100%; height:160px; background-color: #eeeeee;" src="{{shopDetail.cover_img}}"></image>
 
 <view class="tith">关于我们</view>
 
 <view class="box content">
-    <text>繁橙工作室为广大客户提供企业建站、微信建站、手机建站、微商城、分销系统、微官网、小程序等一站式服务。5年专注于网站建设，已服务过1000+用户和客户。</text>
-    <text>核心价值观：以客户为中心，结果导向，删繁就简，追求极致。</text>
-    <text>专注于中小企业一站式产品服务，助力中小企业轻松拥抱互联网。</text>
-    <text>经营理念：平台化、可定制、低成本、一站式。</text>
-    <text>我们是一群善于学习的年轻人，在瞬息万变的移动互联网，不断挑战自我，不断创新，拥抱变化，追求卓越，从未停歇。我们是怀揣着理想的团队，由兴趣开始，因理想而坚持，梦想与工作并肩而行。我们的团队有来自美图、美亚柏科、网宿科技、4399、网龙等厦门比较酷的互联网公司精英，因为相信互联网的广阔市场和前景而走到一起。过硬的技术、丰富的经验是我们赖以生存的基础，我们不但说得到还做得到。</text>
+    <template is="wxParse" data="{{wxParseData:article.nodes}}"/>
 </view>

@@ -1,0 +1,15 @@
+<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+<title><?php if($post['seotitle']){echo $post['seotitle'];}else{echo $post['name'].'-'.sysconfig('CMS_WEBNAME');}if($page!=0){echo ' '.($page+1);} ?></title><meta name="keywords" content="<?php echo $post["keywords"];?>" /><meta name="description" content="<?php echo $post["description"]; ?>" /><meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"><link href="<?php echo sysconfig('CMS_BASEHOST'); ?>/css/wap/style.css" type="text/css" rel="stylesheet"><script type="text/javascript" src="<?php echo sysconfig('CMS_BASEHOST'); ?>/js/wap/ad.js"></script></head><body>
+{include file="common/header"/}
+
+<h1 class="tit"><?php echo $post["name"]; ?></h1>
+
+<div class="yi-w"><ul class="ulist"><?php if($list){foreach($list as $row){ ?>
+<li><?php if($row['litpic']){ ?><a class="gpic" href="<?php echo model('Article')->getArticleDetailUrl(array('id'=>$row['id'])); ?>"><img alt="<?php echo $row["title"]; ?>" src="<?php echo $row["litpic"]; ?>"></a><?php } ?><a href="<?php echo model('Article')->getArticleDetailUrl(array('id'=>$row['id'])); ?>"><?php echo $row['title']; ?></a></li><?php }} ?></ul><div class="cl"></div>
+
+<div class="bootstrap-front-pagination">{$page}<div class="cl"></div></div></div><div id="lad1"><script>ljs1();</script></div>
+
+<div class="dh2"><h2 class="tit2">猜你喜欢</h2><ul class="ulist"><?php if($relate_rand_list){foreach($relate_rand_list as $row){ ?>
+<li><?php if($row['litpic']){ ?><a class="gpic" href="<?php echo model('Article')->getArticleDetailUrl(array('id'=>$row['id'])); ?>"><img alt="<?php echo $row["title"]; ?>" src="<?php echo sysconfig('CMS_BASEHOST'); ?><?php echo $row["litpic"]; ?>"></a><?php } ?><a href="<?php echo model('Article')->getArticleDetailUrl(array('id'=>$row['id'])); ?>"><?php echo $row["title"]; ?></a></li><?php }} ?></ul><div class="cl"></div></div>
+
+<div class="foot"><script>count_js();</script></div></body></html>

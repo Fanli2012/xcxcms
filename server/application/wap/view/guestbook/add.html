@@ -1,0 +1,88 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,viewport-fit=cover">
+<title>在线留言-<?php echo sysconfig('CMS_WEBNAME'); ?></title>
+<meta name="keywords" content="在线留言" /><meta name="description" content="在线留言" />
+<link rel="stylesheet" href="<?php echo sysconfig('CMS_BASEHOST'); ?>/css/wap/weui.min.css"/>
+<link rel="stylesheet" href="<?php echo sysconfig('CMS_BASEHOST'); ?>/css/wap/style.css"/>
+<script type="text/javascript" src="<?php echo sysconfig('CMS_BASEHOST'); ?>/js/wap/jquery.min.js"></script>
+<script type="text/javascript" src="<?php echo sysconfig('CMS_BASEHOST'); ?>/js/wap/ad.js"></script>
+</head><body>
+<form id="myform" action="" method="post">
+<div class="weui-cells__title">姓名</div>
+<div class="weui-cells">
+    <div class="weui-cell">
+        <div class="weui-cell__bd">
+            <input name="name" id="name" focus="true" class="weui-input" type="text" placeholder="请输入姓名">
+        </div>
+    </div>
+</div>
+<div class="weui-cells__title">手机号码</div>
+<div class="weui-cells">
+    <div class="weui-cell">
+        <div class="weui-cell__bd">
+            <input name="mobile" id="mobile" class="weui-input" type="text" placeholder="请输入手机号码">
+        </div>
+    </div>
+</div>
+<div class="weui-cells__title">内容</div>
+<div class="weui-cells weui-cells_form">
+    <div class="weui-cell">
+        <div class="weui-cell__bd">
+            <textarea name="msg" id="msg" class="weui-textarea" placeholder="请输入内容" rows="3"></textarea>
+        </div>
+    </div>
+</div>
+<div class="weui-btn-area">
+    <a class="weui-btn weui-btn_primary" href="javascript:form_submit();">确定</a>
+</div>
+</form>
+<script>
+function form_submit()
+{
+	var url = '{:url('api/guestbook/add')}';
+	var name = $("#name").val();
+	var mobile = $("#mobile").val();
+	var msg = $("#msg").val();
+	
+    if(name == '')
+    {
+        //提示
+        alert('姓名不能为空');
+        return false;
+    }
+    
+    if(mobile == '')
+    {
+        //提示
+        alert('手机号不能为空');
+        return false;
+    }
+    
+    if(msg == '')
+    {
+        //提示
+        alert('内容不能为空');
+        return false;
+    }
+    
+	$.post(url,{name:name,mobile:mobile,msg:msg},function(res)
+	{
+		if(res.code==0)
+		{
+            //提示
+            alert(res.msg);
+            window.history.go(0);
+            //window.history.back();
+		}
+		else
+		{
+            //提示
+            alert(res.msg);
+			//location.href = "";
+		}
+	},'json');
+}
+</script>
+
+{include file="common/footer"/}
+</body></html>

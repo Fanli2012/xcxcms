@@ -1,0 +1,35 @@
+{extend name="public/base" /}
+{block name="title"}分类修改{/block}
+
+{block name="content"}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel-body" style="padding: 15px 0;">
+                <ul class="nav nav-tabs">
+                    <li><a href="{:url('shop/GoodsType/index')}">分类列表</a></li>
+                    <li class="active"><a href="javascript:;">分类修改</a></li>
+                    <li><a href="{:url('shop/GoodsType/add')}">添加分类</a></li>
+                </ul>
+            </div>
+            <br>
+            <div class="panel-body">
+            <form id="addarc" method="post" action="" role="form" enctype="multipart/form-data" class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label"><span class="text-danger"> * </span>名称</label>
+                    <div class="col-sm-4">
+                        <input value="<?php echo $post["name"]; ?>" type="text" name="name" class="form-control" placeholder="名称" required><input style="display:none;" name="id" type="text" id="id" value="<?php echo $id; ?>">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-10">
+                        <button type="submit" onclick="" class="btn btn-success" value="Submit">保存(Submit)</button>
+                        <button type="reset" class="btn btn-default" value="Reset">重置(Reset)</button>
+                    </div>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}

@@ -1,0 +1,4 @@
+.myhearder {position: relative;}
+.myhearder .person {text-align:center;}
+.myhearder .person .personicon image {width:72px;height:72px;margin-bottom:10px;margin-top:30px;-moz-border-radius: 50%;-webkit-border-radius: 50%;border-radius: 50%;border:1px solid #f8f8f8;}
+.myhearder .person .lors{color:#fff;font-size:16px;padding-bottom:25px;}

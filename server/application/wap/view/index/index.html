@@ -1,0 +1,170 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,viewport-fit=cover">
+<title><?php echo sysconfig('CMS_SEOTITLE'); ?></title>
+<meta name="keywords" content="<?php echo sysconfig('CMS_KEYWORDS'); ?>" /><meta name="description" content="<?php echo sysconfig('CMS_DESCRIPTION'); ?>" />
+<link rel="stylesheet" href="<?php echo sysconfig('CMS_BASEHOST'); ?>/css/wap/weui.min.css"/>
+<link rel="stylesheet" href="<?php echo sysconfig('CMS_BASEHOST'); ?>/css/wap/style.css"/>
+<script type="text/javascript" src="<?php echo sysconfig('CMS_BASEHOST'); ?>/js/wap/ad.js"></script>
+</head><body>
+<!-- 封面 -->
+<img style="width:100%;height:50vw;background-color:#eeeeee;" src="/images/wap/banner.jpg">
+
+<!-- 联系我们 -->
+<div class="page__bd">
+    <div class="weui-cells" style="margin-top:0;">
+        <div class="weui-cell">
+            <div class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+                <img src="/images/wap/avatar.png" style="border-radius:5px;width:50px;height:50px;display:block;">
+                <!-- <span class="weui-badge" style="position: absolute;top: -.4em;right: -.4em;">8</span> -->
+            </div>
+            <div class="weui-cell__bd">
+                <p><?php echo sysconfig('CMS_COMPANY_NAME'); ?></p>
+                <p style="font-size: 13px;color: #888888;"><?php echo sysconfig('CMS_COMPANY_CONTACT'); ?></p>
+            </div>
+            <div class="weui-cell__ft"><img src="/images/wap/qrcode.png" style="width:20px;height:20px;"></div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <span style="vertical-align: middle">联系人：范例</span>
+            </div>
+            <div class="weui-cell__ft"></div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <span style="vertical-align: middle">联系方式：<?php echo sysconfig('CMS_COMPANY_CONTACT'); ?></span>
+            </div>
+            <div class="weui-cell__ft"><a href="tel:15280748956"><img src="/images/wap/tel.png" style="width:20px;height:20px;"></a></div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <span style="vertical-align: middle">电子邮箱：277023115@qq.com</span>
+            </div>
+            <div class="weui-cell__ft"></div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <span style="vertical-align: middle">微信号：jkui2012</span>
+            </div>
+            <div class="weui-cell__ft"></div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <span style="vertical-align: middle">QQ：277023115</span>
+            </div>
+            <div class="weui-cell__ft"></div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <span style="vertical-align: middle">官网：http://fc.xyabb.com/</span>
+            </div>
+            <div class="weui-cell__ft"></div>
+        </div>
+        <div class="weui-cell">
+            <div class="weui-cell__bd">
+                <span style="vertical-align: middle">地址：<?php echo sysconfig('CMS_COMPANY_ADDRESS'); ?></span>
+            </div>
+            <div class="weui-cell__ft"><img src="/images/wap/location3.png" style="width:20px;height:20px;"></div>
+        </div>
+        <!-- 百度地图 -->
+        <div id="allmap" style="width:100%;height:50vw;"></div>
+        <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=Q7M2SqUZZKENk9Ed8FQbcmnyQMN2HzdC"></script>
+        <script type="text/javascript">
+            // 百度地图API功能
+            var map = new BMap.Map("allmap"); // 创建Map实例
+            var point = new BMap.Point(<?php echo sysconfig('CMS_COMPANY_ADDRESS_LONGITUDE'); ?>, <?php echo sysconfig('CMS_COMPANY_ADDRESS_LATITUDE'); ?>); // 初始化地图,设置中心点坐标和地图级别
+            map.centerAndZoom(point,12);
+            
+            var marker = new BMap.Marker(point);// 创建标注
+            map.addOverlay(marker);             // 将标注添加到地图中
+            map.enableScrollWheelZoom();   //启用滚轮放大缩小，默认禁用
+            map.enableContinuousZoom();    //启用地图惯性拖拽，默认禁用
+        </script>
+        
+        <div class="weui-form-preview">
+            <div class="weui-form-preview__ft">
+                <a class="weui-form-preview__btn weui-form-preview__btn_primary" href="{:url('wap/guestbook/add')}">在线留言
+                <span class="weui-badge" style="margin-left: 2px;">Hot</span></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 产品中心 -->
+<div class="weui-panel weui-panel_access">
+    <div class="weui-panel__hd">产品中心</div>
+    <div class="weui-panel__bd">
+        <ul class="goods_list" id="goods_list">
+            <?php if($goods_list){foreach($goods_list as $row){ ?>
+            <li>
+                <a href="<?php echo model('Goods')->getGoodsDetailUrl(array('id'=>$row['id'])); ?>">
+                    <img src="<?php echo sysconfig('CMS_BASEHOST'); ?><?php echo $row['litpic']; ?>" alt="<?php echo $row['title']; ?>" />
+                    <div class="goods_info">
+                        <div class="goods_tit"><?php echo $row['title']; ?></div>
+                        <div class="goods_price">￥<?php echo $row['price']; ?></div>
+                    </div>
+                </a>
+            </li>
+            <?php }} ?>
+        </ul>
+    </div>
+    <div class="weui-panel__ft">
+        <a href="<?php echo model('GoodsType')->getGoodsTypeUrl(array('key'=>'f1')); ?>" class="weui-cell weui-cell_access weui-cell_link">
+            <div class="weui-cell__bd">查看更多</div>
+            <span class="weui-cell__ft"></span>
+        </a>    
+    </div>
+</div>
+
+<!-- 新闻动态 -->
+<div class="weui-panel">
+    <div class="weui-panel__hd">新闻动态</div>
+    <div class="weui-panel__bd">
+        <div class="weui-media-box weui-media-box_small-appmsg">
+            <div class="weui-cells">
+                <?php if($list){foreach($list as $row){ ?>
+                <a class="weui-cell weui-cell_access" href="<?php echo model('Article')->getArticleDetailUrl(array('id'=>$row['id'])); ?>">
+                    <?php if($row['litpic']){ ?><div class="weui-cell__hd"><img src="<?php echo sysconfig('CMS_BASEHOST'); ?><?php echo $row['litpic']; ?>" alt="<?php echo $row['title']; ?>" style="width:20px;margin-right:5px;display:block"></div><?php } ?>
+                    <div class="weui-cell__bd weui-cell_primary">
+                        <p><?php echo $row["title"]; ?></p>
+                    </div>
+                </a>
+                <?php }} ?>
+            </div>
+        </div>
+    </div>
+    <div class="weui-panel__ft">
+        <a href="<?php echo model('ArticleType')->getArticleTypeUrl(array('key'=>'f1')); ?>" class="weui-cell weui-cell_access weui-cell_link">
+            <div class="weui-cell__bd">查看更多</div>
+            <span class="weui-cell__ft"></span>
+        </a>    
+    </div>
+</div>
+
+<!-- 企业简介 -->
+<div class="weui-panel weui-panel_access">
+    <div class="weui-panel__hd">关于我们</div>
+    <div class="weui-panel__bd">
+        <a href="javascript:void(0);" class="weui-media-box weui-media-box_appmsg">
+            <div class="weui-media-box__hd">
+                <img class="weui-media-box__thumb" src="/images/wap/xinqibaoxcxewm.jpg" alt="">
+            </div>
+            <div class="weui-media-box__bd" style="text-overflow:-o-ellipsis-lastline;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;">
+                <span>nbnbk(www.nbnbk3.com)为您推荐最新新闻热点。</span>
+            </div>
+        </a>
+    </div>
+    <div class="weui-panel__ft">
+        <a href="/page/about.html" class="weui-cell weui-cell_access weui-cell_link">
+            <div class="weui-cell__bd">查看更多</div>
+            <span class="weui-cell__ft"></span>
+        </a>    
+    </div>
+</div>
+
+<!-- 技术支持 -->
+<div class="weui-footer" style="padding:10px 0;">
+    <div class="weui-footer__text">技术支持：繁橙工作室</div>
+</div>
+
+{include file="common/footer"/}
+</body></html>

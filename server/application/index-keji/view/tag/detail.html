@@ -1,0 +1,128 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8" /><meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport">
+<title><?php if($post['title']){echo $post['title'];}else{echo $post['name'].'-'.sysconfig('CMS_WEBNAME');} ?></title><meta name="keywords" content="<?php echo $post["keywords"]; ?>" /><meta name="description" content="<?php echo $post["description"]; ?>" /><link rel="stylesheet" href="<?php echo sysconfig('CMS_BASEHOST'); ?>/css/style.css" media="all"><script type="text/javascript" src="<?php echo sysconfig('CMS_BASEHOST'); ?>/js/jquery.min.js"></script><script type="text/javascript" src="<?php echo sysconfig('CMS_BASEHOST'); ?>/js/ad.js"></script></head><body><script>site();</script>
+{include file="common/header"/}<div id="tad"><script>tjs();</script></div>
+
+<div class="box mt10"><div class="fl_640">
+<div class="bread" style="padding:12px 20px;"><a href="/"><?php echo sysconfig('CMS_INDEXNAME'); ?></a> > <a href="/taglist/">标签</a> > <a href="<?php echo model('Tag')->getTagDetailUrl(array('id'=>$post['id'])); ?>"><?php echo $post['name']; ?></a> > </div>
+<div class="zinfo" style="padding-left:20px;padding-right:20px;"><h1><?php echo $post['name']; ?></h1><?php if(!empty($post['content'])){echo '<div class="zdes">'.$post['content'].'</div>';} ?></div><div id="lad1"><script>ljs1();</script></div>
+
+<div id="arclist">
+<?php if($list){foreach($list as $row){ ?><div class="list"><?php if(!empty($row['litpic'])){ ?><a class="limg" href="<?php echo model('Article')->getArticleDetailUrl(array('id'=>$row['id'])); ?>"><img alt="<?php echo $row['title']; ?>" src="<?php echo $row['litpic']; ?>"></a><?php } ?>
+<strong class="tit"><a href="<?php echo model('Article')->getArticleDetailUrl(array('id'=>$row['id'])); ?>" target="_blank"><?php echo $row['title']; ?></a></strong><p><?php echo mb_strcut($row['description'],0,150,'UTF-8'); ?>..</p>
+<div class="info"><span class="fl"><?php if(!empty($row['writer'])){ echo '<i>'.$row['writer'].'</i>'; }elseif(!empty($row['source'])){ echo '<i>'.$row['source'].'</i>'; } ?><em><?php echo date("m-d H:i",$row['update_time']); ?></em></span><span class="fr"><em><?php echo $row['click']; ?></em>人阅读</span></div><div class="cl"></div></div><?php }} ?></div>
+
+</div><!-- fl_640 end -->
+
+<div class="fr_300"><div id="rad1"><script>rjs1();</script></div>
+<div class="side"><div class="stit"><div class="stith"><strong>相关话题</strong></div><div class="cl"></div></div>
+<div class="ws-tag"><?php if($tag_list){foreach($tag_list as $row){ ?><a href="<?php echo model('Tag')->getTagDetailUrl(array('id'=>$row['id'])); ?>"><?php echo $row['name']; ?></a><?php }} ?></div></div>
+
+<div class="side"><div class="stit"><h2>热门推荐</h2><a href="javascript:getmore({limit:5,mode:1,tuijian:1,orderby:'rand()'});" class="more">换一换</a><div class="cl"></div></div>	
+<ul class="uli chs" id="xglist"><?php if($relate_zuixin_list){foreach($relate_zuixin_list as $row){ ?><li><a target="_blank" href="<?php echo model('Article')->getArticleDetailUrl(array('id'=>$row['id'])); ?>"><?php echo $row['title']; ?></a></li><?php }} ?></ul><div class="cl"></div></div>
+
+<div id="rad3"><script>rjs3();</script></div>
+<div class="side"><div class="stit"><h2>猜你喜欢</h2><a href="javascript:getmore({limit:5,mode:2,orderby:'rand()'});" class="more">换一换</a><div class="cl"></div></div>
+<div class="uli2" id="xglike"><?php if($relate_rand_list){foreach($relate_rand_list as $row){ ?><div class="suli"><?php if(!empty($row['litpic'])){ ?><a class="limg" href="<?php echo model('Article')->getArticleDetailUrl(array('id'=>$row['id'])); ?>"><img alt="<?php echo $row['title']; ?>" src="<?php echo $row['litpic']; ?>"></a><?php } ?><a target="_blank" href="<?php echo model('Article')->getArticleDetailUrl(array('id'=>$row['id'])); ?>"><?php echo $row['title']; ?></a><div class="sulii"><?php if(!empty($row['writer'])){echo '<span class="time">'.$row['writer'].'</span>';}elseif(!empty($row['source'])){echo '<span class="time">'.$row['source'].'</span>';} ?> 阅读(<?php echo $row['click']; ?>)</div><div class="cl"></div></div><?php }} ?></div></div>
+
+<div id="rad2"><script>rjs2();</script></div></div><!-- fr_300 end --></div><!-- box end -->
+<script>
+function getmore(condition)
+{
+    var url = "<?php echo sysconfig('CMS_BASEHOST'); ?>/api/article/index";
+    //var typeid = "";
+    $.post(url,condition,function(res){
+        if(res.code==0)
+        {
+            var json = res.data.list; //数组
+            var str = '';
+            $.each(json, function (index) {
+                //循环获取数据
+                //var title = json[index].title;
+                if(condition.mode==1)
+                {
+                    str = str + '<li><a target="_blank" href="<?php echo model('Article')->getArticleDetailUrl(); ?>'+json[index].id+'">'+json[index].title+'</a></li>';
+                }
+                else if(condition.mode==2)
+                {
+                    var litpic = '';if(json[index].litpic!==''){litpic = '<a class="limg" href="<?php echo model('Article')->getArticleDetailUrl(); ?>'+json[index].id+'"><img alt="'+json[index].title+'" src="'+json[index].litpic+'"></a>';}
+                    str = str + '<div class="suli">'+litpic+'<a target="_blank" href="<?php echo model('Article')->getArticleDetailUrl(); ?>'+json[index].id+'">'+json[index].title+'</a><div class="sulii">阅读('+json[index].click+')</div><div class="cl"></div></div>';
+                }
+            });
+            
+            if(str!='' && str!=null && condition.mode==1)
+            {
+                $('#xglist').html(str);
+            }
+            else if(str!='' && str!=null && condition.mode==2)
+            {
+                $('#xglike').html(str);
+            }
+        }
+        else
+        {
+            
+        }
+    },'json');
+}
+
+$(function(){
+    var ajaxload  = false;
+    var maxpage   = false;
+    var startpage = 1;
+    var totalpage = <?php echo $totalpage; ?>;
+    
+    var tmp_url   = window.location.href;
+    msg = tmp_url.split("#");
+    tmp_url = msg[0];
+    
+    $(window).scroll(function ()
+    {
+        var listheight = $("#arclist").outerHeight(); 
+        
+        if ($(document).scrollTop() + $(window).height() >= listheight)
+        {
+            if(startpage >= totalpage)
+            {
+                //$("#submit_bt_one").html("已是最后一页，没有更多数据");
+                return false;
+            }
+            
+            if(!ajaxload && !maxpage)
+            {
+                ajaxload = true;
+                //$("#submit_bt_one").html("努力加载中...");
+                var url = tmp_url;
+                var nextpage = startpage+1;
+                
+                $.get(url,{page_ajax:1,page:nextpage},function(res)
+                {
+                    if(res)
+                    {
+                        $("#arclist").append(res);
+                        startpage++;
+                        
+                        if(startpage >= totalpage)
+                        {
+                            maxpage = true;
+                            //$("#submit_bt_one").html("已是最后一页，没有更多数据");
+                            $("#arclist").append('<div style="text-align:center;padding:20px;">暂无记录</div>');
+                        }
+                        else
+                        {
+                            //$("#submit_bt_one").html("点击加载更多");
+                        }
+                        
+                        ajaxload = false;
+                    }
+                    else
+                    {
+                        //$("#submit_bt_one").html("请求失败，请稍后再试");
+                        ajaxload = false;
+                    }
+                },'json');
+            }
+        }
+    });
+});
+</script>
+{include file="common/footer"/}</body></html>

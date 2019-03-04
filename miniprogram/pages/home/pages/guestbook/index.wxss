@@ -1,0 +1,5 @@
+.scroll-view_H{white-space: nowrap;}
+.scroll-view-item_H{display: inline-block;margin-right:10px;}
+
+.ewmimg {border: 1px solid #efefef;float: left;padding: 2px;margin-right: 10px;width: 84px;height: 84px;}
+

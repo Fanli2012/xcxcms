@@ -1,0 +1,137 @@
+{extend name="public/base" /}
+{block name="title"}设置中心{/block}
+
+{block name="content"}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel-body" style="padding: 15px 0;">
+                <ul class="nav nav-tabs">
+                    <li><a href="{:url('setting')}">设置中心</a></li>
+                    <li><a href="{:url('changePassword')}">密码修改</a></li>
+                    <li class="active"><a href="{:url('setcover')}">封面设置</a></li>
+                    <li><a href="{:url('setavatar')}">头像</a></li>
+                    <li><a href="{:url('setqrcode')}">二维码设置</a></li>
+                </ul>
+            </div>
+            <div class="panel-body">
+                <form id="myform" method="post" action="{:url('setcover')}" role="form" enctype="multipart/form-data" class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label"><span class="text-danger">*</span>封面图片</label>
+                        <div class="col-sm-6">
+                            <label class="btn btn-default" for="upload-file"><span class="glyphicon glyphicon-plus"></span> 选择图片</label>
+                            <input type="file" name="upload-file" id="upload-file" style="display:none;"><br><br>
+                            <input style="display:none;" type="text" name="cover_img" id="cover_img" class="form-control" placeholder="封面图片" value="<?php echo $post['cover_img']; ?>" required>
+                            <img id="preview" src="<?php echo $post['cover_img']; ?>" style="border:1px #eee solid;width:100%;height:300px;">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-3 col-sm-8"><button onclick="save_cover();" class="btn btn-success">保存</button></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// 更换封面
+$("#upload-file").change(function () {
+    var reader=new FileReader();
+    reader.onload=function(e){
+        //console.log(reader.result);  //或者 e.target.result都是一样的，都是base64码
+        
+        $.ajax({
+            url:'{:url("api/Image/base64ImageUpload")}',
+            data:{img:reader.result},
+            type:"POST",
+            dataType:"json",
+            success: function(res){
+                if(res.code==0)
+                {
+                    $('#cover_img').val(res.data);
+                }
+                else
+                {
+                    alert(res.msg);
+                }
+            },
+            error: function (jqXHR, textStatus, errorThrown) {
+                alert('图片太大或系统错误，请重新上传');
+                //弹出jqXHR对象的信息
+                /* alert(jqXHR.responseText);
+                alert(jqXHR.status);
+                alert(jqXHR.readyState);
+                alert(jqXHR.statusText);
+                //弹出其他两个参数的信息
+                alert(textStatus);
+                alert(errorThrown); */
+            }
+        });
+        
+        $("#preview").attr('src', reader.result);
+    }
+    
+    reader.readAsDataURL(this.files[0]);
+    //filses就是input[type=file]文件列表，files[0]就是第一个文件，这里就是将选择的第一个图片文件转化为base64的码
+    
+    /* var file = $(this);
+    var fileObj = file[0];console.log(file);
+    var windowURL = window.URL || window.webkitURL;
+    var dataURL;
+    var img = $("#preview");
+
+    if (fileObj && fileObj.files && fileObj.files[0]) {
+        dataURL = windowURL.createObjectURL(fileObj.files[0]);
+        img.attr('src', dataURL);
+    } else {
+        dataURL = file.val();
+        var imgObj = document.getElementById("preview");
+        imgObj.style.filter = "progid:DXImageTransform.Microsoft.AlphaImageLoader(sizingMethod=scale)";
+        imgObj.filters.item("DXImageTransform.Microsoft.AlphaImageLoader").src = dataURL;
+    } */
+});
+
+function save_cover()
+{
+    var cover_img = $('#cover_img').val();
+    if(cover_img==''){alert('请上传封面');return false;}
+    
+    var img = $("#preview").attr("src");
+    if(img==''){alert('请上传封面');return false;}
+    
+    $("#myform").submit();
+    
+    /* $.ajax({
+        url:'{:url("api/Image/base64ImageUpload")}',
+        data:{img:img},
+        type:"POST",
+        dataType:"json",
+        success: function(res){
+            if(res.code==0)
+            {
+                $('#cover_img').val(res.data);
+                $("#myform").submit();
+                return false;
+            }
+            else
+            {
+                alert(res.msg);
+                return false;
+            }
+        },
+        error: function (jqXHR, textStatus, errorThrown) {
+            alert('图片太大或系统错误');
+            //弹出jqXHR对象的信息
+            alert(jqXHR.responseText);
+            alert(jqXHR.status);
+            alert(jqXHR.readyState);
+            alert(jqXHR.statusText);
+            //弹出其他两个参数的信息
+            alert(textStatus);
+            alert(errorThrown);
+        }
+    }); */
+}
+</script>
+{/block}

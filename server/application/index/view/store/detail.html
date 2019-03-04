@@ -1,0 +1,128 @@
+<!DOCTYPE html><html lang="zh-tw"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8" /><meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport">
+<title><?php echo $post['company_name'].'-'.sysconfig('CMS_WEBNAME'); ?></title><meta name="keywords" content="<?php echo $post['company_name']; ?>" /><meta name="description" content="<?php echo $post['introduction']; ?>" /><link rel="stylesheet" href="<?php echo sysconfig('CMS_BASEHOST'); ?>/css/style.css" media="all"><script type="text/javascript" src="<?php echo sysconfig('CMS_BASEHOST'); ?>/js/jquery.min.js"></script><script type="text/javascript" src="<?php echo sysconfig('CMS_BASEHOST'); ?>/js/ad.js"></script></head><body><script>site();</script>
+{include file="common/header"/}<div id="tad"><script>tjs();</script></div>
+
+<div class="box mt10"><div class="fl_640">
+<div id="list">
+<?php if($list){foreach($list as $row){ ?><div class="list"><?php if(!empty($row['litpic'])){ ?><a class="limg" href="<?php echo model('Article')->getArticleDetailUrl(array('id'=>$row['id'])); ?>"><img alt="<?php echo $row['title']; ?>" src="<?php echo $row['litpic']; ?>"></a><?php } ?>
+<strong class="tit"><a href="<?php echo model('Article')->getArticleDetailUrl(array('id'=>$row['id'])); ?>"><?php echo $row['title']; ?></a></strong><p><?php echo mb_strcut($row['description'],0,150,'UTF-8'); ?>..</p>
+<div class="info"><span class="fl"><?php if(!empty($row['writer'])){ echo '<i>'.$row['writer'].'</i>'; }elseif(!empty($row['source'])){ echo '<i>'.$row['source'].'</i>'; } ?><em><?php echo date("m-d H:i",$row['update_time']); ?></em></span><span class="fr"><em><?php echo $row['click']; ?></em>人阅读</span></div><div class="cl"></div></div><?php }}else{echo '<div style="text-align:center;padding:20px;">暂无记录</div>';} ?>
+</div></div><!-- fl_640 end -->
+
+<div class="fr_300"><div id="rad1"><script>rjs1();</script></div>
+<div class="side"><div class="stit"><h2>简介</h2><a href="/articlelist/f<?php echo $post['category_id']; ?>" class="more"><?php echo $post['category_text']; ?></a><div class="cl"></div></div>
+<div class="uli2">
+<div class="suli"><?php if($post['head_img']){ ?><a class="limg" href="/store/<?php echo $post['id']; ?>"><img alt="<?php echo $post['company_name']; ?>" src="<?php echo $post['head_img']; ?>"></a><?php } ?><a href="/store/<?php echo $post['id']; ?>"><?php echo $post['company_name']; ?></a><div class="sulii"><span class="time">文章<?php echo $post['article_count']; ?></span> 阅读(<?php echo $post['click']; ?>)</div><div class="cl"></div></div>
+<div class="suli" style="color:#999;padding:10px 8px;line-height:1.5"><?php echo $post['introduction']; ?><div class="cl"></div></div><div class="cl"></div></div></div>
+
+<?php if($relate_tuijian_list){ ?><div class="side"><div class="stit"><h2>推荐阅读</h2><a href="javascript:getmore({limit:5,mode:1,orderby:'rand()'});" class="more">换一换</a><div class="cl"></div></div>	
+<ul class="uli chs" id="xglist"><?php foreach($relate_tuijian_list as $row){ ?><li><a href="/p/<?php echo $row['id']; ?>"><?php echo $row['title']; ?></a></li><?php } ?></ul><div class="cl"></div></div><?php } ?>
+
+<?php if($relate_zuixin_list){ ?><div id="rad3"><script>rjs3();</script></div>
+<div class="side"><div class="stit"><h2>猜你喜欢</h2><div class="cl"></div></div>
+<div class="uli2" id="xglike"><?php foreach($relate_zuixin_list as $row){ ?><div class="suli"><?php if($row['head_img']){ ?><a class="limg" href="/store/<?php echo $row['id']; ?>"><img alt="<?php echo $row['company_name']; ?>" src="<?php echo $row['head_img']; ?>"></a><?php } ?><a href="/store/<?php echo $row['id']; ?>"><?php echo $row['company_name']; ?></a><div class="sulii"><span class="time">文章<?php echo $row['article_count']; ?></span> 阅读(<?php echo $row['click']; ?>)</div><div class="cl"></div></div><?php } ?></div></div><?php } ?>
+
+<div id="rad2"><script>rjs2();</script></div></div><!-- fr_300 end --></div><!-- box end -->
+
+<script>
+function getmore(condition)
+{
+    var url = "<?php echo sysconfig('CMS_BASEHOST'); ?>/api/article/index";
+    //var typeid = "";
+    $.post(url,condition,function(res){
+        if(res.code==0)
+        {
+            var json = res.data.list; //数组
+            var str = '';
+            $.each(json, function (index) {
+                //循环获取数据
+                //var title = json[index].title;
+                if(condition.mode==1)
+                {
+                    str = str + '<li><a href="<?php echo model('Article')->getArticleDetailUrl(); ?>'+json[index].id+'">'+json[index].title+'</a></li>';
+                }
+                else if(condition.mode==2)
+                {
+                    var litpic = '';if(json[index].litpic!==''){litpic = '<a class="limg" href="<?php echo model('Article')->getArticleDetailUrl(); ?>'+json[index].id+'"><img alt="'+json[index].title+'" src="'+json[index].litpic+'"></a>';}
+                    str = str + '<div class="suli">'+litpic+'<a href="<?php echo model('Article')->getArticleDetailUrl(); ?>'+json[index].id+'">'+json[index].title+'</a><div class="sulii">阅读('+json[index].click+')</div><div class="cl"></div></div>';
+                }
+            });
+            
+            if(str!='' && str!=null && condition.mode==1)
+            {
+                $('#xglist').html(str);
+            }
+            else if(str!='' && str!=null && condition.mode==2)
+            {
+                $('#xglike').html(str);
+            }
+        }
+        else
+        {
+            
+        }
+    },'json');
+}
+
+$(function(){
+    var ajaxload  = false;
+    var maxpage   = false;
+    var startpage = 1;
+    var totalpage = <?php echo $totalpage; ?>;
+    
+    var tmp_url   = window.location.href;
+    msg = tmp_url.split("#");
+    tmp_url = msg[0];
+    
+    $(window).scroll(function ()
+    {
+        var listheight = $("#list").outerHeight(); 
+        
+        if ($(document).scrollTop() + $(window).height() >= listheight)
+        {
+            if(startpage >= totalpage)
+            {
+                //$("#submit_bt_one").html("已是最后一页，沒有更多数据！");
+                return false;
+            }
+            
+            if(!ajaxload && !maxpage)
+            {
+                ajaxload = true;
+                //$("#submit_bt_one").html("努力加载中...");
+                var url = tmp_url;
+                var nextpage = startpage+1;
+                
+                $.get(url,{page_ajax:1,page:nextpage},function(res)
+                {
+                    if(res)
+                    {
+                        $("#list").append(res);
+                        startpage++;
+                        
+                        if(startpage >= totalpage)
+                        {
+                            maxpage = true;
+                            //$("#submit_bt_one").html("已是最后一页，沒有更多数据！");
+                            $("#list").append('<div style="text-align:center;padding:20px;">暂无记录</div>');
+                        }
+                        else
+                        {
+                            //$("#submit_bt_one").html("点击加载更多");
+                        }
+                        
+                        ajaxload = false;
+                    }
+                    else
+                    {
+                        //$("#submit_bt_one").html("请求失败，请稍候再试！");
+                        ajaxload = false;
+                    }
+                },'json');
+            }
+        }
+    });
+});
+</script>
+
+{include file="common/footer"/}</body></html>

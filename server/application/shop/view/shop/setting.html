@@ -1,0 +1,308 @@
+{extend name="public/base" /}
+{block name="title"}设置中心{/block}
+
+{block name="content"}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel-body" style="padding: 15px 0;">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="{:url('setting')}">设置中心</a></li>
+                    <li><a href="{:url('changePassword')}">密码修改</a></li>
+                    <li><a href="{:url('setcover')}">封面设置</a></li>
+                    <li><a href="{:url('setavatar')}">头像</a></li>
+                    <li><a href="{:url('setqrcode')}">二维码设置</a></li>
+                </ul>
+            </div>
+            <div class="panel-body">
+                <form id="myform" method="post" action="{:url('setting')}" role="form" enctype="multipart/form-data" class="form-horizontal">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">
+                            <span class="text-danger">*</span>地区</label>
+                        <div class="col-sm-4 form-inline">
+                            <select class="form-control" id='sheng' name="province_id"></select> <select class="form-control" id='shi' name="city_id"></select> <select class="form-control" id='qu' name="district_id"></select></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">
+                            <span class="text-danger">*</span>详细地址</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="address" id="address" class="form-control" placeholder="详细地址" value="<?php echo $post['address']; ?>" required></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">
+                            <span class="text-danger">*</span>公司名称</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="company_name" id="company_name" class="form-control" placeholder="公司名称" value="<?php echo $post['company_name']; ?>" required></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">
+                            <span class="text-danger">*</span>类目</label>
+                        <div class="col-sm-4 form-inline">
+                            <select class="form-control" id='category_id' name="category_id">
+                                <option value="0">请选择</option>
+                                <?php if($category_list){foreach($category_list as $k=>$v){ ?>
+                                <option <?php if($v["id"]==$post['category_id']){echo 'selected = "selected"';} ?> value="<?php echo $v["id"]; ?>"><?php echo $v["name"]; ?></option>
+                                <?php if($v['sub']){foreach($v['sub'] as $key=>$value){ ?>
+                                <option <?php if($value["id"]==$post['category_id']){echo 'selected = "selected"';} ?> value="<?php echo $value["id"]; ?>">— <?php echo $value["name"]; ?></option>
+                                <?php }} ?>
+                                <?php }} ?>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">
+                            <span class="text-danger">*</span>主营产品或服务</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="main_product" id="main_product" class="form-control" placeholder="主营产品或服务" value="<?php echo $post['main_product']; ?>" required></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label"><span class="text-danger">*</span>简介</label>
+                        <div class="col-sm-6">
+                        <textarea class="form-control" name="introduction" rows="3"><?php echo $post['introduction']; ?></textarea>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">
+                            <span class="text-danger"></span>统一社会信用代码</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="business_license_no" id="business_license_no" class="form-control" placeholder="统一社会信用代码" value="<?php echo $post['business_license_no']; ?>"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">
+                            官方网站</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="website" id="website" class="form-control" placeholder="http开头" value="<?php echo $post['website']; ?>"></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">
+                            <span class="text-danger">*</span>联系人</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="contact" id="contact" class="form-control" placeholder="联系人" value="<?php echo $post['contact']; ?>" required></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">
+                            <span class="text-danger">*</span>职务</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="zhiwu" id="zhiwu" class="form-control" placeholder="职务" value="<?php echo $post['zhiwu']; ?>" required></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">
+                            <span class="text-danger">*</span>联系方式</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="contact_information" id="contact_information" class="form-control" placeholder="联系方式" value="<?php echo $post['contact_information']; ?>" required></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">
+                            <span class="text-danger"></span>传真</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="fax" id="fax" class="form-control" placeholder="传真" value="<?php echo $post['fax']; ?>" ></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">
+                            <span class="text-danger"></span>邮编</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="zipcode" id="zipcode" class="form-control" placeholder="邮编" value="<?php echo $post['zipcode']; ?>" ></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">
+                            <span class="text-danger"></span>邮箱</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="email" id="email" class="form-control" placeholder="邮箱" value="<?php echo $post['email']; ?>" ></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">
+                            <span class="text-danger">*</span>微信号</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="wechat" id="wechat" class="form-control" placeholder="微信号" value="<?php echo $post['wechat']; ?>" required></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">
+                            <span class="text-danger">*</span>QQ</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="qq" id="qq" class="form-control" placeholder="qq" value="<?php echo $post['qq']; ?>" required></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">
+                            <span class="text-danger">*</span>经度</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="point_lng" id="point_lng" class="form-control" placeholder="经度" value="<?php echo $post['point_lng']; ?>" required></div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">
+                            <span class="text-danger">*</span>纬度</label>
+                        <div class="col-sm-4">
+                            <input type="text" name="point_lat" id="point_lat" class="form-control" placeholder="纬度" value="<?php echo $post['point_lat']; ?>" required></div>
+                    </div>
+                    <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=2658c9ccf1a7c8762bf6413614e25c21&s=1"></script>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label"><span class="text-danger">*</span>定位</label>
+                        <div class="col-sm-9">
+                            <div id="allmap"></div>
+                            <script type="text/javascript">
+                                // 百度地图API功能
+                                var map = new BMap.Map("allmap");
+                                <?php if($post['point_lng']){ ?>
+                                var point = new BMap.Point(<?php echo $post['point_lng']; ?>,<?php echo $post['point_lat']; ?>);
+                                <?php }else{ ?>
+                                var point = '厦门';
+                                <?php } ?>
+                                map.centerAndZoom(point,12);
+                                var marker = new BMap.Marker(point);// 创建标注
+                                map.addOverlay(marker);             // 将标注添加到地图中
+                                map.enableScrollWheelZoom();   //启用滚轮放大缩小，默认禁用
+                                map.enableContinuousZoom();    //启用地图惯性拖拽，默认禁用
+                                //单击获取点击的经纬度
+                                map.addEventListener("click",function(e){
+                                    //alert(e.point.lng + "," + e.point.lat);
+                                    $("#point_lat").val(e.point.lat);
+                                    $("#point_lng").val(e.point.lng);
+                                });
+                            </script>
+                            <style type="text/css">
+                                #allmap {width:60%;height:300px;overflow:hidden;margin:0;font-family:"微软雅黑";}
+                            </style>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label"><span class="text-danger">*</span>详细介绍</label>
+                        <div class="col-sm-9">
+<!-- 加载编辑器的容器 --><script id="container" name="content" type="text/plain"><?php echo $post["content"]; ?></script>
+<!-- 配置文件 --><script type="text/javascript" src="/other/flueditor/ueditor.config.js"></script>
+<!-- 编辑器源码文件 --><script type="text/javascript" src="/other/flueditor/ueditor.all.min.js"></script>
+<!-- 实例化编辑器 --><script type="text/javascript">var ue = UE.getEditor('container',{maximumWords:2000,initialFrameHeight:320,enableAutoSave:false});</script>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-3 col-sm-8">
+                            <button type="submit" onclick="" class="btn btn-success">保存</button></div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+// JavaScript Document
+$(document).ready(function(e) {
+    //加载省的数据
+    LoadSheng(86,<?php echo $post['province_id']; ?>);
+    //加载市的数据
+    LoadShi(<?php echo $post['province_id']; ?>,<?php echo $post['city_id']; ?>);
+    //加载区的数据
+    LoadQu(<?php echo $post['city_id']; ?>,<?php echo $post['district_id']; ?>);
+
+    //给省的下拉加点击事件
+    $("#sheng").change(function(){
+        //重新加载市
+        LoadShi();
+        //重新加载区
+        LoadQu();
+    });
+
+    //给市的下拉加点击事件
+    $("#shi").change(function(){
+        //重新加载区
+        LoadQu();
+    });
+});
+
+//加载省份的方法
+function LoadSheng(parent_id,select_id)
+{
+    //省的父级代号
+    parent_id = parent_id || '86';
+    select_id = select_id || 0;
+    
+    $.ajax({
+        async:false,
+        url:'{:url("api/Region/index")}',
+        data:{id:parent_id},
+        type:"GET",
+        dataType:"json",
+        success: function(res){
+            var hang = res.data;
+            var str = "";
+            for(var i=0;i<hang.length;i++)
+            {
+                if(select_id != 0 && select_id == hang[i].id)
+                {
+                    str = str+"<option selected='selected' value='"+hang[i].id+"'>"+hang[i].name+"</option>";
+                }
+                else
+                {
+                    str = str+"<option value='"+hang[i].id+"'>"+hang[i].name+"</option>";
+                }
+            }
+            
+            $("#sheng").html(str);
+        }
+    });
+}
+
+//加载市的方法
+function LoadShi(parent_id,select_id)
+{
+    //找市的父级代号
+    parent_id = parent_id || $("#sheng").val();
+    select_id = select_id || 0;
+    
+    $.ajax({
+        async:false,
+        url:'{:url("api/Region/index")}',
+        data:{id:parent_id},
+        type:"GET",
+        dataType:"json",
+        success: function(res){
+            var hang = res.data;
+            var str = "";
+            for(var i=0;i<hang.length;i++)
+            {
+                if(select_id != 0 && select_id == hang[i].id)
+                {
+                    str = str+"<option selected='selected' value='"+hang[i].id+"'>"+hang[i].name+"</option>";
+                }
+                else
+                {
+                    str = str+"<option value='"+hang[i].id+"'>"+hang[i].name+"</option>";
+                }
+            }
+            
+            $("#shi").html(str);
+        }
+    });
+}
+
+//加载区的方法
+function LoadQu(parent_id,select_id)
+{
+    //找区的父级代号
+    parent_id = parent_id || $("#shi").val();
+    select_id = select_id || 0;
+    
+    $.ajax({
+        url:'{:url("api/Region/index")}',
+        data:{id:parent_id},
+        type:"GET",
+        dataType:"json",
+        success: function(res){
+            var hang = res.data;
+            var str = "";
+            for(var i=0;i<hang.length;i++)
+            {
+                if(select_id != 0 && select_id == hang[i].id)
+                {
+                    str = str+"<option selected='selected' value='"+hang[i].id+"'>"+hang[i].name+"</option>";
+                }
+                else
+                {
+                    str = str+"<option value='"+hang[i].id+"'>"+hang[i].name+"</option>";
+                }
+            }
+            
+            $("#qu").html(str);
+        }
+    });
+}
+</script>
+{/block}

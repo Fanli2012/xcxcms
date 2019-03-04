@@ -1,0 +1,24 @@
+<div class="bottom-tabbar" style="height:50px;">
+    <div class="weui-tabbar" style="position:fixed;">
+        <a href="/" class="weui-tabbar__item <?php if(request()->url()=='/'){echo 'weui-bar__item_on';} ?>">
+            <span style="display: inline-block;position: relative;">
+                <img src="/images/wap/home_icon.png" alt="" class="weui-tabbar__icon">
+            </span>
+            <p class="weui-tabbar__label">首页</p>
+        </a>
+        <a href="<?php echo model('ArticleType')->getArticleTypeUrl(array('key'=>'f1')); ?>" class="weui-tabbar__item <?php if(request()->url()==model('ArticleType')->getArticleTypeUrl(array('key'=>'f1'))){echo 'weui-bar__item_on';} ?>">
+            <img src="/images/wap/news_icon.png" alt="" class="weui-tabbar__icon">
+            <p class="weui-tabbar__label">动态</p>
+        </a>
+        <a href="<?php echo model('GoodsType')->getGoodsTypeUrl(array('key'=>'f1')); ?>" class="weui-tabbar__item <?php if(request()->url()==model('GoodsType')->getGoodsTypeUrl(array('key'=>'f1'))){echo 'weui-bar__item_on';} ?>">
+            <span style="display: inline-block;position: relative;">
+                <img src="/images/wap/product_icon.png" alt="" class="weui-tabbar__icon">
+            </span>
+            <p class="weui-tabbar__label">产品</p>
+        </a>
+        <a href="/page/contact.html" class="weui-tabbar__item <?php if(request()->url()=='/page/contact.html'){echo 'weui-bar__item_on';} ?>">
+            <img src="/images/wap/contact_icon.png" alt="" class="weui-tabbar__icon">
+            <p class="weui-tabbar__label">联系</p>
+        </a>
+    </div>
+</div>

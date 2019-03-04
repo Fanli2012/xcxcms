@@ -1,0 +1,26 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title><?php if(empty($post["seotitle"])){echo $post["title"];}else{echo $post["seotitle"];} ?></title>
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/prettify.css">
+<link rel="stylesheet" href="/css/doc.css">
+<script src="/js/pc.js"></script>
+</head><body>
+<include file="./Flhome/Home/View/header.html" />
+<div class="container ue-docs-container">
+    <div class="row">
+        <div class="col-md-3">
+            <div id="guidebar" class="ue-sidebar hidden-print" role="complementary">
+                <ul class="nav ue-sidenav">
+				<li class="category active"><a href="javascript:void(0)">1. 开始使用</a><ul class="nav"><li><a href="http://fex.baidu.com/ueditor/#start-start">1.1 开始使用ueditor</a></li><li><a href="http://fex.baidu.com/ueditor/#start-toolbar">1.2 定制工具栏图标</a></li><li><a href="http://fex.baidu.com/ueditor/#start-config">1.3 前端配置项说明</a></li><li><a href="http://fex.baidu.com/ueditor/#start-dir">1.4 目录介绍</a></li><li><a href="http://fex.baidu.com/ueditor/#start-submit">1.5 提交表单</a></li><li><a href="http://fex.baidu.com/ueditor/#start-uparse">1.6 编辑内容展示</a></li><li><a href="http://fex.baidu.com/ueditor/#start-patch">1.7 如何使用补丁文件</a></li></ul></li>
+				<li class="category active"><a href="javascript:void(0)">2. 后端配置</a><ul class="nav"><li><a href="http://fex.baidu.com/ueditor/#server-deploy">2.1 后端部署说明</a></li><li><a href="http://fex.baidu.com/ueditor/#server-php">2.2 PHP 使用说明</a></li><li><a href="http://fex.baidu.com/ueditor/#server-asp">2.3 ASP 使用说明</a></li><li><a href="http://fex.baidu.com/ueditor/#server-net">2.4 ASP.NET 使用说明</a></li><li><a href="http://fex.baidu.com/ueditor/#server-jsp">2.5 JSP 使用说明</a></li><li><a href="http://fex.baidu.com/ueditor/#server-config">2.7 后端配置项说明</a></li><li><a href="http://fex.baidu.com/ueditor/#server-path">2.8 上传路径配置</a></li><li><a href="http://fex.baidu.com/ueditor/#server-video">2.9 上传视频</a></li></ul></li>
+				<li class="category active"><a href="javascript:void(0)">3. 二次开发</a><ul class="nav"><li><a href="http://fex.baidu.com/ueditor/#dev-developer">3.1 如何进行二次开发</a></li><li><a href="http://fex.baidu.com/ueditor/#dev-bale_width_grunt">3.2 使用grunt打包源代码</a></li><li><a href="http://fex.baidu.com/ueditor/#dev-request_specification">3.3 后端请求规范</a></li><li><a href="http://fex.baidu.com/ueditor/#dev-serverparam">3.4 自定义请求参数</a></li><li><a href="http://fex.baidu.com/ueditor/#dev-crossdomain">3.5 跨域支持说明</a></li></ul></li>
+				<li class="category active"><a href="javascript:void(0)">4. 常用API列表</a><ul class="nav"><li><a href="http://fex.baidu.com/ueditor/#api-common">4.1 常用API</a></li></ul></li>
+				<li class="category active"><a href="javascript:void(0)">5. 常见问题</a><ul class="nav"><li><a href="http://fex.baidu.com/ueditor/#qa-ready">5.1 实例创建后为什么直接执行接口报错</a></li><li><a href="http://fex.baidu.com/ueditor/#qa-customurl">5.2 如何自定义请求地址</a></li><li><a href="http://fex.baidu.com/ueditor/#qa-allowDivToP">5.3 如何阻止div变成p标签</a></li></ul></li></ul>
+            </div>
+        </div>
+        <div class="col-md-9 ue-docs-main" role="main">
+            <div id="show"><h1><?php echo $post["title"]; ?></h1><?php echo $post["body"]; ?></div>
+		</div>
+    </div>
+</div>
+<include file="./Flhome/Home/View/footer.html" /></body></html>

@@ -1,0 +1,26 @@
+<view class="page">
+    <view class="weui-msg">
+        <view class="weui-msg__icon-area">
+            <view style="border:1px solid #f8f8f8;margin:4px auto;overflow:hidden;width:100px;height:100px;border-radius:50%;-moz-border-radius:50%;-webkit-border-radius:50%;"><image style="width:100px;height:100px;" src="../../../../images/logo.png"></image></view>
+            <open-data type="userNickName"></open-data>
+        </view>
+        <!-- <view class="weui-msg__text-area">
+            <view class="weui-msg__title">登录</view>
+            <view class="weui-msg__desc">请输入您的账号、密码:</view>
+        </view> -->
+        <view class="weui-msg__opr-area">
+            <view class="weui-btn-area">
+                <button class="weui-btn" type="primary" open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="onGotUserInfo">微信登录</button>
+                <!-- <button class="weui-btn" type="default">账号密码登录</button> -->
+            </view>
+        </view>
+        <!-- <view class="weui-msg__extra-area">
+            <view class="weui-footer">
+                <view class="weui-footer__links">
+                    <navigator url="" class="weui-footer__link">底部链接文本</navigator>
+                </view>
+                <view class="weui-footer__text">Copyright © 2008-2016 weui.io</view>
+            </view>
+        </view> -->
+    </view>
+</view>

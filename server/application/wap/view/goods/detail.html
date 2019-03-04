@@ -1,0 +1,121 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,viewport-fit=cover">
+<title><?php if(!empty($post['seotitle'])){echo $post['seotitle'];}else{echo $post['title'];} echo '-'.sysconfig('CMS_WEBNAME'); ?></title>
+<meta name="keywords" content="<?php echo $post['keywords']; ?>" /><meta name="description" content="<?php echo $post['description']; ?>" />
+<link rel="stylesheet" href="<?php echo sysconfig('CMS_BASEHOST'); ?>/css/wap/weui.min.css"/>
+<link rel="stylesheet" href="<?php echo sysconfig('CMS_BASEHOST'); ?>/css/wap/style.css"/>
+<script type="text/javascript" src="<?php echo sysconfig('CMS_BASEHOST'); ?>/js/wap/ad.js"></script>
+</head><body>
+<!-- Swiper -->
+<?php if($post['goods_img_list']){ ?>
+<div class="swiper-container">
+    <div class="swiper-wrapper">
+        <?php foreach($post['goods_img_list'] as $k=>$v){ ?>
+            <div class="swiper-slide"><img src="<?php echo $v['url']; ?>" alt=""></div>
+        <?php } ?>
+    </div>
+    <!-- Add Pagination -->
+    <div class="swiper-pagination swiper-pagination-white"></div>
+</div>
+<?php } ?>
+<link rel="stylesheet" href="<?php echo sysconfig('CMS_BASEHOST'); ?>/css/wap/swiper.min.css">
+<script type="text/javascript" src="<?php echo sysconfig('CMS_BASEHOST'); ?>/js/wap/swiper.min.js"></script>
+<style>
+.swiper-container{width:100%;height:auto;}
+.swiper-slide{text-align:center;font-size:18px;background:#fff;}
+.swiper-slide img{width:100%;height:100vw;}
+</style>
+<script>
+//Swiper轮播
+var swiper = new Swiper('.swiper-container', {
+    pagination: '.swiper-pagination',
+    paginationClickable: true,
+    autoHeight: true, //enable auto height
+    slidesPerView: 1,
+    paginationClickable: true,
+    spaceBetween: 30,
+    loop: true,
+    centeredSlides: true,
+    autoplay: 3000,
+    autoplayDisableOnInteraction: false
+});
+</script>
+
+<div class="goods-header">
+    <div class="title"><?php echo $post['title']; ?></div>
+    <div class="goods-price">
+        <div class="current-price">
+            <span>￥</span>
+            <span class="price"><?php echo $post['price']; ?></span>
+        </div>
+    </div>
+</div>
+<style>
+.goods-header {
+    display: block;
+    height: auto;
+    padding: 10px 0 0;
+    -webkit-tap-highlight-color: transparent;
+    border-top: 1px solid #f2f2f2;
+    background-color: #fff;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.goods-header .title {
+    font-weight: normal;
+    padding: 0 10px;
+    font-size: 18px;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.goods-header .goods-price {
+    padding: 10px 10px 2px;
+    text-align: left;
+}
+
+.goods-header .current-price {
+    color: #f60;
+    display: inline-block;
+}
+
+.goods-header .current-price span {
+    font-size: 16px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.goods-header .current-price .price {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 24px;
+}
+</style>
+
+<!-- <div class="weui-cells" style="margin-top:10px;">
+    <div class="weui-cell weui-cell_access">
+        <div class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+            <img src="images/avatar.png" style="border-radius:5px;width:50px;height:50px;display:block;">
+        </div>
+        <div class="weui-cell__bd">
+            <p>达利食品集团有限公司</p>
+            <p style="font-size: 13px;color: #888888;"><img style="margin-top:-2px;width:14px; height:14px;" src="images/location2.png">福建 · 厦门</p>
+        </div>
+        <div class="weui-cell__ft"><a href="goods-list.html" style="color:#09BB07;">去看看</a></div>
+    </div>
+</div> -->
+
+<div class="weui-panel">
+    <div class="weui-panel__hd">产品详情</div>
+    <div class="weui-panel__bd">
+        <div class="weui-article">
+            <div class="weui-article__section"><?php echo $post['content']; ?></div>
+        </div>
+    </div>
+</div>
+
+{include file="common/footer"/}
+</body></html>

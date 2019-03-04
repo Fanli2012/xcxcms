@@ -1,0 +1,90 @@
+<!DOCTYPE html><html><head><meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0,viewport-fit=cover">
+<title><?php echo $title;if($page!=0){echo '-第'.($page+1).'页';} ?></title>
+<meta name="keywords" content="<?php echo $post['keywords'];?>" /><meta name="description" content="<?php echo $post['description']; ?>" />
+<link rel="stylesheet" href="<?php echo sysconfig('CMS_BASEHOST'); ?>/css/wap/weui.min.css"/>
+<link rel="stylesheet" href="<?php echo sysconfig('CMS_BASEHOST'); ?>/css/wap/style.css"/>
+<script type="text/javascript" src="<?php echo sysconfig('CMS_BASEHOST'); ?>/js/wap/jquery.min.js"></script>
+<script type="text/javascript" src="<?php echo sysconfig('CMS_BASEHOST'); ?>/js/wap/ad.js"></script>
+</head><body>
+<div class="weui-panel weui-panel_access">
+    <div class="weui-panel__bd" id="list">
+        <?php if($list){foreach($list as $k=>$v){ ?>
+        <a href="<?php echo model('Article')->getArticleDetailUrl(array('id'=>$v['id'])); ?>" class="weui-media-box weui-media-box_appmsg">
+            <?php if($v['litpic']){ ?>
+            <div class="weui-media-box__hd">
+                <img class="weui-media-box__thumb" src="<?php echo $v['litpic']; ?>" alt="<?php echo $v['title']; ?>">
+            </div>
+            <?php } ?>
+            <div class="weui-media-box__bd">
+                <h4 class="weui-media-box__title"><?php echo $v['title']; ?></h4>
+                <p class="weui-media-box__desc"><?php echo mb_strcut($v['description'],0,120,'UTF-8'); ?>..</p>
+            </div>
+        </a>
+        <?php }} ?>
+    </div>
+</div>
+<script>
+$(function(){
+    var ajaxload  = false;
+    var maxpage   = false;
+    var startpage = 1;
+    var totalpage = <?php echo $totalpage; ?>;
+    
+    var tmp_url   = window.location.href;
+    msg = tmp_url.split("#");
+    tmp_url = msg[0];
+    
+    $(window).scroll(function ()
+    {
+        var listheight = $("#list").outerHeight(); 
+        
+        if ($(document).scrollTop() + $(window).height() >= listheight)
+        {
+            if(startpage >= totalpage)
+            {
+                //$("#submit_bt_one").html("已是最后一页，没有更多数据");
+                return false;
+            }
+            
+            if(!ajaxload && !maxpage)
+            {
+                ajaxload = true;
+                //$("#submit_bt_one").html("努力加载中...");
+                var url = tmp_url;
+                var nextpage = startpage+1;
+                
+                $.get(url,{page_ajax:1,page:nextpage},function(res)
+                {
+                    if(res)
+                    {
+                        $("#list").append(res);
+                        startpage++;
+                        
+                        if(startpage >= totalpage)
+                        {
+                            maxpage = true;
+                            //$("#submit_bt_one").html("已是最后一页，没有更多数据");
+                            $("#list").append('<div style="text-align:center;padding:20px;">暂无记录</div>');
+                        }
+                        else
+                        {
+                            //$("#submit_bt_one").html("点击加载更多");
+                        }
+                        
+                        ajaxload = false;
+                    }
+                    else
+                    {
+                        //$("#submit_bt_one").html("请求失败，请稍后再试");
+                        ajaxload = false;
+                    }
+                },'json');
+            }
+        }
+    });
+});
+</script>
+
+{include file="common/footer"/}
+</body></html>

@@ -1,0 +1,111 @@
+{extend name="public/base" /}
+{block name="title"}分类列表{/block}
+
+{block name="content"}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel-body" style="padding: 15px 0;">
+                <ul class="nav nav-tabs">
+                    <li class="active"><a href="">分类列表</a></li>
+                    <li><a href="{:url('shop/GoodsType/add')}">添加分类</a></li>
+                </ul>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <form action="" method="get">
+                        <div class="col-md-4">
+                            <div class="form-group text-left">
+                                <a href="{:url('shop/Goods/add')}" class="btn btn-primary" role="button"><i class="glyphicon glyphicon-plus"></i> 添加商品</a>
+                            </div>
+                        </div>
+                        <div class="col-md-3"></div>
+                        <div class="col-md-2"></div>
+                        <div class="col-md-3">
+                            <div class="input-group">
+                                <input class="form-control" type="text" value="" placeholder="请输入关键词" name="keyword">
+                                <span class="input-group-btn">
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="glyphicon glyphicon-search"></i>
+                                    </button>
+                                </span>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <?php if($list){ ?>
+            <div class="panel panel-default">
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="w5p">ID</th>
+                                <th>名称</th>
+                                <th class="w10p">时间</th>
+                                <th class="w20p">操作</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach($list as $row){ ?>
+                            <tr>
+                                <td class="center"><?php echo $row["id"]; ?></td>
+                                <td class="center"><?php echo $row["name"]; ?></td>
+                                <td class="center"><?php echo date('Y-m-d',$row["add_time"]); ?></td>
+                                <td class="center">
+                                    <a href="{:url('shop/GoodsType/edit')}?id=<?php echo $row["id"]; ?>"><i class="glyphicon glyphicon-pencil"></i> 修改</a>
+                                    <a data-url="{:url('shop/GoodsType/del')}?id=<?php echo $row["id"]; ?>" data-toggle="modal" data-target="#delConfirmModal" href="javascript:;"><i class="glyphicon glyphicon-remove"></i> 删除</a>
+                                </td>
+                            </tr>
+                        <?php } ?>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="panel-footer">
+                    <?php if($page){echo $page;}else{echo '共'.$list->total().'条';} ?>
+                </div>
+            </div>
+            <?php }else{ ?>
+            <div class="center" style="padding-top:25px;padding-bottom:25px;color:#666;">
+                <p><i class="glyphicon glyphicon-send" style="font-size:36px;"></i></p>
+                <h4>暂无记录</h4>
+            </div>
+            <?php } ?>
+        </div>
+    </div>
+</div>
+
+<!-- 删除模态框Modal -->
+<div class="modal fade bs-example-modal-sm" id="delConfirmModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+    <div class="modal-dialog modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="myModalLabel">信息</h4>
+            </div>
+            <div class="modal-body">会连商品一起删除，确定要删除吗？<br><br><input id="del-url" style="display:none;" type="text" value=""></div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-success" onclick="javascript:window.location.href = $('#del-url').val();">确定</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+$(function() {
+    // 绑定模态框展示的方法  
+    $("#delConfirmModal").on("show.bs.modal",function(e){
+        // 获得点击打开的按钮
+        var button=$(e.relatedTarget);
+        // 根据标签获得按钮传入的参数
+        var recipient=button.data("url");
+        // 获得模态框本身
+        var modal=$(this);
+        // 更改将title的text  
+        //modal.find(".modal-title").text("Hello"+recipient);
+        // 更改body里input的值
+        modal.find("#del-url").val(recipient);
+    });
+});
+</script>
+{/block}

@@ -1,0 +1,85 @@
+@import "../../../../vendor/wxParse/wxParse.wxss";
+
+/*幻灯片*/
+
+.swiper-boxs {
+    background: #f2f2f2;
+}
+
+.swiper-boxs-img {
+    display: block;
+    position: relative;
+}
+
+.swiper-boxs-img::before {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0; /*content: ''; background-image: linear-gradient(180deg, rgba(0,0,0,0.05) 5%,rgba(0,0,0,0.5) 100%);*/
+}
+
+.goods-header {
+    display: block;
+    height: auto;
+    padding: 10px 0 0;
+    -webkit-tap-highlight-color: transparent;
+    border-top: 1px solid #f2f2f2;
+    background-color: #fff;
+    margin-bottom: 10px;
+    position: relative;
+}
+
+.goods-header .title {
+    font-weight: normal;
+    padding: 0 10px;
+    font-size: 18px;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
+
+.goods-header .goods-price {
+    padding: 10px 10px 2px;
+    text-align: left;
+}
+
+.goods-header .current-price {
+    color: #f60;
+    display: inline-block;
+}
+
+.goods-header .current-price span {
+    font-size: 16px;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+.goods-header .current-price .price {
+    display: inline-block;
+    vertical-align: middle;
+    font-size: 24px;
+}
+
+.bottoma {
+    display: block;
+    font-size: 18px;
+    padding: 10px;
+    color: #fff;
+    background-color: #179b16;
+    text-align: center;
+    border-radius: 5px;
+}
+
+.foohi {
+    height: 60px;
+}
+
+.footer {
+    left: 0px;
+    bottom: 0px;
+    width: 100%;
+    position: fixed;
+    background: #ebebeb;
+}

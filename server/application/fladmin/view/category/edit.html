@@ -1,0 +1,100 @@
+{extend name="public/base" /}
+{block name="title"}类目修改{/block}
+
+{block name="content"}
+<h5 class="sub-header"><a href="/Fladmin/Category">类目管理</a> > 类目修改</h5>
+
+<form method="post" action="/Fladmin/Category/edit" role="form" id="addcat" class="table-responsive">
+<table class="table table-striped table-bordered">
+  <tbody>
+    <tr>
+      <td align="right">名称：</td>
+      <td><input name="name" type="text" value="<?php echo $post["name"]; ?>" id="name" size="30" class="required"><input style="display:none;" type="text" name="id" id="id" value="<?php echo $id; ?>"></td>
+    </tr>
+    <tr>
+      <td colspan="2"><input type="submit" class="btn btn-success" value="保存(Submit)">&nbsp;&nbsp;<input type="reset" class="btn btn-default" value="重置(Reset)"></td>
+    </tr>
+  </tbody>
+</table>
+</form><!-- 表单结束 -->
+
+<script>
+$(function(){
+    $(".required").blur(function(){
+        var $parent = $(this).parent();
+        $parent.find(".formtips").remove();
+        
+        if(this.value=="")
+        {
+            $parent.append(' <small class="formtips onError"><font color="red">不能为空！</font></small>');
+        }
+        else
+        {
+            if( $(this).is('#typedir') ){
+                var reg = /^[a-zA-Z]+[0-9]*[a-zA-Z0-9]*$/;//验证是否为字母、数字
+                if(!reg.test($("#typedir").val()))
+                {
+                    $parent.append(' <small class="formtips onError"><font color="red">格式不正确！</font></small>');
+                }
+                else
+                {
+                    $parent.append(' <small class="formtips onSuccess"><font color="green">OK</font></small>');
+                }
+            }
+            else
+            {
+                $parent.append(' <small class="formtips onSuccess"><font color="green">OK</font></small>');
+            }
+        }
+    });
+
+    //重置
+    $('#addcat input[type="reset"]').click(function(){
+            $(".formtips").remove(); 
+    });
+});
+
+$('#addcat input[type="submit"]').click(function(){
+    $(".required").trigger('blur');
+    var numError = $('#addcat .onError').length;
+
+    if(numError){
+        return false;
+    }
+
+    //$("#contents").val = ue.getContent();
+    //var datas = $('#addcat').serialize();//#form要在form里面
+
+    //var content = ue.getContent();
+    /* $.ajax({
+        url: "/Fladmin/Category/doedit",
+        type: "POST",
+        dataType: "json",
+        data: {
+            "id":$("#id").val(),
+            "name":$("#name").val(),
+            "typedir":$("#typedir").val(),
+            "templist":$("#templist").val(),
+            "temparticle":$("#temparticle").val(),
+            "litpic":$("#litpic").val(),
+            "seotitle":$("#seotitle").val(),
+            "keywords":$("#keywords").val(),
+            "seokeyword":$("#seokeyword").val(),
+            "description":$("#description").val(),
+            "content":content
+            //"seotitle":seotitle.replace("'", "&#039;"),
+            //"keywords":keywords.replace("'", "&#039;"),
+            //"description":description.replace("'", "&#039;"),
+            //"contents":content.replace("'", "&#039;")
+        },
+        success: function(data){
+            if(data.code==200)
+            {
+                //alert(data.info);
+                window.location.replace("/Fladmin/Category");
+            }
+        }
+    }); */
+});
+</script>
+{/block}

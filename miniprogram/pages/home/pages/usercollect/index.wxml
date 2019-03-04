@@ -1,0 +1,17 @@
+<view class="page">
+    <view class="page__bd">
+        <view class="weui-cells weui-cells_after-title">
+            <view class="weui-cell" wx:for="{{collectUserList}}" wx:key="unique">
+                <view class="weui-cell__hd" style="position: relative;margin-right: 10px;" wx:if="{{item.user.head_img != ''}}">
+                    <image src="{{item.user.head_img}}" style="width: 50px; height: 50px; display: block"/>
+                    <view class="weui-badge" style="position: absolute;top: -.4em;right: -.4em;">8</view>
+                </view>
+                <view class="weui-cell__bd">
+                    <view>{{item.user.nickname}}</view>
+                    <view style="font-size: 13px;color: #888888;">摘要信息</view>
+                </view>
+            <view class="weui-cell__ft"><navigator url="../shop/index?id=" class="article-shop_name" style="color:#09BB07;">关注</navigator></view>
+            </view>
+        </view>
+    </view>
+</view>

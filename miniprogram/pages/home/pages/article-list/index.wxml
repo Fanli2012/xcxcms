@@ -1,0 +1,27 @@
+<!-- 图文列表 -->
+<scroll-view style="height:{{windowHeight}}" class="page_list" scroll-y="true" bindscrolltolower="loadMore" bindscrolltoupper="refresh">
+    <view class="page__bd">
+        <view class="weui-panel weui-panel_access">
+            <view class="weui-panel__bd">
+                <navigator wx:for="{{dataList}}" wx:key="unique" url="../article-detail/index?id={{item.id}}" class="weui-media-box weui-media-box_appmsg" hover-class="weui-cell_active">
+                    <view wx:if="{{item.litpic != ''}}" class="weui-media-box__hd weui-media-box__hd_in-appmsg">
+                        <image class="weui-media-box__thumb" src="{{item.litpic}}" />
+                    </view>
+                    <view class="weui-media-box__bd weui-media-box__bd_in-appmsg">
+                        <view class="weui-media-box__title">{{item.title}}</view>
+                        <view class="weui-media-box__desc" style="-webkit-line-clamp:1;">{{item.description}}</view>
+                    </view>
+                </navigator>
+            </view>
+        </view>
+    </view>
+    
+    <view class="tips">
+        <view wx:if="{{hasMore}}">
+            <image src="../../../../images/loading.gif" mode="aspectFill"/>
+            <text>玩了命的加载中...</text>
+        </view>
+        <view wx:else><text>没有更多内容了</text></view>
+    </view>
+</scroll-view>
+<loading hidden="{{loading}}">加载中...</loading>

@@ -1,0 +1,5 @@
+@import "../../../../vendor/wxParse/wxParse.wxss";
+
+page{background: #fff;}
+
+.article-shop_name{display: inline-block;margin-left:6px;color:#586C94;}

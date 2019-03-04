@@ -1,0 +1,68 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>72pcms - php开源、快速、免费企业建站cms系统_中小企业网站建设首选</title>
+<meta name="keywords" content="72pcms,企业建站cms"><meta name="description" content="72PCMS(企业建站cms程序)基于thinkphp开发的cms系统，免费企业cms系统，免费自动建站系统，企业免费建站系统，中小企业建站首选。无版权限制，mvc模式，符合seo标准的开源轻量级cms。">
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/prettify.css">
+<link rel="stylesheet" href="/css/doc.css">
+<script src="/js/pc.js"></script>
+</head><body>
+<div class="blog-masthead clearfix"><div class="container"><nav class="blog-nav">
+<a class="blog-nav-item active" href="/"><strong>72PCMS</strong></a>
+<a class="blog-nav-item" href="/doc" target="_blank">文档</a>
+<a class="blog-nav-item" href="/cat1">教程</a>
+<a class="blog-nav-item" href="/help.html">帮助中心</a>
+<a class="blog-nav-item pull-right" href="/about.html">关于我们</a>
+</nav></div></div>
+
+<div class="bgimg">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>72PCMS.org</h1>
+				<p>免费开源cms、可任意修改代码</p>
+                <p>基于thinkphp开发的cms系统——高效、轻便的中小企业建站cms。</p>
+				<p>PC网站+手机网站</p>
+				<p class="down"><a type="button" class="btn btn-success btn-lg">开始使用</a>&nbsp;<a type="button" class="btn btn-danger btn-lg">下载72pcms</a>&nbsp;<a type="button" class="btn btn-info btn-lg">贡献代码</a></p>
+				<p class="version">当前版本：1.1.0 | 文件大小：8.9M</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container tcenter"><div class="row">
+<div class="col-md-1"></div><div class="col-md-5"><img class="am-img-responsive img" src="/images/foundation.png" alt="foundation"><h2>PC+移动一体化网站</h2><p>pc、手机站点数据同步，只需更新一个站点即可。</p></div>
+<div class="col-md-5"><img class="am-img-responsive img" src="/images/web.png" alt="web"><h2>MVC模式，易维护，前后端分离</h2><p>大幅提升开发效率，会Html就可以改成任何想要的效果。</p></div><div class="col-md-1"></div></div>
+<div class="row"><div class="col-md-1"></div><div class="col-md-5"><img class="am-img-responsive img" src="/images/chinese.png" alt="chinese"><h2>可任意修改代码</h2><p>无版权限制，无论是个人或企业都可以任意修改，甚至二次发布。</p></div>
+<div class="col-md-5"><img class="am-img-responsive img" src="/images/mobile.png" alt="mobile"><h2>轻量级cms，符合seo标准</h2><p>友好的网站结构，简单易懂的URL，载入速度快。</p></div><div class="col-md-1"></div></div></div>
+
+<div class="bs-docs-featurette">
+<div class="container">
+<h2 class="bs-docs-featurette-title">案例中心/Case Show</h2>
+<p class="lead">我们在这里展示了许多精美的案例，欢迎欣赏。</p>
+
+<hr class="half-rule">
+
+<div class="row">
+    {tag:arclist limit='4' litpic='1' tuijian='3'}
+    <div class="col-xs-6 col-sm-3">
+        <a href="<?php echo model('Article')->getArticleDetailUrl(array('id'=>$v['id'])); ?>" target="_blank">
+            <img src="<?php echo $v['litpic'] ?>" alt="<?php echo $v['title'] ?>" class="imgzsy">
+        </a>
+    </div>
+    {/tag:arclist}
+</div>
+</div></div>
+
+<div class="index_num">
+    <div class="container">
+        <div class="indexad"><strong>企业免费建站系统 72PCMS</strong><p>零技术也可轻松建站，百万企业的共同选择。<br>免费自动建站系统，面向中小企业提供轻量级网站建设解决方案。</p></div>
+    </div>
+</div>
+
+<div class="index_down">
+    <div class="container">
+        <h3>开始使用<p>下载后只需简单修改就可以拥有自己的企业官网</p></h3>
+        <a class="btn btn-primary btn-lg" title="免费下载 72PCMS" href="http://www.72p.org/download/" target="_blank">免费下载72PCMS</a>
+    </div>
+</div>
+{include file="common/footer"/}</body></html>

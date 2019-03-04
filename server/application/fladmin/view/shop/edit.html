@@ -1,0 +1,73 @@
+{extend name="public/base" /}
+{block name="title"}企业修改{/block}
+
+{block name="content"}
+<script language="javascript" type="text/javascript" src="/js/My97DatePicker/WdatePicker.js"></script>
+<h5 class="sub-header"><a href="{:url('index')}">企业列表</a> > 企业修改</h5>
+
+<form id="addarc" method="post" action="" role="form" enctype="multipart/form-data" class="table-responsive">
+<table class="table table-striped table-bordered">
+<tbody>
+    <tr>
+        <td align="right">用户名：</td>
+        <td><input name="user_name" type="text" id="user_name" value="<?php echo $post["user_name"]; ?>" class="required" style="width:60%" placeholder="在此输入用户名"><input style="display:none;" name="id" type="text" id="id" value="<?php echo $id; ?>"></td>
+    </tr>
+    <tr>
+        <td align="right">密码：</td>
+        <td><input name="password" type="password" id="password" value="" style="width:60%" placeholder="在此输入密码"></td>
+    </tr>
+    <tr>
+        <td align="right">名称：</td>
+        <td><input name="company_name" type="text" id="company_name" value="<?php echo $post["company_name"]; ?>" class="required" style="width:60%" placeholder="在此输入名称"></td>
+    </tr>
+    <tr>
+        <td align="right">類目：</td>
+        <td>
+            <select id="category_id" name="category_id">
+                <?php if($category_list){foreach($category_list as $k=>$v){ ?>
+                <option <?php if($v["id"]==$post['category_id']){echo 'selected = "selected"';} ?> value="<?php echo $v["id"]; ?>"><?php echo $v["name"]; ?></option>
+                <?php if($v['sub']){foreach($v['sub'] as $key=>$value){ ?>
+                <option <?php if($value["id"]==$post['category_id']){echo 'selected = "selected"';} ?> value="<?php echo $value["id"]; ?>">— <?php echo $value["name"]; ?></option>
+                <?php }} ?>
+                <?php }} ?>
+            </select>
+        </td>
+    </tr>
+    <tr>
+        <td align="right">简介：</td>
+        <td><textarea style="width:60%" class="required" name="introduction" rows="3"><?php echo $post["introduction"]; ?></textarea></td>
+    </tr>
+    <tr>
+        <td colspan="2"><button type="submit" class="btn btn-success" value="Submit">保存(Submit)</button>&nbsp;&nbsp;<button type="reset" class="btn btn-default" value="Reset">重置(Reset)</button><input type="hidden"></input></td>
+    </tr>
+</tbody></table></form><!-- 表单结束 -->
+
+<script>
+$(function(){
+    $(".required").blur(function(){
+        var $parent = $(this).parent();
+        $parent.find(".formtips").remove();
+        if(this.value=="")
+        {
+            $parent.append(' <small class="formtips onError"><font color="red">不能为空！</font></small>');
+        }
+        else
+        {
+            $parent.append(' <small class="formtips onSuccess"><font color="green">OK</font></small>');
+        }
+    });
+
+    //重置
+    $('#addarc input[type="reset"]').click(function(){
+            $(".formtips").remove(); 
+    });
+
+    $("#addarc").submit(function(){
+        $(".required").trigger('blur');
+        var numError = $('#addarc .onError').length;
+        
+        if(numError){return false;}
+    });
+});
+</script>
+{/block}

@@ -1,0 +1,22 @@
+<nav class="navbar navbar-inverse navbar-static-top">
+  <div class="container">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="/"><img alt="繁橙工作室logo" width="100" height="20" src="/images/pc/logo.png" style="margin-right:20px;"></a>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <li><a href="/articlelist/f1">新闻动态</a></li>
+        <li><a href="/articlelist/f2">案例中心</a></li>
+        <li><a href="<?php echo model('Page')->getPageDetailUrl(array('id'=>'about')); ?>">关于我们</a></li>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <li class="active"><a href="<?php echo model('Page')->getPageDetailUrl(array('id'=>'contact')); ?>"><span class="glyphicon glyphicon-phone-alt" aria-hidden="true"></span> 联系我们</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>

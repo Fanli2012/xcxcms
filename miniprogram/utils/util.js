@@ -56,16 +56,32 @@ function getTime(timestamp) {
         + (s < 10 ? '0' + s : s); */
 }
 
-module.exports = {
+function formatLocation(longitude, latitude) {
+    if (typeof longitude === 'string' && typeof latitude === 'string') {
+        longitude = parseFloat(longitude)
+        latitude = parseFloat(latitude)
+    }
 
+    longitude = longitude.toFixed(2)
+    latitude = latitude.toFixed(2)
+
+    return {
+        longitude: longitude.toString().split('.'),
+        latitude: latitude.toString().split('.')
+    }
+}
+
+module.exports = {
     formatTime: formatTime,
     getTime: getTime,
+    formatLocation: formatLocation,
 
     AJAX: function (url = '', fn, data = {}, method = "GET", header = {}) {
         wx.request({
             url: config.appApiUrl + url,
             method: method ? method : 'GET',
             data: data,
+            //dataType: 'json',
             header: header ? header : { "Content-Type": "application/json" },
             success: function (res) {
                 fn(res);
@@ -78,7 +94,6 @@ module.exports = {
      * 20161002
      */
     getFormatDate: function (str) {
-
         // 拆分日期为年 月 日
         var YEAR = str.substring(0, 4),
             MONTH = str.substring(4, 6),

@@ -36,16 +36,12 @@ input[type="text"],input[type="password"]{padding:4px 5px;vertical-align:middle;
 .inpMain {border:1px solid #DBDBDB;background-color:#FFF;padding:4px 5px;color:#999;font-size:12x;line-height:20px;-webkit-appearance:none;}
 .textArea {border:1px solid #DBDBDB;background-color:#FFF;padding:4px 5px;color:#999;font-size:12x;line-height:20px;-webkit-appearance:none;}
 
-.backpages{text-align:center;padding:15px 0px;}.backpages a:hover{background:#01aef0;color:#fff;border:1px solid #01aef0;}
-.backpages a{display:inline-block;height:32px;line-height:32px;padding:0 10px;font-size:14px;color:#333;background:#fff;margin-right:8px;border:1px solid #e3e3e3;}
-.backpages .current{display:inline-block;height:32px;line-height:32px;padding:0 10px;font-size:14px;background:#01aef0;color:#fff;margin-right:8px;border:1px solid #01aef0;}
-
 /* 后台左侧菜单 */
 .menu ul{padding:0;}
 .menu ul li{background-color:#f2f2f2;border:solid 1px #E5E5E5;border-bottom:0;}
 .menu ul li a{padding-left:20px;color:#444;display:block;height:45px;line-height:45px;position:relative;font-size:16px;}
-.menu ul li .inactive{background:url(/images/off.png) no-repeat 90% center;}
-.menu ul li .active{background:url(/images/on.png) no-repeat 90% center;color:#01aef0;} 
+.menu ul li .inactive{/* background:url(../images/off.png) no-repeat 90% center; */}
+.menu ul li .active{/* background:url(../images/on.png) no-repeat 90% center; */color:#01aef0;} 
 .menu ul li ul{display:none;padding:0;}
 .menu ul li ul li{border-left:0;border-right:0;background-color:#fafafa;border-color:#eee;}
 .menu ul li ul li ul{display:none;padding:0;}

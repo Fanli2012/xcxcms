@@ -1,0 +1,139 @@
+<!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>UEditor Docs</title>
+<link rel="stylesheet" href="/css/bootstrap.min.css">
+<link rel="stylesheet" href="/css/prettify.css">
+<link rel="stylesheet" href="/css/doc.css">
+</head>
+<body>
+<div class="blog-masthead clearfix"><div class="container"><nav class="blog-nav">
+<a class="blog-nav-item active" href="/Fladmin"><strong>UEditor Docs</strong></a>
+<a class="blog-nav-item" href="/" target="_blank">演示</a>
+<a class="blog-nav-item" href="/Fladmin/Index/upcache">官网</a>
+<a class="blog-nav-item" id="navexit" href="/Home/Index/loginout">论坛</a>
+<a class="blog-nav-item pull-right" href="javascript:;"><small>您好：admin888</small></a>
+</nav></div></div>
+
+<div class="ue-docs-caption">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h1>UEditor文档</h1>
+                <p>UEditor富文本编辑器，轻量，可定制，注重用户体验。</p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container ue-docs-container">
+    <div class="row">
+        <div class="col-md-3">
+            <div id="guidebar" class="ue-sidebar hidden-print" role="complementary">
+                <ul class="nav ue-sidenav">
+				<li class="category active"><a href="javascript:void(0)">1. 开始使用</a><ul class="nav"><li><a href="http://fex.baidu.com/ueditor/#start-start">1.1 开始使用ueditor</a></li><li><a href="http://fex.baidu.com/ueditor/#start-toolbar">1.2 定制工具栏图标</a></li><li><a href="http://fex.baidu.com/ueditor/#start-config">1.3 前端配置项说明</a></li><li><a href="http://fex.baidu.com/ueditor/#start-dir">1.4 目录介绍</a></li><li><a href="http://fex.baidu.com/ueditor/#start-submit">1.5 提交表单</a></li><li><a href="http://fex.baidu.com/ueditor/#start-uparse">1.6 编辑内容展示</a></li><li><a href="http://fex.baidu.com/ueditor/#start-patch">1.7 如何使用补丁文件</a></li></ul></li>
+				<li class="category active"><a href="javascript:void(0)">2. 后端配置</a><ul class="nav"><li><a href="http://fex.baidu.com/ueditor/#server-deploy">2.1 后端部署说明</a></li><li><a href="http://fex.baidu.com/ueditor/#server-php">2.2 PHP 使用说明</a></li><li><a href="http://fex.baidu.com/ueditor/#server-asp">2.3 ASP 使用说明</a></li><li><a href="http://fex.baidu.com/ueditor/#server-net">2.4 ASP.NET 使用说明</a></li><li><a href="http://fex.baidu.com/ueditor/#server-jsp">2.5 JSP 使用说明</a></li><li><a href="http://fex.baidu.com/ueditor/#server-config">2.7 后端配置项说明</a></li><li><a href="http://fex.baidu.com/ueditor/#server-path">2.8 上传路径配置</a></li><li><a href="http://fex.baidu.com/ueditor/#server-video">2.9 上传视频</a></li></ul></li>
+				<li class="category active"><a href="javascript:void(0)">3. 二次开发</a><ul class="nav"><li><a href="http://fex.baidu.com/ueditor/#dev-developer">3.1 如何进行二次开发</a></li><li><a href="http://fex.baidu.com/ueditor/#dev-bale_width_grunt">3.2 使用grunt打包源代码</a></li><li><a href="http://fex.baidu.com/ueditor/#dev-request_specification">3.3 后端请求规范</a></li><li><a href="http://fex.baidu.com/ueditor/#dev-serverparam">3.4 自定义请求参数</a></li><li><a href="http://fex.baidu.com/ueditor/#dev-crossdomain">3.5 跨域支持说明</a></li></ul></li>
+				<li class="category active"><a href="javascript:void(0)">4. 常用API列表</a><ul class="nav"><li><a href="http://fex.baidu.com/ueditor/#api-common">4.1 常用API</a></li></ul></li>
+				<li class="category active"><a href="javascript:void(0)">5. 常见问题</a><ul class="nav"><li><a href="http://fex.baidu.com/ueditor/#qa-ready">5.1 实例创建后为什么直接执行接口报错</a></li><li><a href="http://fex.baidu.com/ueditor/#qa-customurl">5.2 如何自定义请求地址</a></li><li><a href="http://fex.baidu.com/ueditor/#qa-allowDivToP">5.3 如何阻止div变成p标签</a></li></ul></li></ul>
+            </div>
+        </div>
+        <div class="col-md-9 ue-docs-main" role="main">
+            <div id="show"><h1>Get Started</h1>
+
+<h2>UEditor 介绍</h2>
+
+<p>UEditor 是由百度「FEX前端研发团队」开发的所见即所得富文本web编辑器，具有轻量，可定制，注重用户体验等特点，开源基于MIT协议，允许自由使用和修改代码。</p>
+
+<h2>1 入门部署和体验</h2>
+
+<h3>1.1 下载编辑器</h3>
+
+<p>到官网下载 UEditor 最新版：<a href="http://ueditor.baidu.com/website/download.html#ueditor" title="官网下载地址">[官网地址]</a></p>
+
+<h3>1.2 创建demo文件</h3>
+
+<p>解压下载的包，在解压后的目录创建 demo.html 文件，填入下面的html代码</p>
+
+<p></p><pre class="prettyprint lang-html prettyprinted"><span class="dec">&lt;!DOCTYPE HTML&gt;</span><span class="pln">
+</span><span class="tag">&lt;html</span><span class="pln"> </span><span class="atn">lang</span><span class="pun">=</span><span class="atv">"en-US"</span><span class="tag">&gt;</span><span class="pln">
+
+</span><span class="tag">&lt;head&gt;</span><span class="pln">
+    </span><span class="tag">&lt;meta</span><span class="pln"> </span><span class="atn">charset</span><span class="pun">=</span><span class="atv">"UTF-8"</span><span class="tag">&gt;</span><span class="pln">
+    </span><span class="tag">&lt;title&gt;</span><span class="pln">ueditor demo</span><span class="tag">&lt;/title&gt;</span><span class="pln">
+</span><span class="tag">&lt;/head&gt;</span><span class="pln">
+
+</span><span class="tag">&lt;body&gt;</span><span class="pln">
+    </span><span class="com">&lt;!-- 加载编辑器的容器 --&gt;</span><span class="pln">
+    </span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">id</span><span class="pun">=</span><span class="atv">"container"</span><span class="pln"> </span><span class="atn">name</span><span class="pun">=</span><span class="atv">"content"</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text/plain"</span><span class="tag">&gt;</span><span class="pln">
+        </span><span class="pun">这里写你的初始化内容</span><span class="pln">
+    </span><span class="tag">&lt;/script&gt;</span><span class="pln">
+    </span><span class="com">&lt;!-- 配置文件 --&gt;</span><span class="pln">
+    </span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text/javascript"</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"ueditor.config.js"</span><span class="tag">&gt;&lt;/script&gt;</span><span class="pln">
+    </span><span class="com">&lt;!-- 编辑器源码文件 --&gt;</span><span class="pln">
+    </span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text/javascript"</span><span class="pln"> </span><span class="atn">src</span><span class="pun">=</span><span class="atv">"ueditor.all.js"</span><span class="tag">&gt;&lt;/script&gt;</span><span class="pln">
+    </span><span class="com">&lt;!-- 实例化编辑器 --&gt;</span><span class="pln">
+    </span><span class="tag">&lt;script</span><span class="pln"> </span><span class="atn">type</span><span class="pun">=</span><span class="atv">"text/javascript"</span><span class="tag">&gt;</span><span class="pln">
+        </span><span class="kwd">var</span><span class="pln"> ue </span><span class="pun">=</span><span class="pln"> UE</span><span class="pun">.</span><span class="pln">getEditor</span><span class="pun">(</span><span class="str">'container'</span><span class="pun">);</span><span class="pln">
+    </span><span class="tag">&lt;/script&gt;</span><span class="pln">
+</span><span class="tag">&lt;/body&gt;</span><span class="pln">
+
+</span><span class="tag">&lt;/html&gt;</span></pre><p></p>
+
+<h3>1.3 在浏览器打开demo.html</h3>
+
+<p>如果看到了下面这样的编辑器，恭喜你，初次部署成功！</p>
+
+<p><img src="images/demo.png" alt="部署成功"></p>
+
+<h3>1.4 传入自定义的参数</h3>
+
+<p>编辑器有很多可自定义的参数项，在实例化的时候可以传入给编辑器：
+</p><pre class="prettyprint lang-javascript prettyprinted"><span class="kwd">var</span><span class="pln"> ue </span><span class="pun">=</span><span class="pln"> UE</span><span class="pun">.</span><span class="pln">getEditor</span><span class="pun">(</span><span class="str">'container'</span><span class="pun">,</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    autoHeight</span><span class="pun">:</span><span class="pln"> </span><span class="kwd">false</span><span class="pln">
+</span><span class="pun">});</span></pre><p></p>
+
+<p>配置项也可以通过 ueditor.config.js 文件修改，具体的配置方法请看<a class="mardwodnlink" href="http://fex.baidu.com/ueditor/#start-config">前端配置项说明</a></p>
+
+<h3>1.5 设置和读取编辑器的内容</h3>
+
+<p>通 getContent 和 setContent 方法可以设置和读取编辑器的内容
+</p><pre class="prettyprint lang-javascript prettyprinted"><span class="kwd">var</span><span class="pln"> ue </span><span class="pun">=</span><span class="pln"> UE</span><span class="pun">.</span><span class="pln">getContent</span><span class="pun">();</span><span class="pln">
+</span><span class="com">//对编辑器的操作最好在编辑器ready之后再做</span><span class="pln">
+ue</span><span class="pun">.</span><span class="pln">ready</span><span class="pun">(</span><span class="kwd">function</span><span class="pun">()</span><span class="pln"> </span><span class="pun">{</span><span class="pln">
+    </span><span class="com">//设置编辑器的内容</span><span class="pln">
+    ue</span><span class="pun">.</span><span class="pln">setContent</span><span class="pun">(</span><span class="str">'hello'</span><span class="pun">);</span><span class="pln">
+    </span><span class="com">//获取html内容，返回: &lt;p&gt;hello&lt;/p&gt;</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> html </span><span class="pun">=</span><span class="pln"> ue</span><span class="pun">.</span><span class="pln">getContent</span><span class="pun">();</span><span class="pln">
+    </span><span class="com">//获取纯文本内容，返回: hello</span><span class="pln">
+    </span><span class="kwd">var</span><span class="pln"> txt </span><span class="pun">=</span><span class="pln"> ue</span><span class="pun">.</span><span class="pln">getContentTxt</span><span class="pun">();</span><span class="pln">
+</span><span class="pun">});</span></pre><p></p>
+
+<p>UEditor 的更多API请看<a href="http://ueditor.baidu.com/doc" title="UEditor API 文档">API 文档</a></p>
+
+<h2>2 详细文档</h2>
+
+<p>UEditor 官网：<a href="http://ueditor.baidu.com/" title="UEditor 官网">http://ueditor.baidu.com</a></p>
+
+<p>UEditor API 文档：<a href="http://ueditor.baidu.com/doc" title="UEditor API 文档">http://ueditor.baidu.com/doc</a></p>
+
+<p>UEditor Github 地址：<a href="http://github.com/fex-team/ueditor" title="UEditor github 地址">http://github.com/fex-team/ueditor</a></p>
+
+<h2>3 联系我们</h2>
+
+<p>Email：<a href="mailto://email:ueditor@baidu.com" title="发邮件给 UEditor 开发组">ueditor@baidu.com</a></p>
+
+<p>Issue：<a href="http://github.com/fex-team/ueditor/issues" title="ueditor 论坛">github issue</a></p><div class="pagebar"><a class="next mardwodnlink" href="http://fex.baidu.com/ueditor/#start-toolbar">下一篇: 1.2 定制工具栏图标</a><span class="clearfloat"></span></div></div>
+        </div>
+    </div>
+</div>
+<div class="ue-footer" role="contentinfo">
+    <div class="container">
+        <ul class="footer-links">
+            <li>UEditor Docs</li>
+            <li class="muted">·</li>
+            <li>Version 1.3.5</li>
+            <li class="muted">·</li>
+            <li><a href="https://github.com/fex-team/ueditor" target="_blank">Fork me on github</a></li>
+        </ul>
+    </div>
+</div>
+
+</body></html>

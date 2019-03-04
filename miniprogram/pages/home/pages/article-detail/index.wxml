@@ -1,0 +1,10 @@
+<import src="../../../../vendor/wxParse/wxParse.wxml"/>
+
+<view class="page__bd">
+    <view class="weui-article">
+        <view class="weui-article__h1">{{post.title}}</view>
+        <view class="weui-article__p" style="color:#b2b2b2;">{{post.updated_at}} <!-- <navigator url="../shop/index?id={{post.shop_id}}" wx:if="{{post.shop_id > 0}}" class="article-shop_name">{{post.shop.company_name}}</navigator> --></view>
+        <view class="weui-article__section"><template is="wxParse" data="{{wxParseData:article.nodes}}"/></view>
+        <view class="weui-article__p" style="color:#b2b2b2;">阅读({{post.click}})</view>
+    </view>
+</view>

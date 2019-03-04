@@ -1,0 +1,41 @@
+<view class="page">
+    <view class="myhearder" style="background:#444;color:#fff;">
+        <view class="person">
+            <view class="personicon">
+                <navigator url="">
+                    <image src="{{userInfo.avatarUrl}}"></image>
+                </navigator>
+            </view>
+            <view class="lors">
+                <navigator style="color:#fff;" url="">{{userInfo.nickName}}</navigator>
+            </view>
+        </view>
+    </view>
+
+    <view class="weui-cells weui-cells_after-title">
+        <navigator class="weui-cell" url="../user/index">
+            <view class="weui-cell__bd">我的名片</view>
+            <view class="weui-cell__ft weui-cell__ft_in-access">编辑</view>
+        </navigator>
+        <navigator class="weui-cell" url="../usercollect/index">
+            <view class="weui-cell__bd">我的收藏</view>
+            <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+        </navigator>
+    </view>
+
+    <view class="weui-cells weui-cells_after-title" style="margin-top:10px;">
+        <view class="weui-cell" bindtap="makePhoneCall">
+            <view class="weui-cell__bd">联系我们</view>
+            <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+        </view>
+        <view class="weui-cell" bindtap="openAlert">
+            <view class="weui-cell__bd">关于我们</view>
+            <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+        </view>
+    </view>
+
+    <view class="page__bd page__bd_spacing" style="margin:10px;">
+        <navigator url="../login/index"><button class="weui-btn" type="warn">重新登录</button></navigator>
+        <button class="weui-btn" type="primary" open-type="openSetting">授权设置</button>
+    </view>
+</view>

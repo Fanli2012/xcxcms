@@ -1,9 +1,76 @@
-<map style="width: 100%; height: 300px;" latitude="{{latitude}}" longitude="{{longitude}}" markers="{{markers}}"></map>
+<view><map style="width: 100%; height:300px;" latitude="{{latitude}}" longitude="{{longitude}}" markers="{{markers}}" show-location></map></view>
 
-<view class="block-tit mt10">联系我们</view>
-<view class="ulist clear">
-    <view><text style="color:#999;">联系人：</text>{{contact}}</view>
-    <view><text style="color:#999;">电子邮箱：</text>{{email}}</view>
-    <view bindtap="makePhoneCall"><text style="color:#999;">联系方式：</text>{{mobile}}</view>
-    <view><navigator url="../map/index"><text style="color:#999;">地址：</text>{{address}}</navigator></view>
+<!-- 联系我们 -->
+<view class="page__bd">
+    <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell">
+            <view wx:if="{{shopDetail.head_img != ''}}" class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+                <image src="{{shopDetail.head_img}}" style="border-radius:5px;width: 50px; height: 50px; display: block" />
+                <!-- <view class="weui-badge" style="position: absolute;top: -.4em;right: -.4em;">8</view> -->
+            </view>
+            <view class="weui-cell__bd">
+                <view>{{shopDetail.company_name}}</view>
+                <view wx:if="{{shopDetail.city_text != ''}}" style="font-size: 13px;color: #888888;vertical-align:top;">
+                    <image style="margin-top:-2px;width:14px; height:14px;" src="../../../../images/location2.png"></image> {{shopDetail.province_text}} · {{shopDetail.city_text}}</view>
+            </view>
+            <view class="weui-cell__ft">
+                <image style="width:20px; height:20px;" src="../../../../images/company_icon.png"></image>
+            </view>
+        </view>
+        <view class="weui-cell weui-cell_access">
+            <view class="weui-cell__bd">
+                <view style="display: inline-block; vertical-align: middle">
+                    <text style="color:#999;">地址：</text>{{shopDetail.address}}</view>
+            </view>
+            <view class="weui-cell__ft"></view>
+        </view>
+        <view class="weui-cell weui-cell_access" wx:if="{{shopDetail.contact != ''}}">
+            <view class="weui-cell__bd">
+                <view style="display: inline-block; vertical-align: middle">
+                    <text style="color:#999;">联系人：</text>{{shopDetail.contact}}</view>
+            </view>
+            <view class="weui-cell__ft"></view>
+        </view>
+        <view class="weui-cell weui-cell_access" bindtap="makePhoneCall" wx:if="{{shopDetail.contact_information != ''}}">
+            <view class="weui-cell__bd">
+                <view style="display: inline-block; vertical-align: middle">
+                    <text style="color:#999;">联系方式：</text>{{shopDetail.contact_information}}</view>
+            </view>
+            <view class="weui-cell__ft">
+                <image style="width:18px; height:18px;" src="../../../../images/tel.png"></image>
+            </view>
+        </view>
+        <view class="weui-cell weui-cell_access" wx:if="{{shopDetail.email != ''}}">
+            <view class="weui-cell__bd">
+                <view style="display: inline-block; vertical-align: middle" bindtap="copyTBL" data-clipboarddata="{{shopDetail.email}}">
+                    <text style="color:#999;">电子邮箱：</text>{{shopDetail.email}}</view>
+            </view>
+            <view class="weui-cell__ft"></view>
+        </view>
+        <view class="weui-cell weui-cell_access" wx:if="{{shopDetail.wechat != ''}}">
+            <view class="weui-cell__bd">
+                <view style="display: inline-block; vertical-align: middle" bindtap="copyTBL" data-clipboarddata="{{shopDetail.wechat}}">
+                    <text style="color:#999;">微信号：</text>{{shopDetail.wechat}}</view>
+            </view>
+            <view class="weui-cell__ft"></view>
+        </view>
+        <view class="weui-cell weui-cell_access" wx:if="{{shopDetail.qq != ''}}">
+            <view class="weui-cell__bd">
+                <view style="display: inline-block; vertical-align: middle" bindtap="copyTBL" data-clipboarddata="{{shopDetail.qq}}">
+                    <text style="color:#999;">QQ：</text>{{shopDetail.qq}}</view>
+            </view>
+            <view class="weui-cell__ft"></view>
+        </view>
+        <view class="weui-cell weui-cell_access" wx:if="{{shopDetail.website != ''}}">
+            <view class="weui-cell__bd">
+                <view style="display: inline-block; vertical-align: middle" bindtap="copyTBL" data-clipboarddata="{{shopDetail.website}}">
+                    <text style="color:#999;">官网：</text>{{shopDetail.website}}</view>
+            </view>
+            <view class="weui-cell__ft"></view>
+        </view>
+    </view>
+    <!-- <map style="width: 100%; height:200px;z-index:-999" latitude="{{latitude}}" longitude="{{longitude}}" markers="{{markers}}" show-location></map> -->
+    <view style="padding:10px;background-color:#f8f8f8;border-top:1px solid #ebebeb;">
+        <button open-type="contact" type="primary">聊一聊</button>
+    </view>
 </view>

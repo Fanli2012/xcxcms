@@ -1,0 +1,122 @@
+{extend name="public/base" /}
+{block name="title"}文章修改{/block}
+
+{block name="content"}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel-body" style="padding: 15px 0;">
+                <ul class="nav nav-tabs">
+                    <li><a href="{:url('shop/Article/index')}">文章列表</a></li>
+                    <li class="active"><a href="javascript:;">文章修改</a></li>
+                    <li><a href="{:url('shop/Article/add')}">添加文章</a></li>
+                </ul>
+            </div>
+            <br>
+            <div class="panel-body">
+            <form id="addarc" method="post" action="{:url('shop/Article/doedit')}" role="form" enctype="multipart/form-data" class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label"><span class="text-danger"> * </span>标题</label>
+                    <div class="col-sm-4">
+                        <input value="<?php echo $post["title"]; ?>" type="text" name="title" class="form-control" placeholder="标题" required><input style="display:none;" name="id" type="text" id="id" value="<?php echo $id; ?>">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">seoTitle</label>
+                    <div class="col-sm-4">
+                        <input value="<?php echo $post["seotitle"]; ?>" type="text" name="seotitle" class="form-control" placeholder="seoTitle">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">关键词</label>
+                    <div class="col-sm-4">
+                        <input value="<?php echo $post["keywords"]; ?>" type="text" name="keywords" class="form-control" placeholder="关键词">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">
+                        <span class="text-danger">*</span>分类</label>
+                    <div class="col-sm-4 form-inline">
+                        <select class="form-control" id='type_id' name="type_id">
+                            <?php if($article_type_list){foreach($article_type_list as $row){ ?>
+                            <option value ="<?php echo $row["id"]; ?>"<?php if($row["id"]==$post['type_id']){echo ' selected = selected"';} ?>><?php echo $row["name"]; ?></option>
+                            <?php }} ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label"><span class="text-danger"> * </span>是否置顶</label>
+                    <div class="col-sm-4">
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="tuijian" id="tuijian" value="1" {if condition="$post['tuijian']==1"}checked{/if}> 是
+                            </label>
+                            <label>
+                                <input type="radio" name="tuijian" id="tuijian" value="0" {if condition="$post['tuijian']==0"}checked{/if}> 否
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label"><span class="text-danger">  </span>缩略图</label>
+                    <div class="col-sm-9">
+                        <button type="button" onclick="upImage();">选择图片</button>
+                        <input name="litpic" type="text" id="litpic" value="{$post['litpic']}" style="display:none;">
+                        <img style="margin-left:20px;<?php if(empty($post["litpic"]) || !imgmatch($post["litpic"])){ echo "display:none;"; } ?>" src="<?php if(imgmatch($post["litpic"])){echo $post["litpic"];} ?>" width="120" height="80" id="picview" name="picview">
+                    </div>
+                </div>
+<script type="text/javascript">
+var _editor;
+$(function() {
+    //重新实例化一个编辑器，防止在上面的editor编辑器中显示上传的图片或者文件
+    _editor = UE.getEditor('ueditorimg');
+    _editor.ready(function () {
+        //设置编辑器不可用
+        _editor.setDisabled('insertimage');
+        //隐藏编辑器，因为不会用到这个编辑器实例，所以要隐藏
+        _editor.hide();
+        //侦听图片上传
+        _editor.addListener('beforeInsertImage', function (t, arg) {
+            //将地址赋值给相应的input,只取第一张图片的路径
+			$('#litpic').val(arg[0].src);
+            //图片预览
+            $('#picview').attr("src",arg[0].src).css("display","inline-block");
+        })
+    });
+});
+//弹出图片上传的对话框
+function upImage()
+{
+    var myImage = _editor.getDialog("insertimage");
+	myImage.render();
+    myImage.open();
+}
+</script>
+<script type="text/plain" id="ueditorimg"></script>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">摘要</label>
+                    <div class="col-sm-6">
+                    <textarea class="form-control" name="description" rows="3"><?php echo $post["description"]; ?></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">内容</label>
+                    <div class="col-sm-9">
+                        <!-- 加载编辑器的容器 --><script id="container" name="content" type="text/plain"><?php echo $post["content"]; ?></script>
+                        <!-- 配置文件 --><script type="text/javascript" src="/other/flueditor/ueditor.config.js"></script>
+                        <!-- 编辑器源码文件 --><script type="text/javascript" src="/other/flueditor/ueditor.all.min.js"></script>
+                        <!-- 实例化编辑器 --><script type="text/javascript">var ue = UE.getEditor('container',{maximumWords:10000,initialFrameHeight:320,enableAutoSave:false});</script>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-10">
+                        <button type="submit" onclick="" class="btn btn-success" value="Submit">保存(Submit)</button>
+                        <button type="reset" class="btn btn-default" value="Reset">重置(Reset)</button>
+                    </div>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+</div>
+{/block}

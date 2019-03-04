@@ -1,0 +1,169 @@
+{extend name="public/base" /}
+{block name="title"}添加文章{/block}
+
+{block name="content"}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel-body" style="padding: 15px 0;">
+                <ul class="nav nav-tabs">
+                    <li><a href="{:url('shop/Article/index')}">文章列表</a></li>
+                    <li class="active"><a href="javascript:;">添加文章</a></li>
+                </ul>
+            </div>
+            <br>
+            <div class="panel-body">
+            <form id="addarc" method="post" action="{:url('shop/Article/doadd')}" role="form" enctype="multipart/form-data" class="form-horizontal">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label"><span class="text-danger"> * </span>标题</label>
+                    <div class="col-sm-4">
+                        <input type="text" name="title" class="form-control" placeholder="标题" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">seoTitle</label>
+                    <div class="col-sm-4">
+                        <input value="" type="text" name="seotitle" class="form-control" placeholder="seoTitle">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">关键词</label>
+                    <div class="col-sm-4">
+                        <input value="" type="text" name="keywords" class="form-control" placeholder="关键词">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">
+                        <span class="text-danger">*</span>分类</label>
+                    <div class="col-sm-4 form-inline">
+                        <select class="form-control" id='type_id' name="type_id">
+                            <?php if($article_type_list){foreach($article_type_list as $row){ ?>
+                            <option value ="<?php echo $row["id"]; ?>"><?php echo $row["name"]; ?></option>
+                            <?php }} ?>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label"><span class="text-danger"> * </span>是否置顶</label>
+                    <div class="col-sm-4">
+                        <div class="radio">
+                            <label>
+                                <input type="radio" name="tuijian" id="tuijian" value="1"> 是
+                            </label>
+                            <label>
+                                <input type="radio" name="tuijian" id="tuijian" value="0" checked> 否
+                            </label>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label"><span class="text-danger">  </span>缩略图</label>
+                    <div class="col-sm-9">
+                        <button type="button" onclick="upImage();">选择图片</button>
+                        <input name="litpic" type="text" id="litpic" value="" style="display:none;">
+                        <img style="margin-left:20px;display:none;" src="" width="120" height="80" id="picview">
+                    </div>
+                </div>
+<script type="text/javascript">
+var _editor;
+$(function() {
+    //重新实例化一个编辑器，防止在上面的editor编辑器中显示上传的图片或者文件
+    _editor = UE.getEditor('ueditorimg');
+    _editor.ready(function () {
+        //设置编辑器不可用
+        _editor.setDisabled('insertimage');
+        //隐藏编辑器，因为不会用到这个编辑器实例，所以要隐藏
+        _editor.hide();
+        //侦听图片上传
+        _editor.addListener('beforeInsertImage', function (t, arg) {
+            //将地址赋值给相应的input,只取第一张图片的路径
+			$('#litpic').val(arg[0].src);
+            //图片预览
+            $('#picview').attr("src",arg[0].src).css("display","inline-block");
+        })
+    });
+});
+//弹出图片上传的对话框
+function upImage()
+{
+    var myImage = _editor.getDialog("insertimage");
+	myImage.render();
+    myImage.open();
+}
+</script>
+<script type="text/plain" id="ueditorimg"></script>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">摘要</label>
+                    <div class="col-sm-6">
+                    <textarea class="form-control" name="description" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">内容</label>
+                    <div class="col-sm-9">
+                        <!-- 加载编辑器的容器 --><script id="container" name="content" type="text/plain"></script>
+                        <!-- 配置文件 --><script type="text/javascript" src="/other/flueditor/ueditor.config.js"></script>
+                        <!-- 编辑器源码文件 --><script type="text/javascript" src="/other/flueditor/ueditor.all.min.js"></script>
+                        <!-- 实例化编辑器 --><script type="text/javascript">var ue = UE.getEditor('container',{maximumWords:100000,initialFrameHeight:320,enableAutoSave:false});</script>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-offset-3 col-sm-10">
+                        <button type="submit" onclick="" class="btn btn-success" value="Submit">保存(Submit)</button>
+                        <button type="reset" class="btn btn-default" value="Reset">重置(Reset)</button>
+                    </div>
+                </div>
+            </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+$(function(){
+    $(".required").blur(function(){
+        var $parent = $(this).parent();
+        $parent.find(".formtips").remove();
+        if(this.value=="")
+        {
+            $parent.append(' <small class="formtips onError"><font color="red">不能为空！</font></small>');
+        }
+        else
+        {
+            var title = $("#title").val();
+            $.ajax({
+                url: "/fladmin/Article/articleexists",
+                type: "GET",
+                cache: false,
+                data: {
+                    "title":title
+                    //"title":title.replace("'", '&#039;')
+                },
+                success: function(data){
+                    if(data>0)
+                    {
+                        $parent.append(' <small class="formtips onSuccess"><font color="green">已经存在</font></small>');
+                    }
+                    else
+                    {
+                        $parent.append(' <small class="formtips onSuccess"><font color="green">OK</font></small>');
+                    }
+                }
+            });
+        }
+    });
+
+    //重置
+    $('#addarc input[type="reset"]').click(function(){
+            $(".formtips").remove(); 
+    });
+
+    $("#addarc").submit(function(){
+        $(".required").trigger('blur');
+        var numError = $('#addarc .onError').length;
+        
+        if(numError){return false;}
+    });
+});
+</script>
+{/block}

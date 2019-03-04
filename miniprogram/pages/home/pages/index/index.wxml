@@ -1,72 +1,168 @@
-<swiper class="swiper-boxs" indicator-dots autoplay circular duration="300">
-    <swiper-item wx:for="{{slideList}}" wx:key="unique">
-        <navigator url="../{{slideList[index].id}}">
-            <image model="aspectFit" style="width: {{windowWidth}}px;" class="swiper-boxs-img" src="{{slideList[index].pic}}" />
-        </navigator>
-    </swiper-item>
-</swiper>
+<!-- 封面 -->
+<image style="width:100%; height:160px; background-color: #eeeeee;" src="{{shopDetail.cover_img}}"></image>
 
-<!-- 产品中心 -->
-<view class="banner_headline"><view class="title"><text class="htit">产品中心</text></view></view>
-<view class="page-section-spacing" style="margin-bottom:20px;">
-    <scroll-view class="scroll-view_H" scroll-x="true" style="width: 100%">
-        <view wx:for="{{goodsList}}" wx:key="unique" class="scroll-view-item_H demo-text-1">
-        <navigator url="../goodsdetail/index?id={{item.id}}">
-        <image style="width: 150px; height: 100px; background-color: #eeeeee;" src="{{item.litpic}}"></image></navigator></view>
-    </scroll-view>
-</view>
+<!-- 联系我们 -->
+<view class="page__bd">
+    <view class="weui-cells weui-cells_after-title">
+        <view class="weui-cell">
+            <view wx:if="{{shopDetail.head_img != ''}}" class="weui-cell__hd" style="position: relative;margin-right: 10px;">
+                <image src="{{shopDetail.head_img}}" style="border-radius:5px;width: 50px; height: 50px; display: block" />
+                <!-- <view class="weui-badge" style="position: absolute;top: -.4em;right: -.4em;">8</view> -->
+            </view>
+            <view class="weui-cell__bd">
+                <view>{{shopDetail.company_name}}</view>
+                <view wx:if="{{shopDetail.city_text != ''}}" style="font-size: 13px;color: #888888;vertical-align:top;">
+                    <image style="margin-top:-2px;width:14px; height:14px;" src="../../../../images/location2.png"></image> {{shopDetail.province_text}} · {{shopDetail.city_text}}</view>
+            </view>
+            <view class="weui-cell__ft">
+                <image style="width:20px; height:20px;" src="../../../../images/company_icon.png"></image>
+            </view>
+        </view>
+        <view class="weui-cell weui-cell_access" wx:if="{{shopDetail.contact != ''}}">
+            <view class="weui-cell__bd">
+                <view style="display: inline-block; vertical-align: middle">
+                    <text style="color:#999;">联系人：</text>{{shopDetail.contact}}</view>
+            </view>
+            <view class="weui-cell__ft"></view>
+        </view>
+        <view class="weui-cell weui-cell_access" bindtap="makePhoneCall" wx:if="{{shopDetail.contact_information != ''}}">
+            <view class="weui-cell__bd">
+                <view style="display: inline-block; vertical-align: middle">
+                    <text style="color:#999;">联系方式：</text>{{shopDetail.contact_information}}</view>
+            </view>
+            <view class="weui-cell__ft">
+                <image style="width:18px; height:18px;" src="../../../../images/tel.png"></image>
+            </view>
+        </view>
+        <view class="weui-cell weui-cell_access" wx:if="{{shopDetail.wechat != ''}}">
+            <view class="weui-cell__bd">
+                <view style="display: inline-block; vertical-align: middle" bindtap="copyTBL" data-clipboarddata="{{shopDetail.wechat}}">
+                    <text style="color:#999;">微信号：</text>{{shopDetail.wechat}}</view>
+            </view>
+            <view class="weui-cell__ft"></view>
+        </view>
+        <view class="weui-cell weui-cell_access" wx:if="{{shopDetail.qq != ''}}">
+            <view class="weui-cell__bd">
+                <view style="display: inline-block; vertical-align: middle" bindtap="copyTBL" data-clipboarddata="{{shopDetail.qq}}">
+                    <text style="color:#999;">QQ：</text>{{shopDetail.qq}}</view>
+            </view>
+            <view class="weui-cell__ft"></view>
+        </view>
+        <view class="weui-cell weui-cell_access" wx:if="{{shopDetail.email != ''}}">
+            <view class="weui-cell__bd">
+                <view style="display: inline-block; vertical-align: middle" bindtap="copyTBL" data-clipboarddata="{{shopDetail.email}}">
+                    <text style="color:#999;">电子邮箱：</text>{{shopDetail.email}}</view>
+            </view>
+            <view class="weui-cell__ft"></view>
+        </view>
+        <view class="weui-cell weui-cell_access" wx:if="{{shopDetail.website != ''}}">
+            <view class="weui-cell__bd">
+                <view style="display: inline-block; vertical-align: middle" bindtap="copyTBL" data-clipboarddata="{{shopDetail.website}}">
+                    <text style="color:#999;">官网：</text>{{shopDetail.website}}</view>
+            </view>
+            <view class="weui-cell__ft"></view>
+        </view>
+        <view class="weui-cell weui-cell_access">
+            <view class="weui-cell__bd">
+                <view style="display: inline-block; vertical-align: middle">
+                    <text style="color:#999;">地址：</text>{{shopDetail.address}}</view>
+            </view>
+            <view class="weui-cell__ft">
+                <navigator url="../map/index">
+                    <image style="width:20px; height:20px;" src="../../../../images/location3.png"></image>
+                </navigator>
+            </view>
+        </view>
+    </view>
+    <!-- <map style="width: 100%; height:200px;z-index:-999" latitude="{{latitude}}" longitude="{{longitude}}" markers="{{markers}}" show-location></map> -->
+    <view style="padding:10px;background-color:#f8f8f8;border-top:1px solid #ebebeb;">
+        <button open-type="contact" type="primary">聊一聊</button>
+    </view>
 
-<!-- 图文列表 -->
-<!--<view class="block-tit">最新动态</view>
-<view class="themes-list mb10">
-    <view class="themes-list-box" wx:for="{{newsList}}" wx:key="unique">
-        <navigator url="../detail/index?id={{item.id}}">
-            <view wx:if="{{item.litpic != ''}}" class="themes-list-thumbnail">
-                <image class="themes-list-img" src="{{item.litpic}}" />
-            </view>
-            <view class="themes-list-main">
-                <view class="themes-list-name">{{item.title}}</view>
-                <view class="themes-list-description">{{item.description}}</view>
-            </view>
-        </navigator>
+    <!-- <view class="page__bd">
+    <view class="weui-form-preview">
+        <view class="weui-form-preview__ft">
+            <navigator url="../guestbook/index" class="weui-form-preview__btn weui-form-preview__btn_primary" hover-class="weui-form-preview__btn_active">在线留言<view class="weui-badge" style="margin-left: 2px;">Hot</view></navigator>
+        </view>
     </view>
 </view> -->
 
-<view class="block-tit">新闻资讯</view>
-
-<view class="ulist clear"><view wx:for="{{newsList}}" wx:key="unique">
-<navigator wx:if="{{item.litpic != ''}}" class="gpic" url="../detail/index?id={{item.id}}"><image src="{{item.litpic}}"></image></navigator>
-<navigator url="../detail/index?id={{item.id}}">{{item.title}}</navigator>
-</view></view>
-
-<!-- <view class="hot-main">
-    <view class="hot-main-box">
-        <view class="hot-main-title">精选</view>
-        <view class="hot-main-subtitle">呈现最新的精选日报</view>
-    </view>
-</view>
-
-<view class="hot-box-main">
-    <view wx:for="{{newsList}}" wx:for-index="i" wx:key="unique">
-        <navigator id="{{newsList[i].id}}" url="../detail/index?id={{newsList[i].id}}">
-                <view class="list-box">
-                    <view class="list-box-title">{{newsList[i].title}}</view>
-                    <view class="list-box-sub">{{newsList[i].pubdate}}</view>
+    <!-- 产品中心 -->
+    <view class="weui-panel weui-panel_access" wx:if="{{goodsList.length}}">
+        <view class="weui-panel__hd">产品中心</view>
+        <view class="page__bd">
+            <!-- <scroll-view class="scroll-view_H" scroll-x="true" style="width: 100%;padding:10px;">
+                <view wx:for="{{goodsList}}" wx:key="unique" class="scroll-view-item_H demo-text-1">
+                <navigator url="../goods-detail/index?id={{item.id}}">
+                <image style="width: 120px; height: 80px; background-color: #eeeeee;" src="{{item.litpic}}"></image></navigator></view>
+            </scroll-view> -->
+            <view class="goods_list" id="goods_list">
+                <view class="li" wx:for="{{goodsList}}" wx:key="unique">
+                    <navigator url="../goods-detail/index?id={{item.id}}">
+                        <image src="{{item.litpic}}" />
+                        <view class="goods_info">
+                            <view class="goods_tit">{{item.title}}</view>
+                            <view class="goods_price">￥{{item.price}}</view>
+                        </view>
+                    </navigator>
+                    <view class="cl"></view>
                 </view>
-            </navigator>
+            </view>
+        </view>
+        <view bindtap="jumpTabBarPage" data-url="/pages/home/pages/goods-list/index" class="weui-panel__ft">
+            <view class="weui-cell weui-cell_access weui-cell_link">
+                <view class="weui-cell__bd">查看更多</view>
+                <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+            </view>
+        </view>
     </view>
-</view> -->
-
-<view class="block-tit">联系我们</view>
-<view class="ulist clear">
-    <view><text style="color:#999;">联系人：</text>{{contact}}</view>
-    <view><text style="color:#999;">电子邮箱：</text>{{email}}</view>
-    <view bindtap="makePhoneCall"><text style="color:#999;">联系方式：</text>{{mobile}}</view>
-    <view><navigator url="../map/index"><text style="color:#999;">地址：</text>{{address}}</navigator></view>
+    <!-- 新闻动态 -->
+    <view class="weui-panel" wx:if="{{articleList.length}}">
+        <view class="weui-panel__hd">新闻动态</view>
+        <view class="weui-panel__bd">
+            <view class="weui-media-box weui-media-box_small-appmsg">
+                <view class="weui-cells weui-cells_in-small-appmsg">
+                    <navigator wx:for="{{articleList}}" wx:key="unique" url="../article-detail/index?id={{item.id}}" class="weui-cell weui-cell_access" hover-class="weui-cell_active">
+                        <view class="weui-cell__hd" wx:if="{{item.litpic != ''}}">
+                            <image src="{{item.litpic}}" style="width: 20px;height: 20px;margin-right: 5px" />
+                        </view>
+                        <view class="weui-cell__bd weui-cell_primary">
+                            <view>{{item.title}}</view>
+                        </view>
+                        <view class="weui-cell__ft"></view>
+                    </navigator>
+                    <view bindtap="jumpTabBarPage" data-url="/pages/home/pages/article-list/index" class="weui-panel__ft">
+                        <view class="weui-cell weui-cell_access weui-cell_link" style="border:0;">
+                            <view class="weui-cell__bd">查看更多</view>
+                            <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+                        </view>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
 </view>
 
-<view class="block-tit">关于我们</view>
-<view class="box mt10 mb10">
-    <image class="ewmimg" src="../../../../images/xcxewm.jpg"></image>
-    <text>{{intro}}</text>
+<!-- 企业简介 -->
+<view class="weui-panel">
+    <view class="weui-panel__hd">关于我们</view>
+    <view class="page__bd">
+        <view class="weui-panel__bd">
+            <view class="weui-media-box" style="min-height:95px;">
+                <image class="ewmimg" src="../../../../images/xcxewm.jpg"></image>
+                <text>{{shopDetail.introduction}}</text>
+            </view>
+            <view bindtap="jumpTabBarPage" data-url="/pages/home/pages/page/index" class="weui-panel__ft">
+                <view class="weui-cell weui-cell_access weui-cell_link" style="border:0;">
+                    <view class="weui-cell__bd">查看更多</view>
+                    <view class="weui-cell__ft weui-cell__ft_in-access"></view>
+                </view>
+            </view>
+        </view>
+    </view>
+</view>
+
+<!-- 技术支持 -->
+<view class="weui-footer" style="padding:10px 0;">
+    <view class="weui-footer__text">技术支持：繁橙工作室</view>
 </view>

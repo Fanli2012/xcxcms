@@ -1,4 +1,0 @@
-<view class="tith">{{post.title}}</view>
-
-<import src="../../../../vendor/wxParse/wxParse.wxml"/>
-<view class="box content mb10"><template is="wxParse" data="{{wxParseData:goods.nodes}}"/></view>

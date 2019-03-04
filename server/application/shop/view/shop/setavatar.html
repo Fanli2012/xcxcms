@@ -1,0 +1,218 @@
+{extend name="public/base" /}
+{block name="title"}头像设置{/block}
+
+{block name="content"}
+<div class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel-body" style="padding: 15px 0;">
+                <ul class="nav nav-tabs">
+                    <li><a href="{:url('setting')}">设置中心</a></li>
+                    <li><a href="{:url('changePassword')}">密码修改</a></li>
+                    <li><a href="{:url('setcover')}">封面设置</a></li>
+                    <li class="active"><a href="{:url('setavatar')}">头像</a></li>
+                    <li><a href="{:url('setqrcode')}">二维码设置</a></li>
+                </ul>
+            </div>
+            <div class="panel-body">
+                <form id="myform" method="post" action="{:url('setavatar')}" role="form" enctype="multipart/form-data" class="form-horizontal">
+                    <div class="avatar-box">
+                        <div class="imageBox">
+                            <div class="thumbBox"></div>
+                            <div class="spinner" style="display: none">步骤：上传图像->裁剪->保存</div>
+                        </div>
+                        <div class="action">
+                            <div class="new-contentarea tc">
+                                <a href="javascript:void(0)" class="upload-img">
+                                    <label for="upload-file">上传图像</label></a>
+                                <input type="file" class="" name="upload-file" id="upload-file" /></div>
+                            <input type="button" id="btnCrop" class="Btnsty_peyton" value="裁切">
+                            <input type="button" id="btnZoomIn" class="Btnsty_peyton" value="+">
+                            <input type="button" id="btnZoomOut" class="Btnsty_peyton" value="-">
+                        </div>
+                        <div class="cropped">
+                            <?php if($post['head_img']){ ?>
+                            <img src="<?php echo $post['head_img']; ?>" align="absmiddle" style="width:64px;margin-top:4px;border-radius:64px;box-shadow:0px 0px 12px #7E7E7E;" ><p>64px*64px</p>
+                            <img src="<?php echo $post['head_img']; ?>" align="absmiddle" style="width:128px;margin-top:4px;border-radius:128px;box-shadow:0px 0px 12px #7E7E7E;"><p>128px*128px</p>
+                            <img src="<?php echo $post['head_img']; ?>" align="absmiddle" style="width:180px;margin-top:4px;border-radius:200px;box-shadow:0px 0px 12px #7E7E7E;"><p>180px*180px</p>
+                            <?php } ?>
+                        </div>
+                        
+                        <input type="text" id="head_img" name="head_img" style="display:none;" value="" required>
+                        <div class="form-group">
+                            <div class="col-sm-offset-6 col-sm-6"><button type="submit" onclick="save_avatar()" class="btn btn-success btn-lg">保存头像</button></div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<style>
+.avatar-box {
+	width: 400px;
+	margin: 40px auto 0 auto;
+	position: relative;
+	font-family: 微软雅黑;
+	font-size: 12px;
+}
+.avatar-box p{
+	line-height: 12px;
+	line-height: 0px;
+	height: 0px;
+	margin: 10px;
+	color: #bbb
+}
+.action {
+	width: 400px;
+	height: 30px;
+	margin: 10px 0;
+}
+.cropped {
+	position: absolute;
+	right: -230px;
+	top: 0;
+	width: 200px;
+	border: 1px #ddd solid;
+	height: 460px;
+	padding: 4px;
+	text-align: center;
+}
+.imageBox {
+	position: relative;
+	height: 400px;
+	width: 400px;
+	background: #fff;
+	overflow: hidden;
+	background-repeat: no-repeat;
+	cursor: move;
+}
+.imageBox .thumbBox {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	width: 200px;
+	height: 200px;
+	margin-top: -100px;
+	margin-left: -100px;
+	box-sizing: border-box;
+	box-shadow: 0 0 0 1000px rgba(0, 0, 0, 0.5);
+	background: none repeat scroll 0% 0% transparent;
+}
+.imageBox .spinner {
+	position: absolute;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+	text-align: center;
+	line-height: 400px;
+}
+.Btnsty_peyton{ float: right;
+  width: 66px;
+  display: inline-block;
+  margin-bottom: 10px;
+  height: 50px;
+  line-height: 50px;
+  font-size: 20px;
+  color: #FFFFFF;
+  margin:0px 2px;
+  background-color: #5cb85c;
+  border-radius: 3px;
+  text-decoration: none;
+  cursor: pointer;
+  border: 0px #fff solid;}
+/*选择文件上传*/
+.new-contentarea {
+	width: 165px;
+	overflow:hidden;
+	margin: 0 auto;
+	position:relative;float:left;
+}
+.new-contentarea label {
+	width:100%;
+	height:100%;
+	display:block;
+}
+.new-contentarea input[type=file] {
+	width:188px;
+	height:60px;
+	background:#333;
+	margin: 0 auto;
+	position:absolute;
+	right:50%;
+	margin-right:-94px;
+	top:0;
+	right/*\**/:0px\9;
+	margin-right/*\**/:0px\9;
+	width/*\**/:10px\9;
+	opacity:0;
+	filter:alpha(opacity=0);
+	z-index:2;
+}
+a.upload-img{
+	width:165px;
+	display: inline-block;
+	margin-bottom: 10px;
+	height:50px;
+	line-height: 50px;
+	font-size: 20px;
+	color: #FFFFFF;
+	background-color: #5cb85c;
+	border-radius: 3px;
+	text-decoration:none;
+	cursor:pointer;
+	border: 0px #fff solid;
+	box-shadow: 0px 0px 5px #B0B0B0;
+}
+a.upload-img:hover{
+	background-color: #ec7e70;
+}
+
+.tc{text-align:center;}
+</style>
+<script type="text/javascript" src="/js/cropbox.js"></script>
+<script type="text/javascript">
+function save_avatar()
+{
+    var head_img = $('#head_img').val();
+    if(head_img==''){alert('请上传图片');return false;}
+    
+    $("#myform").submit();
+}
+
+$(window).load(function() {
+	var options =
+	{
+		thumbBox: '.thumbBox',
+		spinner: '.spinner',
+		imgSrc: ''
+	}
+	var cropper = $('.imageBox').cropbox(options);
+	$('#upload-file').on('change', function(){
+		var reader = new FileReader();
+		reader.onload = function(e) {
+			options.imgSrc = e.target.result;
+			cropper = $('.imageBox').cropbox(options);
+		}
+		reader.readAsDataURL(this.files[0]);
+		this.files = [];
+	})
+	$('#btnCrop').on('click', function(){
+		var img = cropper.getDataURL();
+		$('.cropped').html('');
+		$('.cropped').append('<img src="'+img+'" align="absmiddle" style="width:64px;margin-top:4px;border-radius:64px;box-shadow:0px 0px 12px #7E7E7E;" ><p>64px*64px</p>');
+		$('.cropped').append('<img src="'+img+'" align="absmiddle" style="width:128px;margin-top:4px;border-radius:128px;box-shadow:0px 0px 12px #7E7E7E;"><p>128px*128px</p>');
+		$('.cropped').append('<img src="'+img+'" align="absmiddle" style="width:180px;margin-top:4px;border-radius:200px;box-shadow:0px 0px 12px #7E7E7E;"><p>180px*180px</p>');
+        
+        $('#head_img').val(img);
+    })
+	$('#btnZoomIn').on('click', function(){
+		cropper.zoomIn();
+	})
+	$('#btnZoomOut').on('click', function(){
+		cropper.zoomOut();
+	})
+});
+</script>
+{/block}

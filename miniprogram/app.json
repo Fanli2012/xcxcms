@@ -1,21 +1,26 @@
 {
     "pages": [
         "pages/home/pages/index/index",
-        "pages/home/pages/category/index",
-        "pages/home/pages/detail/index",
-        "pages/home/pages/goodslist/index",
-        "pages/home/pages/goodsdetail/index",
+        "pages/home/pages/article-list/index",
+        "pages/home/pages/article-detail/index",
+        "pages/home/pages/goods-list/index",
+        "pages/home/pages/goods-detail/index",
+        "pages/home/pages/guestbook/index",
         "pages/home/pages/page/index",
-        "pages/home/pages/tagindex/index",
-        "pages/home/pages/taglist/index",
         "pages/home/pages/map/index"
     ],
     "window": {
-        "backgroundTextStyle": "white",
+        "backgroundTextStyle": "light",
         "backgroundColor": "#FFF",
-        "navigationBarBackgroundColor": "#393a3f",
-        "navigationBarTitleText": "XCXCMS",
-        "navigationBarTextStyle": "white"
+        "navigationBarBackgroundColor": "#303030",
+        "navigationBarTextStyle": "white",
+        "navigationBarTitleText": "XCXCMS"
+    },
+    "networkTimeout": {
+        "request": 10000,
+        "connectSocket": 10000,
+        "uploadFile": 10000,
+        "downloadFile": 10000
     },
     "tabBar": {
         "borderStyle": "black",
@@ -28,13 +33,13 @@
                 "selectedIconPath": "images/home_hover_icon.png"
             },
             {
-                "pagePath": "pages/home/pages/category/index",
+                "pagePath": "pages/home/pages/article-list/index",
                 "text": "动态",
                 "iconPath": "images/news_icon.png",
                 "selectedIconPath": "images/news_hover_icon.png"
             },
             {
-                "pagePath": "pages/home/pages/goodslist/index",
+                "pagePath": "pages/home/pages/goods-list/index",
                 "text": "产品",
                 "iconPath": "images/product_icon.png",
                 "selectedIconPath": "images/product_hover_icon.png"
@@ -46,5 +51,6 @@
                 "selectedIconPath": "images/contact_hover_icon.png"
             }
         ]
-    }
+    },
+    "debug": false
 }
