@@ -16,7 +16,7 @@
 
 2、PHP+Mysql
 
-3、后台登录：http://www.nbnbk3.com/fladmin/Login，账号：admin888，密码：admin
+3、后台登录：http://www.nbnbk3.com/fladmin/Login，账号：admin888，密码：123456
 
 4、恢复后台默认账号密码：http://www.nbnbk3.com/fladmin/Login/recoverpwd
 
