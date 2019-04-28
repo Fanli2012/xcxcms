@@ -11,6 +11,8 @@
 	"libVersion": "1.6.6",
 	"appid": "touristappid",
 	"projectname": "xcxcms",
+	"simulatorType": "wechat",
+	"simulatorPluginLibVersion": {},
 	"condition": {
 		"search": {
 			"current": -1,

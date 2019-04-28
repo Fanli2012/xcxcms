@@ -1,16 +1,28 @@
 # xcxcms
 微信小程序cms
 
+## 访问
+
+1、微信小程序搜索"繁橙工作室"
+
+2、扫码访问
+
+![alt text](miniprogram/images/xcxewm.jpg "繁橙工作室")
+
+
+## 预览
+
 ![alt text](miniprogram/images/screenshots-wap.gif "截图")
 
-# 目录结构
+
+## 目录结构
 
 1、miniprogram，小程序目录
 
 2、server，小程序后端目录，基于ThinkPHP5
 
 
-# 小程序后端说明
+## 小程序后端说明
 
 1、基于ThinkPHP5，初始绑定的域名是www.nbnbk3.com，自行修改成自己要绑定的域名，以下说明如果遇到www.nbnbk3.com请修改成自己的域名
 
@@ -21,7 +33,7 @@
 4、恢复后台默认账号密码：http://www.nbnbk3.com/fladmin/Login/recoverpwd
 
 
-# 安装
+## 安装
 
 1、 导入数据库
 
