@@ -3,16 +3,16 @@
 
 PC端
 
-![alt text](public/images/screenshots.jpg "网站截图")
-![alt text](public/images/screenshots-2.jpg "产品中心")
+![alt text](/public/images/screenshots.jpg "网站截图")
+![alt text](/public/images/screenshots-2.jpg "产品中心")
 
 WAP端
 
-![alt text](public/images/screenshots-wap.gif "WAP首页")
+![alt text](/public/images/screenshots-wap.gif "WAP首页")
 
 后台管理
 
-![alt text](public/images/screenshots-admin.jpg "后台管理")
+![alt text](/public/images/screenshots-admin.jpg "后台管理")
 
 
 # 说明
@@ -21,9 +21,9 @@ WAP端
 
 2、PHP+Mysql
 
-3、后台登录：http://www.nbnbk3.com/fladmin/Login，账号：admin888，密码：123456
+3、后台登录：http://www.nbnbk3.com/fladmin/login，账号：admin888，密码：123456
 
-4、恢复后台默认账号密码：http://www.nbnbk3.com/fladmin/Login/recoverpwd
+4、恢复后台默认账号密码：http://www.nbnbk3.com/fladmin/login/recoverpwd
 
 5、tp5开源cms，适合博客、中小企业建站二次开发。
 
@@ -31,9 +31,9 @@ WAP端
 
 注意：WAP端的域名通常是PC端的子域名，这里PC端的域名是www.nbnbk3.com，WAP端的域名是m.nbnbk3.com，子域名不是m就要修改application/route.php下的m
 
-<strong>PC入口</strong>：http://+PC域名+/
+<strong>PC入口</strong>：http(s)://+PC域名+/
 
-<strong>WAP入口</strong>：http://+WAP域名+/，WAP域名解析与PC域名一致，都是指向同一目录下
+<strong>WAP入口</strong>：http(s)://+WAP域名+/，WAP域名解析与PC域名一致，都是指向同一目录下
 
 7、后台功能
 1) 文章管理：增删改查，栏目管理
@@ -65,7 +65,7 @@ WAP端
 
 打开/application/database.php文件,修改相关配置
 
-3、 登录后台->系统设置->系统配置参数，更新配置：http://www.nbnbk3.com/fladmin/Index/upcache
+3、 登录后台->系统设置->系统配置参数，更新配置：http://www.nbnbk3.com/fladmin/index/upcache
 
 
 # 注意

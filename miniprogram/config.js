@@ -39,7 +39,7 @@ var config = {
     // 店铺ID
     appShopId: 14,
     // API 接口
-    appApiUrl: "http://www.nbnbk3.com/api"
+    appApiUrl: 'http://www.nbnbk3.com/api'
 };
 
 module.exports = config

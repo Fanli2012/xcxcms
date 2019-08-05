@@ -3,3 +3,9 @@
 .goods_list .li navigator{display:block;margin-right:2px;background-color:#fff;}.goods_list .goods_tit{overflow:hidden;white-space:nowrap;color:#000}
 .goods_list .li image{width:100%;height:48vw;}.goods_list .li .goods_price{color:#f23030;}.goods_list .li .goods_price b{font-size:1rem;font-weight:normal;}.goods_list .li .goods_price span{color:#999;font-size:14px;}
 .goods_list .li:nth-child(even) navigator{margin-right:0;margin-left:2px;}
+
+.page_list {height:100%;display: flex;flex: 1;flex-direction: column;}
+.tips {font-size: 32rpx;text-align: center;padding:20rpx 40rpx 20rpx 40rpx;color: #ccc;}
+.tips image {width: 40rpx;height: 40rpx;margin-right: 20rpx;}
+.tips image,.tips text {vertical-align: middle;}
+.weui-media-box__desc{height:16px;}

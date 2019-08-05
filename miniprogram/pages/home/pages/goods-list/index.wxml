@@ -1,19 +1,26 @@
 <!-- 图文列表 -->
-<scroll-view class="page_list" scroll-y="true" bindscrolltolower="loadMore" bindscrolltoupper="refresh">
-    <view class="goods_list" id="goods_list">
-        <view class="li" wx:for="{{dataList}}">
-        <navigator url="../goods-detail/index?id={{item.id}}">
+<scroll-view style="height:{{windowHeight}}" class="page_list" scroll-y="true" bindscrolltolower="loadMore" bindscrolltoupper="refresh">
+  <view class="goods_list" id="goods_list">
+    <view class="li" wx:for="{{list}}">
+      <navigator url="../goods-detail/index?id={{item.id}}">
         <image src="{{item.litpic}}" />
-        <view class="goods_info"><view class="goods_tit">{{item.title}}</view><view class="goods_price">￥{{item.price}}</view></view></navigator>
-        <view class="cl"></view>
+        <view class="goods_info">
+          <view class="goods_tit">{{item.title}}</view>
+          <view class="goods_price">￥{{item.price}}</view>
         </view>
+      </navigator>
+      <view class="cl"></view>
     </view>
-    <view class="tips">
-        <view wx:if="{{hasMore}}">
-            <image src="../img/loading.gif" mode="aspectFill"/>
-            <text>玩了命的加载中...</text>
-        </view>
-        <!--<view wx:else><text>没有更多内容了</text></view>-->
+  </view>
+
+  <view class="tips">
+    <view wx:if="{{hasMore}}">
+      <image src="../../../../images/loading.gif" mode="aspectFill" />
+      <text>玩命加载中...</text>
     </view>
+    <view wx:else>
+      <text>没有更多内容了</text>
+    </view>
+  </view>
 </scroll-view>
 <loading hidden="{{loading}}">加载中...</loading>

@@ -1,20 +1,21 @@
 <import src="../../../../vendor/wxParse/wxParse.wxml" />
 
 <swiper class="swiper-boxs" indicator-dots autoplay circular duration="300" style="width: {{windowWidth}}px;height: {{windowWidth}}px;">
-    <swiper-item wx:for="{{post.goods_img_list}}" wx:key="unique">
-        <image model="aspectFit" style="width: {{windowWidth}}px;height: {{windowWidth}}px;" class="swiper-boxs-img" src="{{item.url}}" />
-    </swiper-item>
+  <swiper-item wx:for="{{post.goods_img_list}}" wx:key="unique">
+    <image bindtap="clickImagePreview" data-src="{{item.url}}" data-id="{{post.id}}" model="aspectFit" style="width: {{windowWidth}}px;height: {{windowWidth}}px;" class="swiper-boxs-img" src="{{item.url}}" />
+  </swiper-item>
 </swiper>
 
 <view class="goods-header">
-    <view class="title">{{post.title}}</view>
-    <view class="goods-price">
-        <view class="current-price">
-            <text>￥</text>
-            <text class="price">{{post.price}}</text>
-            <text class="original-price" style="vertical-align: bottom;margin-left:8px;color:#999;font-size:12px;text-decoration:line-through;">￥{{post.market_price}}</text>
-        </view>
-    </view>
+  <button open-type="share" style="line-height:100%;padding:0;margin:0;border:none;background:none;float:right;display:inline-block;" hover-class="none">
+    <view class="share">
+      <image src="../../../../images/share.png" style="display:block;width:20px;height:20px;" />分享</view>
+  </button>
+  <view class="title">{{post.title}}</view>
+  <view class="goods-price">
+    <text class="price">￥{{post.price}}</text>
+    <text class="original-price">￥{{post.market_price}}</text>
+  </view>
 </view>
 
 <!-- 联系我们 -->
@@ -39,19 +40,20 @@
 
 <!-- 产品详情 -->
 <view class="weui-panel">
-    <view class="weui-panel__hd">产品详情</view>
-    <view class="page__bd">
-        <view class="weui-article">
-            <view class="weui-article__section">
-                <template is="wxParse" data="{{wxParseData:goods.nodes}}" />
-            </view>
-        </view>
+  <view class="weui-panel__hd">产品详情</view>
+  <view class="page__bd">
+    <view class="weui-article">
+      <view class="weui-article__section">
+        <template is="wxParse" data="{{wxParseData:goods.nodes}}" />
+      </view>
     </view>
+  </view>
 </view>
 
 <!-- 底部联系方式 -->
 <view class="foohi">
-    <view class="footer">
-        <button class="weui-btn" open-type="contact" type="warn" style="margin:10px;">联系我们</button>
-    </view>
+  <view class="footer">
+    <button wx:if="{{scene==1036 || scene==1007}}" class="weui-btn" bindtap="goback_home" type="default" style="display:inline-block;margin:10px 0 10px 10px;width:40%;float:left;}}">返回首页</button>
+    <button class="weui-btn" open-type="contact" type="primary" style="margin:10px;{{(scene==1036 || scene==1007) ? 'width:50%;float:right;display:inline-block;margin-left:0;' : ''}}">联系我们</button>
+  </view>
 </view>

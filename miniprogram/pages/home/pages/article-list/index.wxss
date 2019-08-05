@@ -7,28 +7,8 @@
 .themes-list-name{ font-size: 16px; color: #444; height: 20px; line-height: 20px; overflow: hidden; }
 .themes-list-description{ font-size: 12px; color: #999; height: 20px; line-height: 20px; overflow: hidden; }
 
-.page_list {
-    height:100%;
-    display: flex;
-    flex: 1;
-    flex-direction: column;
-}
-
-.tips {
-    font-size: 32rpx;
-    text-align: center;
-    padding:20rpx 40rpx 50rpx 40rpx;
-    color: #ccc;
-}
-.tips image {
-    width: 40rpx;
-    height: 40rpx;
-    margin-right: 20rpx;
-}
-
-.tips image,
-.tips text {
-    vertical-align: middle;
-}
-
+.page_list {height:100%;display: flex;flex: 1;flex-direction: column;}
+.tips {font-size: 32rpx;text-align: center;padding:20rpx 40rpx 20rpx 40rpx;color: #ccc;}
+.tips image {width: 40rpx;height: 40rpx;margin-right: 20rpx;}
+.tips image,.tips text {vertical-align: middle;}
 .weui-media-box__desc{height:16px;}

@@ -3,3 +3,6 @@
 page{background: #fff;}
 
 .article-shop_name{display: inline-block;margin-left:6px;color:#586C94;}
+
+.foohi {height: 60px;}
+.footer {left: 0px;bottom: 0px;width: 100%;position: fixed;background: #ebebeb;}
