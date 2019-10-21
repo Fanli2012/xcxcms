@@ -1,0 +1,14 @@
+<!--底部导航-start-->
+<div class="foohi">
+<div class="footer">
+	<ul>
+    <?php $current_url = get_current_url(true); ?>
+	<li<?php if(sysconfig('CMS_BASEHOST').'/weixin' == $current_url){echo ' class="on"';} ?>><a href="<?php echo '/weixin'; ?>"><img src="<?php echo sysconfig('CMS_BASEHOST'); ?>/images/weixin/home_icon<?php if(sysconfig('CMS_BASEHOST').'/weixin' == $current_url){echo '2';} ?>.png"><p>首页</p></a></li>
+    <li<?php if(url('goods/category_list') == $current_url){echo ' class="on"';} ?>><a href="<?php echo url('goods/category_list'); ?>"><img src="<?php echo sysconfig('CMS_BASEHOST'); ?>/images/weixin/brand_icon<?php if(url('goods/category_list') == $current_url){echo '2';} ?>.png"><p>分类</p></a></li>
+    <li<?php if(url('cart/index') == $current_url){echo ' class="on"';} ?>><a href="<?php echo url('cart/index'); ?>"><img src="<?php echo sysconfig('CMS_BASEHOST'); ?>/images/weixin/car_icon<?php if(url('cart/index') == $current_url){echo '2';} ?>.png"><p>购物车</p></a></li>
+    <li<?php if(url('user/index') == $current_url){echo ' class="on"';} ?>><a href="<?php echo url('user/index'); ?>"><img src="<?php echo sysconfig('CMS_BASEHOST'); ?>/images/weixin/center_icon<?php if(url('user/index') == $current_url){echo '2';} ?>.png"><p>个人中心</p></a></li></ul>
+</div>
+</div>
+<!--底部导航-end-->
+
+<?php if($isWechatBrowser){ ?>{include file="common/wxshare"/}<?php } ?>

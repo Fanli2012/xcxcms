@@ -6,8 +6,9 @@ use app\common\lib\Token;
 use app\common\lib\Helper;
 use app\common\lib\ReturnData;
 use app\common\logic\PageLogic;
+use app\common\model\Page as PageModel;
 
-class Page extends Base
+class Page extends Common
 {
 	public function _initialize()
 	{
@@ -26,37 +27,38 @@ class Page extends Base
         $where = array();
         $limit = input('limit',10);
         $offset = input('offset', 0);
-        if(input('keyword', null) !== null){$where['title'] = ['like','%'.input('keyword').'%'];}
+		$where = array();
+        if(input('keyword', '') !== ''){$where['title'] = ['like','%'.input('keyword').'%'];}
+		if(input('group_id', '') !== ''){$where['group_id'] = input('group_id');}
         $orderby = input('orderby','id desc');
         
-        $res = $this->getLogic()->getList($where,$orderby,['body'],$offset,$limit);
-		
-        if($res['list'])
+        $res = $this->getLogic()->getList($where, $orderby, ['content'], $offset, $limit);
+        if($res['count']>0)
         {
             foreach($res['list'] as $k=>$v)
             {
-                if(!empty($v['litpic'])){$res['list'][$k]['litpic'] = http_host().$v['litpic'];}
+                if(!empty($v['litpic'])){$res['list'][$k]['litpic'] = sysconfig('CMS_SITE_CDN_ADDRESS').$v['litpic'];}
             }
         }
         
-		exit(json_encode(ReturnData::create(ReturnData::SUCCESS,$res)));
+		Util::echo_json(ReturnData::create(ReturnData::SUCCESS, $res));
     }
     
     //详情
     public function detail()
 	{
         //参数
-        $where = [];
-        if(input('id', null) !== null){$where['id'] = input('id');}
-        if(input('filename', null) !== null){$where['filename'] = input('filename');}
-        if($where===[]){exit(json_encode(ReturnData::create(ReturnData::PARAMS_ERROR)));}
+        $where = array();
+        if(input('id', '') !== ''){$where['id'] = input('id');}
+        if(input('filename', '') !== ''){$where['filename'] = input('filename');}
+        if(!$where){Util::echo_json(ReturnData::create(ReturnData::PARAMS_ERROR));}
         
 		$res = $this->getLogic()->getOne($where);
-        if(!$res){exit(json_encode(ReturnData::create(ReturnData::PARAMS_ERROR)));}
+        if(!$res){Util::echo_json(ReturnData::create(ReturnData::PARAMS_ERROR));}
         
-        if(!empty($res['litpic'])){$res['litpic'] = http_host().$res['litpic'];}
+        if(!empty($res['litpic'])){$res['litpic'] = sysconfig('CMS_SITE_CDN_ADDRESS').$res['litpic'];}
         
-		exit(json_encode(ReturnData::create(ReturnData::SUCCESS,$res)));
+		Util::echo_json(ReturnData::create(ReturnData::SUCCESS, $res));
     }
     
     //添加
@@ -66,7 +68,7 @@ class Page extends Base
         {
             $res = $this->getLogic()->add($_POST);
             
-            exit(json_encode($res));
+            Util::echo_json($res);
         }
     }
     
@@ -75,13 +77,13 @@ class Page extends Base
     {
         if(Helper::isPostRequest())
         {
-            if(!checkIsNumber(input('id/d',0))){exit(json_encode(ReturnData::create(ReturnData::PARAMS_ERROR)));}
+            if(!checkIsNumber(input('id/d',0))){Util::echo_json(ReturnData::create(ReturnData::PARAMS_ERROR));}
             $where['id'] = input('id');
             unset($_POST['id']);
             
             $res = $this->getLogic()->edit($_POST,$where);
             
-            exit(json_encode($res));
+            Util::echo_json($res);
         }
     }
     
@@ -90,12 +92,12 @@ class Page extends Base
     {
         if(Helper::isPostRequest())
         {
-            if(!checkIsNumber(input('id/d',0))){exit(json_encode(ReturnData::create(ReturnData::PARAMS_ERROR)));}
+            if(!checkIsNumber(input('id/d',0))){Util::echo_json(ReturnData::create(ReturnData::PARAMS_ERROR));}
             $where['id'] = input('id');
             
             $res = $this->getLogic()->del($where);
             
-            exit(json_encode($res));
+            Util::echo_json($res);
         }
     }
 }

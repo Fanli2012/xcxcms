@@ -1,0 +1,64 @@
+{extend name="public/base" /}
+{block name="title"}会员等级添加{/block}
+
+{block name="content"}
+<h5 class="sub-header"><a href="<?php echo url('user_rank/index'); ?>">会员等级列表</a> > 添加会员等级</h5>
+
+<form id="addarc" method="post" action="" role="form" enctype="multipart/form-data" class="table-responsive">
+<table class="table table-striped table-bordered">
+<tbody>
+    <tr>
+        <td align="right">等级名称：</td>
+        <td><input autocomplete="off" name="title" type="text" id="title" value="" class="required" style="width:30%" placeholder="在此输入关键词"></td>
+    </tr>
+    <tr>
+        <td align="right">等级：</td>
+        <td><input autocomplete="off" name="rank" type="text" id="rank" value="" size="3" class="required"></td>
+    </tr>
+    <tr>
+        <td align="right">折扣：</td>
+        <td><input placeholder="折扣0-100" name="discount" type="text" id="discount" value="" size="6" class="required"></td>
+    </tr>
+    <tr>
+        <td align="right">积分：</td>
+        <td><input placeholder="该等级的最低积分" name="min_points" type="text" id="min_points" value="" size="12" class="required"> - <input placeholder="该等级的最高积分" name="max_points" type="text" id="max_points" value="" size="12" class="required"></td>
+    </tr>
+    <tr>
+        <td align="right">排序：</td>
+        <td>
+			<input name="listorder" type="text" id="listorder" value="50" size="3" />
+		</td>
+    </tr>
+    <tr>
+        <td colspan="2"><button type="submit" class="btn btn-success" value="Submit">保存(Submit)</button>&nbsp;&nbsp;<button type="reset" class="btn btn-default" value="Reset">重置(Reset)</button></td>
+    </tr>
+</tbody></table></form><!-- 表单结束 -->
+<script>
+$(function(){
+    $(".required").blur(function(){
+        var $parent = $(this).parent();
+        $parent.find(".formtips").remove();
+        if(this.value=="")
+        {
+            $parent.append(' <small class="formtips onError"><font color="red">不能为空！</font></small>');
+        }
+        else
+        {
+            $parent.append(' <small class="formtips onSuccess"><font color="green">OK</font></small>');
+        }
+    });
+
+    //重置
+    $('#addarc input[type="reset"]').click(function(){
+            $(".formtips").remove(); 
+    });
+
+    $("#addarc").submit(function(){
+        $(".required").trigger('blur');
+        var numError = $('#addarc .onError').length;
+        
+        if(numError){return false;}
+    });
+});
+</script>
+{/block}

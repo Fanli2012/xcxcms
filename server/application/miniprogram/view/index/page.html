@@ -1,9 +1,0 @@
-<!DOCTYPE html><html xmlns="http://www.w3.org/1999/xhtml"><head><meta http-equiv="content-type" content="text/html;charset=utf-8"/>
-<title><?php if(empty($post["seotitle"])){echo $post["title"];}else{echo $post["seotitle"];} ?>_<?php echo sysconfig('CMS_WEBNAME'); ?></title><meta name="keywords" content="<?php echo $post["keywords"]; ?>" /><meta name="description" content="<?php echo $post["description"]; ?>" /><meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"><link href="<?php echo sysconfig('CMS_BASEHOST'); ?>/images/wap.css" type="text/css" rel="stylesheet"><script type="text/javascript" src="<?php echo sysconfig('CMS_BASEHOST'); ?>/images/ad.js"></script></head><body>
-{include file="common/header"/}
-
-<h1 class="tit"><?php echo $post["title"]; ?></h1>
-
-<div class="box content"><?php echo $post["body"]; ?></div><div id="dad3"><script>djs3();</script></div>
-
-<div class="foot"><script>count_js();</script></div></body></html>

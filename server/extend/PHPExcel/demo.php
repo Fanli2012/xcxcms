@@ -110,7 +110,7 @@ public function exportExcel($title=array(), $data=array(), $fileName='', $savePa
             }
             
             $i++;
-        }  
+        }
     }
     
     //文件名处理

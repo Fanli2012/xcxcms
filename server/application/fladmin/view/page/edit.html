@@ -9,15 +9,19 @@
 <tbody>
     <tr>
         <td align="right"><font color="red">*</font>页面标题：</td>
-        <td><input name="title" type="text" id="title" value="<?php echo $post["title"]; ?>" class="required" style="width:60%" placeholder="在此输入标题"> <input style="display:none;" type="text" name="id" id="id" value="<?php echo $id; ?>"></td>
+        <td><input autocomplete="off" name="title" type="text" id="title" value="<?php echo $post["title"]; ?>" class="required" style="width:60%" placeholder="在此输入标题"> <input style="display:none;" type="text" name="id" id="id" value="<?php echo $id; ?>"></td>
     </tr>
     <tr>
         <td align="right"><font color="red">*</font>别名：</td>
-        <td><input name="filename" type="text" id="filename" class="required" value="<?php echo $post["filename"]; ?>" size="30"> </td>
+        <td><input autocomplete="off" name="filename" type="text" id="filename" class="required" value="<?php echo $post["filename"]; ?>" size="30"> </td>
     </tr>
     <tr>
         <td align="right">模板文件名：</td>
         <td><input name="template" type="text" id="template" value="<?php echo $post["template"]; ?>" size="30"></td>
+    </tr>
+    <tr>
+        <td align="right">分组ID：</td>
+        <td><input name="group_id" type="text" id="group_id" value="<?php echo $post["group_id"]; ?>" size="20"></td>
     </tr>
     <tr>
         <td align="right">seoTitle：</td>

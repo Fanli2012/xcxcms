@@ -30,20 +30,20 @@ class VerifyCode extends Base
         
         $res = $this->getLogic()->getList($where,$orderby,'*',$offset,$limit);
 		
-		exit(json_encode(ReturnData::create(ReturnData::SUCCESS,$res)));
+		Util::echo_json(ReturnData::create(ReturnData::SUCCESS, $res));
     }
     
     //详情
     public function detail()
 	{
         //参数
-        if(!checkIsNumber(input('id/d',0))){exit(json_encode(ReturnData::create(ReturnData::PARAMS_ERROR)));}
+        if(!checkIsNumber(input('id/d',0))){Util::echo_json(ReturnData::create(ReturnData::PARAMS_ERROR));}
         $where['id'] = input('id');
         
 		$res = $this->getLogic()->getOne($where);
-        if(!$res){exit(json_encode(ReturnData::create(ReturnData::PARAMS_ERROR)));}
+        if(!$res){Util::echo_json(ReturnData::create(ReturnData::PARAMS_ERROR));}
         
-		exit(json_encode(ReturnData::create(ReturnData::SUCCESS,$res)));
+		Util::echo_json(ReturnData::create(ReturnData::SUCCESS, $res));
     }
     
     //添加
@@ -53,7 +53,7 @@ class VerifyCode extends Base
         {
             $res = $this->getLogic()->add($_POST);
             
-            exit(json_encode($res));
+            Util::echo_json($res);
         }
     }
     
@@ -62,13 +62,13 @@ class VerifyCode extends Base
     {
         if(Helper::isPostRequest())
         {
-            if(!checkIsNumber(input('id/d',0))){exit(json_encode(ReturnData::create(ReturnData::PARAMS_ERROR)));}
+            if(!checkIsNumber(input('id/d',0))){Util::echo_json(ReturnData::create(ReturnData::PARAMS_ERROR));}
             $where['id'] = input('id');
             unset($_POST['id']);
             
             $res = $this->getLogic()->edit($_POST,$where);
             
-            exit(json_encode($res));
+            Util::echo_json($res);
         }
     }
     
@@ -77,12 +77,12 @@ class VerifyCode extends Base
     {
         if(Helper::isPostRequest())
         {
-            if(!checkIsNumber(input('id/d',0))){exit(json_encode(ReturnData::create(ReturnData::PARAMS_ERROR)));}
+            if(!checkIsNumber(input('id/d',0))){Util::echo_json(ReturnData::create(ReturnData::PARAMS_ERROR));}
             $where['id'] = input('id');
             
             $res = $this->getLogic()->del($where);
             
-            exit(json_encode($res));
+            Util::echo_json($res);
         }
     }
     
@@ -92,15 +92,15 @@ class VerifyCode extends Base
      * @param $type 请求用途
      * @return string 成功失败信息
      */
-    public function getSmsCodeBySmsbao()
+    public function get_mobile_verify_code()
     {
         $res = $this->getLogic()->getVerifyCodeBySmsbao($_REQUEST);
         if ($res['code'] == ReturnData::SUCCESS)
         {
-            exit(json_encode(ReturnData::create(ReturnData::SUCCESS, $res['data'])));
+            Util::echo_json(ReturnData::create(ReturnData::SUCCESS, $res['data'], '发送成功'));
         }
         
-        exit(json_encode(ReturnData::create(ReturnData::FAIL, null, $res['msg'])));
+        Util::echo_json(ReturnData::create(ReturnData::FAIL, null, $res['msg']));
     }
     
     /**
@@ -109,15 +109,15 @@ class VerifyCode extends Base
      * @param $captcha 验证码
      * @return string 成功失败信息
      */
-    public function getEmailCode()
+    public function get_email_verify_code()
     {
         $res = logic('EmailVerifyCode')->getEmailCode($_REQUEST);
         if ($res['code'] == ReturnData::SUCCESS)
         {
-            exit(json_encode(ReturnData::create(ReturnData::SUCCESS, $res['data'])));
+            Util::echo_json(ReturnData::create(ReturnData::SUCCESS, $res['data']));
         }
         
-        exit(json_encode(ReturnData::create(ReturnData::FAIL, null, $res['msg'])));
+        Util::echo_json(ReturnData::create(ReturnData::FAIL, null, $res['msg']));
     }
     
     //手机验证码校验
@@ -126,10 +126,10 @@ class VerifyCode extends Base
 		$res = $this->getLogic()->check($_REQUEST);
         if ($res['code'] == ReturnData::SUCCESS)
         {
-            exit(json_encode(ReturnData::create(ReturnData::SUCCESS)));
+            Util::echo_json(ReturnData::create(ReturnData::SUCCESS));
         }
         
-        exit(json_encode(ReturnData::create(ReturnData::FAIL, null, $res['msg'])));
+        Util::echo_json(ReturnData::create(ReturnData::FAIL, null, $res['msg']));
     }
     
 }

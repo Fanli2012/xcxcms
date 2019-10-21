@@ -4,7 +4,7 @@
  */
 @set_time_limit(1000);
 error_reporting(E_STRICT);
-define('NONECMS_INSTALL', 1);
+define('NBNBKCMS_INSTALL', 1);
 header('Content-Type:text/html;charset=UTF-8');
 $version = '5.4.0';
 $phpversion = phpversion();
@@ -20,7 +20,7 @@ $step = isset($_GET['step'])? intval($_GET['step']) : 1;
 if (empty($step)) {
 	$step = 1;
 }
-switch ($step ) {
+switch ($step) {
 	case 1://协议
 		$license = file_get_contents("./license.txt");
 		require 'tpl/step_1.php';
@@ -29,15 +29,13 @@ switch ($step ) {
 		/* 环境检测 */
 		$software = explode('/',$_SERVER["SERVER_SOFTWARE"]);
 		$os_software = '<span class="ok">'.PHP_OS.'--'.$software[0].'/'.str_replace('PHP', '', $software[1]).'</span>';
-
 		/* mysql */
-		$mysql_lowest = '5.1.0';
+		$mysql_lowest = '5.6.0';
 		if (function_exists('mysqli_connect')) {
 			$environment_mysql = '<span class="ok">'.$lang['install_on'].'</span>';
 		} else {
 			$environment_mysql = '<span class="no red">&nbsp;</span>';
 		}
-
 		/* session_start */
 		if (function_exists('session_start')) {
 			$environment_session = '<span class="ok">'.$lang['install_on'].'</span>';
@@ -65,14 +63,12 @@ switch ($step ) {
         }else{
             $environment_gd = '<span class="no red">'. $lang['unsupport'] .'</span>';
         }
-
         /* mbstring */
         if(extension_loaded('mbstring')) {
             $environment_mb = '<span class="ok">'.$lang['support'].'</span>';
         }else{
             $environment_mb = '<span class="no red">'. $lang['unsupport'] .'</span>';
         }
-        
 		/* 文件权限检测 */
 		$file = array(
 			'/',
@@ -81,7 +77,6 @@ switch ($step ) {
 			'../runtime',
 			'../application',
 		);
-
 		require 'tpl/step_2.php';
 		break;
 	case 3:
@@ -120,7 +115,6 @@ switch ($step ) {
 			if ($db->connect_errno) {
 				exit(json_encode(array('status'=>'error','info'=>$lang['database_connection_failed'].','.$lang['error_message']. $db->connect_error)));
 			}
-
 			if (!$db->select_db($_POST['DB_NAME'])) {
 				$result = $db->query("CREATE DATABASE `".$_POST['DB_NAME']."` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;");
 				if (!$result) {
@@ -128,7 +122,6 @@ switch ($step ) {
 				}
 			}
 			$db->close();
-			
 			//右边的/一定要去除
 			$_POST['SITE_URL'] = rtrim($_POST['SITE_URL'],'/');
 			$_POST['add_test'] = isset($_POST['add_test']) ? intval($_POST['add_test']) : 0;
@@ -138,7 +131,6 @@ switch ($step ) {
 			} else {
 				exit(json_encode(array('status'=>'error','info'=>$lang['write_tmp_failed'])));
 			}
-
 			//判断配置目录是否可写
 			if (!is_writable("../application")) {
 				exit(json_encode(array('status'=>'error','info'=>$lang['conf_not_write'])));
@@ -161,10 +153,11 @@ switch ($step ) {
 			}
 			break;
 	case 4:
-		if ($_SERVER['REQUEST_METHOD'] == 'POST') {			
+		if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 			$setting = include './temp.php';
-			$datafile = $setting['add_test'] == 1 ? './inc/nonecms_data.sql' : './inc/nonecms.sql';
-
+			//$datafile = $setting['add_test'] == 1 ? './inc/nbnbkcms_data.sql' : './inc/nbnbkcms.sql';
+			$datafile = './inc/nbnbkcms.sql';
+			
 			$content = file_get_contents($datafile);//带演示
 			if (empty($setting)) {				
 				exit(json_encode(array('status'=>'error','info'=>$lang['load_failed_reinstall'])));
@@ -237,20 +230,21 @@ switch ($step ) {
 			
             //释放变量
             unset($content);
-
+			
 			//添加管理员
-			$time = time();
+			/* $time = time();
 			$ip = getip();
 
 			$passwordinfo = get_password($setting['password']);
 			$password = $passwordinfo['password'];
 			$encrypt = $passwordinfo['encrypt'];
 
-			$result = $connect->query("INSERT INTO `{$setting['DB_PREFIX']}admin` (`username`,`password`,`encrypt`,`usertype`,`logintime`,`loginip`,`islock`) VALUES ('{$setting['username']}','$password','$encrypt',9,'$time','$ip',0);");
+			$result = $connect->query("INSERT INTO `{$setting['DB_PREFIX']}admin` (`name`,`pwd`,`usertype`,`logintime`,`loginip`,`islock`) VALUES ('{$setting['username']}','$password','$encrypt',9,'$time','$ip',0);");
 			$insertId = $connect->insert_id;
 			if (!$result || !$insertId) {
 				exit(json_encode(array('status'=>'error','info'=>$lang['create_administrator_failed'].','.$lang['error_message'].$connect->error.','.$lang['please_refresh_installation'])));
-			}
+			} */
+			
 			$connect->close();
 		
 			$status = 'success_all';
@@ -277,7 +271,7 @@ switch ($step ) {
 			];
         
 		$dbStr="<?php return " . var_export($db,true) . ";?>";			
-		file_put_contents('../../config/database.php',$dbStr);//写文件
+		file_put_contents('../../config/database.php', $dbStr);//写文件
 		//copy('./inc/conf/config.php', '../../config/app.php');
         
 		//删除临时文件

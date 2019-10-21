@@ -3,8 +3,8 @@
 // | 阿里云OSS服务
 // +----------------------------------------------------------------------
 namespace app\common\service;
-require_once EXTEND_PATH.'OSS/OssClient.php';
-require_once EXTEND_PATH.'OSS/Core/OssException.php';
+require_once EXTEND_PATH . 'OSS/OssClient.php';
+require_once EXTEND_PATH . 'OSS/Core/OssException.php';
 
 use OSS\OssClient;
 use OSS\Core\OssException;
@@ -15,7 +15,7 @@ class AliyunOSS
     const OSS_ACCESS_KEY = '';
     const OSS_ENDPOINT = 'oss-cn-beijing.aliyuncs.com';
     const OSS_TEST_BUCKET = 'cheyoubao';
-    
+
     /**
      * 根据Config配置，得到一个OssClient实例
      *
@@ -26,9 +26,9 @@ class AliyunOSS
         try {
             $ossClient = new OssClient(self::OSS_ACCESS_ID, self::OSS_ACCESS_KEY, self::OSS_ENDPOINT, false);
         } catch (OssException $e) {
-            return ['code'=>0, 'msg'=>$e->getMessage(), 'data'=>''];
+            return ['code' => 0, 'msg' => $e->getMessage(), 'data' => ''];
         }
-        
+
         return $ossClient;
     }
 
@@ -49,12 +49,12 @@ class AliyunOSS
         try {
             $res = $ossClient->createBucket($bucket, $acl);
         } catch (OssException $e) {
-            return ['code'=>0, 'msg'=>$e->getMessage(), 'data'=>''];
+            return ['code' => 0, 'msg' => $e->getMessage(), 'data' => ''];
         }
-        
-        return ['code'=>1, 'msg'=>'操作成功', 'data'=>$res];
+
+        return ['code' => 1, 'msg' => '操作成功', 'data' => $res];
     }
-    
+
     /**
      * 上传指定的本地文件内容
      *
@@ -69,16 +69,16 @@ class AliyunOSS
         $options = array();
         $ossClient = self::getOssClient();
         $bucket = self::getBucketName();
-        
+
         try {//self::createBucket();
             $res = $ossClient->uploadFile($bucket, $object, $filePath, $options);
         } catch (OssException $e) {
-            return ['code'=>0, 'msg'=>$e->getMessage(), 'data'=>''];
+            return ['code' => 0, 'msg' => $e->getMessage(), 'data' => ''];
         }
-        
-        return ['code'=>1, 'msg'=>'操作成功', 'data'=>$res];
+
+        return ['code' => 1, 'msg' => '操作成功', 'data' => $res];
     }
-    
+
     /**
      * 把本地变量的内容到文件
      *
@@ -95,13 +95,13 @@ class AliyunOSS
         $options = array();
         $ossClient = self::getOssClient();
         $bucket = self::getBucketName();
-        
+
         try {
             $res = $ossClient->putObject($bucket, $object, $content, $options);
         } catch (OssException $e) {
-            return ['code'=>0, 'msg'=>$e->getMessage(), 'data'=>''];
+            return ['code' => 0, 'msg' => $e->getMessage(), 'data' => ''];
         }
-        
-        return ['code'=>1, 'msg'=>'操作成功', 'data'=>$res];
+
+        return ['code' => 1, 'msg' => '操作成功', 'data' => $res];
     }
 }

@@ -33,23 +33,32 @@
 4、恢复后台默认账号密码：http://www.nbnbk3.com/fladmin/login/recoverpwd
 
 
-## 安装
+## 后端安装
+
+跟thinkphp5安装一样，只是多了一步数据库导入
 
 1、 导入数据库
 
-1) 打开server目录下的nbnbk.sql文件，将 http://www.nbnbk3.com 改成自己的站点根网址，格式：http(s)://+域名
+1) 打开根目录下的nbnbk.sql文件，替换文件里面的 http://www.nbnbk3.com 为自己的站点根网址，格式：http(s)://+域名
 
-2) 导入数据库
+2) 导入数据库，导入完成之后，因为数据表有索引，需要修复表不然很容易报错
 
 2、 修改数据库连接参数
 
-打开/apphome/database.php文件,修改相关配置
+打开/application/database.php文件,修改相关配置
 
-3、 域名绑定到server/public目录
+3、 根目录执行 Composer install 或 Composer update 示例：php composer.phar install 或 php composer.phar update
 
-4、 登录后台->系统设置->系统配置参数，更新配置：http://www.nbnbk3.com/fladmin/index/upconfig
+4、 域名绑定到server/public目录
 
-5、 打开miniprogram目录下的config.js文件，修改【appApiUrl: "http://www.nbnbk3.com/api"】为【appApiUrl: "http(s)://+域名/api"】，这个是为小程序提供数据的api接口路径
+5、 登录后台->系统设置->系统配置参数，更新配置：http://www.nbnbk3.com/fladmin/index/upcache
+
+Linux系统文件/目录权限
+
+ + extend/wxJsSdk目录设置成可读写777
+ + public/index.php文件设置成只读444
+
+6、 打开miniprogram目录下的config.js文件，修改【appApiUrl: "http://www.nbnbk3.com/api"】为【appApiUrl: "http(s)://+域名/api"】，这个是为小程序提供数据的api接口路径
 
 
 ## 注意

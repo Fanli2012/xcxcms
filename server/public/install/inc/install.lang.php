@@ -1,9 +1,9 @@
 <?php
-if(!defined('NONECMS_INSTALL')) exit('Access Denied');
+if(!defined('NBNBKCMS_INSTALL')) exit('Access Denied');
 $lang = array(
-	'install_title' => 'NoneCMS 1.0安装向导',
-	'install_license' => 'NoneCMS内容管理系统-安装用户协议',
-	'install_is_lock' => '您已成功安装NoneCMS，需重新安装请手动删除网站目录下public/install/install.lock文件', 
+	'install_title' => 'NBNBK CMS 安装向导',
+	'install_license' => 'NBNBK CMS内容管理系统-安装用户协议',
+	'install_is_lock' => '您已成功安装NBNBK CMS，需重新安装请手动删除网站目录下public/install/install.lock文件',
 	'install_db_error' => '数据库文件无法读取，请检查public/install/inc/wang.sql是否存在。',	
 	'agree_and_accept' => '同意并接受',	
 	'detection_environment' => '检测环境',
@@ -26,12 +26,12 @@ $lang = array(
 	'success' => '成功',
 	'database_information' => '数据库信息',
 	'database_information_tip' => '安装后,原数据库会被清空,请做好备份',
-
+	
 	'install_mysql_host' => '数据库服务器',
 	'install_mysql_host_intro' => '本地填写：127.0.0.1或IP',
 	'install_mysql_port' => '数据库端口',
 	'install_mysql_port_intro' => '数据库端口一般为3306',
-
+	
 	'install_mysql_username' => '数据库用户名',
 	'install_mysql_password' => '数据库密码',
 	'install_mysql_name' => '数据库名称',
@@ -48,13 +48,13 @@ $lang = array(
 	'site_style_b' => '博客站',
 	'website_administrator' => '网站超级管理员',
 	'username' => '用户名',
-	'password' => '密　码',
+	'password' => '密码',
 	'password_intro' => '最少6位',
 	'test_data' => '测试数据',
 	'test_data_intro' => '添加默认数据！(适合新手第一次使用)',
 	'Installation' => '安装中',
 	'Data_initialization' => '数据初始化中',
-
+	
 	'installation_failed' => '安装失败',
 	'installation_complete' => '安装完成',
 	'installation_successful' => '安装成功',
@@ -63,11 +63,11 @@ $lang = array(
 	'please_delete_folder' => '请手动删除Update文件夹',	
 	'visit_home' => '访问网站首页',
 	'enter_admin' => '进入后台管理',
-
+	
 	'safe_notes' => '为了您站点的安全，安装完成后请立即删除网站根目录public下的“Install”文件夹删除。',
 	'system_installation_requirements_php' => '系统安装要求：PHP版本最低不能低于',
 	'install_on' => '开启',
-
+	
 	'install_mysql_host_empty' => '请填写数据库服务器!',
 	'install_mysql_port_empty' => '请填写数据库端口!',	
 	'install_mysql_username_empty' => '请填写数据库用户名!',
@@ -89,8 +89,7 @@ $lang = array(
 	'write_data_table' => '写入数据表',
 	'create_administrator_failed' => '创建管理员失败',
 	'please_refresh_installation' => '请重新刷新安装',
-
-
+	
 	'support' => '支持',
 	'unsupport' => '不支持',
     'mustopen' => '必须开启',

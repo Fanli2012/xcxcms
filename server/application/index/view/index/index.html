@@ -1,9 +1,56 @@
 <!DOCTYPE html><html><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8" /><meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport"><meta http-equiv="Cache-Control" content="no-siteapp" /><meta http-equiv="Cache-Control" content="no-transform" />
 <title><?php echo sysconfig('CMS_SEOTITLE'); ?></title><meta name="keywords" content="<?php echo sysconfig('CMS_KEYWORDS'); ?>" /><meta name="description" content="<?php echo sysconfig('CMS_DESCRIPTION'); ?>" /><link rel="stylesheet" href="<?php echo sysconfig('CMS_BASEHOST'); ?>/css/style.css" media="all"><script type="text/javascript" src="<?php echo sysconfig('CMS_BASEHOST'); ?>/js/jquery.min.js"></script><script type="text/javascript" src="<?php echo sysconfig('CMS_BASEHOST'); ?>/js/ad.js"></script></head><body><script>site();</script>
-{include file="common/header"/}<div id="tad"><script>tjs();</script></div>
+{include file="common/header"/}
 
 <div class="box mt10">
 <div class="fl_640">
+<?php if($slide_list){ ?>
+<!--轮播图-start-->
+<div class="i-carousel" id="i-carousel" style="border-bottom:20px solid #f1f1f1;">
+    <!-- Swiper -->
+    <div class="swiper-container" id="swiper-container">
+        <div class="swiper-wrapper">
+			<?php foreach($slide_list as $k=>$v){ ?>
+            <div class="swiper-slide"><a href="<?php echo $v['url']; ?>" target="<?php echo $v['target_text']; ?>"><img src="<?php echo $v['pic']; ?>" alt="<?php echo $v['title']; ?>"></a></div>
+			<?php } ?>
+        </div>
+        <!-- Add Arrows -->
+		<!-- <div class="swiper-button-next swiper-button-white"></div>
+		<div class="swiper-button-prev swiper-button-white"></div> -->
+		<!-- Add Pagination -->
+        <div class="swiper-pagination swiper-pagination-white"></div>
+    </div>
+</div>
+<link rel="stylesheet" href="<?php echo sysconfig('CMS_BASEHOST'); ?>/css/swiper.min.css">
+<style>
+.swiper-container{width:100%;}
+.swiper-slide{text-align:center;font-size:18px;background:#fff;}
+.swiper-slide img{width:100%;display:block;vertical-align:middle;}
+</style>
+<script type="text/javascript" src="<?php echo sysconfig('CMS_BASEHOST'); ?>/js/swiper.min.js"></script>
+<script>
+//Swiper轮播
+var swiper = new Swiper('.swiper-container', {
+	pagination: '.swiper-pagination',
+    paginationClickable: true,
+    autoHeight: true, //enable auto height
+    slidesPerView: 1,
+    spaceBetween: 30,
+    loop: true,
+    centeredSlides: true,
+    autoplay: 3000,
+    autoplayDisableOnInteraction: false,
+	//prevButton:'.swiper-button-prev',
+	//nextButton:'.swiper-button-next',
+	onSlideChangeStart: function() {
+		var scH=$(".swiper-container").width();
+		$(".swiper-slide img").css('height', scH/2 + 'px');
+	},
+});
+</script>
+<!--轮播图-end-->
+<?php } ?>
+
 <div class="r_two_column">
 <div class="r_one"><div class="side"><div class="stit"><h2>简介</h2><div class="cl"></div></div>
 <p class="i_des">于千万人之中遇见你所要遇见的人，没有早一步，也没有晚一步，刚巧碰上了，那也没有别的话可以说，唯有轻轻地问一声：“噢，你也在这里吗？”——<a href="https://baike.baidu.com/item/张爱玲/44982">张爱玲百科</a></p></div></div>
@@ -12,10 +59,262 @@
 <ul class="uli chs"><?php if($relate_tuijian_list){foreach($relate_tuijian_list as $row){ ?><li><a href="<?php echo model('Article')->getArticleDetailUrl(array('id'=>$row['id'])); ?>"><?php echo $row['title']; ?></a></li><?php }} ?></ul><div class="cl"></div></div></div>
 <div class="cl"></div></div>
 
+<div class="portal-two-columns" class="cl">
+	<div class="section-heading">
+		<strong class="section-title"><a href="/p/1">经典台词</a></strong>
+		<ul class="section-more">
+			<li><a href="/p/1">短语</a></li>
+			<li><a href="/p/1">签名</a></li>
+			<li><a href="/p/1">微小说</a></li>
+		</ul>
+	</div>
+    <div class="block-left fl">
+        <div class="posts-wrap" style="margin-bottom:-20px;">
+            <div class="post-big">
+                <a class="thumbnail-link" href="/p/1">
+                    <img src="/images/1.jpg" class="img-w3h2" alt="" />
+					<span class="entry-title">世界杯最大牌女球迷，一举动令人钦佩</span>
+                </a>
+            </div>
+            <div class="post-big">
+                <a class="thumbnail-link" href="/p/1">
+                    <img src="/images/2.jpg" class="img-w3h2" alt="" />
+					<span class="entry-title">中国小将完成夏联首秀 助勇士拿下三连胜</span>
+                </a>
+            </div>
+            <div class="post-big">
+                <a class="thumbnail-link" href="/p/1">
+                    <img src="/images/3.jpg" class="img-w3h2" alt="" />
+					<span class="entry-title">世界杯最大牌女球迷，一举动令人钦佩</span>
+                </a>
+            </div>
+            <div class="post-big">
+                <a class="thumbnail-link" href="/p/1">
+                    <img src="/images/4.jpg" class="img-w3h2" alt="" />
+					<span class="entry-title">世界杯最大牌女球迷，一举动令人钦佩</span>
+                </a>
+            </div>
+            <div class="cl"></div>
+        </div>
+    </div>
+    <div class="block-right fr">
+        <div class="posts-wrap">
+            <ul class="post-small">
+                <li><a href="/p/1">詹姆斯对湖人到底有多耐心 骑士老板看完哭了</a></li>
+                <li><a href="/p/1">皇马无情，C罗加盟尤文图斯几乎已成定局</a></li>
+                <li><a href="/p/1">三个罗纳尔多谁的历史地位更高？</a></li>
+                <li><a href="/p/1">马刺记者:莱昂纳德首选已不是湖人</a></li>
+                <li><a href="/p/1">摩洛哥撒哈拉攻略干货，解锁网红拍照点</a></li>
+                <li><a href="/p/1">摩洛哥撒哈拉攻略干货，解锁网红拍照点</a></li>
+                <li><a href="/p/1">三个罗纳尔多谁的历史地位更高？</a></li>
+                <li><a href="/p/1">马刺记者:莱昂纳德首选已不是湖人</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="cl"></div>
+</div>
+
+<div class="portal-two-columns" class="cl">
+    <div class="block-left fl">
+        <div class="section-heading">
+            <strong class="section-title"><a
+                    href="/p/1">炒股技巧</a></strong>
+            <ul class="section-more">
+                <li><a href="/p/1">MACD</a></li>
+                <li><a href="/p/1">筹码分布</a></li>
+                <li><a href="/p/1">基本面</a></li>
+            </ul>
+        </div>
+        <div class="posts-wrap">
+            <div class="post-big">
+                <a class="thumbnail-link" href="/p/1">
+                    <img src="/images/1.jpg" class="img-w3h2" alt="" />
+					<span class="entry-title">世界杯最大牌女球迷，一举动令人钦佩</span>
+                </a>
+            </div>
+            <div class="post-big">
+                <a class="thumbnail-link" href="/p/1">
+                    <img src="/images/2.jpg" class="img-w3h2" alt="" />
+					<span class="entry-title">中国小将完成夏联首秀 助勇士拿下三连胜</span>
+                </a>
+            </div>
+            <div class="cl"></div>
+            <ul class="post-small">
+                <li><a href="/p/1">詹姆斯对湖人到底有多耐心 骑士老板看完哭了</a></li>
+                <li><a href="/p/1">皇马无情，C罗加盟尤文图斯几乎已成定局</a></li>
+                <li><a href="/p/1">三个罗纳尔多谁的历史地位更高？</a></li>
+                <li><a href="/p/1">马刺记者:莱昂纳德首选已不是湖人</a></li>
+                <li><a href="/p/1">摩洛哥撒哈拉攻略干货，解锁网红拍照点</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="block-right fr">
+        <div class="section-heading">
+            <strong class="section-title"><a href="/p/1">体育世界</a></strong>
+            <ul class="section-more">
+                <li><a href="/p/1">NBA</a></li>
+                <li><a href="/p/1">奥运</a></li>
+                <li><a href="/p/1">世界杯</a></li>
+            </ul>
+        </div>
+        <div class="posts-wrap">
+            <div class="post-big">
+                <a class="thumbnail-link" href="/p/1">
+                    <img src="/images/8.jpg" class="img-w3h2" alt="" />
+					<span class="entry-title">世界杯最大牌女球迷，一举动令人钦佩</span>
+                </a>
+            </div>
+            <div class="post-big">
+                <a class="thumbnail-link" href="/p/1">
+                    <img src="/images/6.jpg" class="img-w3h2" alt="" />
+					<span class="entry-title">中国小将完成夏联首秀 助勇士拿下三连胜</span>
+                </a>
+            </div>
+            <div class="cl"></div>
+            <ul class="post-small">
+                <li><a href="/p/1">詹姆斯对湖人到底有多耐心 骑士老板看完哭了</a></li>
+                <li><a href="/p/1">皇马无情，C罗加盟尤文图斯几乎已成定局</a></li>
+                <li><a href="/p/1">三个罗纳尔多谁的历史地位更高？</a></li>
+                <li><a href="/p/1">马刺记者:莱昂纳德首选已不是湖人</a></li>
+                <li><a href="/p/1">摩洛哥撒哈拉攻略干货，解锁网红拍照点</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="cl"></div>
+</div>
+  
+<style>
+#three-img-list{border-top:20px solid #f1f1f1;background-color:#fff;}
+#three-img-list ul{padding:20px 20px 0 20px;}
+#three-img-list ul li{list-style:none;margin-bottom:20px;float:left;margin-right:2%;width:32%;}
+#three-img-list ul li:nth-of-type(3n+0){margin-right:0;}
+#three-img-list .thumbnail-link{display:block;}
+#three-img-list .thumbnail-link img{width:100%;height:auto;}
+#three-img-list .entry-title{display:block;color:#333;line-height:1.5;min-height:48px;margin-top:10px;margin-bottom:4px;font-size:16px;overflow:hidden;text-overflow:ellipsis;display:-webkit-box;-webkit-box-orient:vertical;-webkit-line-clamp:2;line-clamp:2;}
+#three-img-list .thumbnail-link:hover span{color:#ff4c4c;text-decoration:underline;}
+#three-img-list .entry-meta{font-size:13px;color:#999;}
+</style>
+<div id="three-img-list">
+<ul>
+<li>
+	<a class="thumbnail-link" href="/p/1">
+		<img class="img-w3h2" src="/images/1.jpg" alt="">
+		<span class="entry-title">吃一碗根本不够</span>
+	</a>
+	<div class="entry-header">
+		<div class="entry-meta">
+			<span class="entry-views">阅读(692)</span>
+		</div>
+	</div>
+</li>
+<li>
+	<a class="thumbnail-link" href="/p/2">
+		<img class="img-w3h2" src="/images/2.jpg" alt="">
+		<span class="entry-title">炒面多做这一步会特香，炒面多做这一步会特香吃一碗根本不够</span>
+	</a>
+	<div class="entry-header">
+		<div class="entry-meta">
+			<span class="entry-views">阅读(692)</span>
+		</div>
+	</div>
+</li>
+<li>
+	<a class="thumbnail-link" href="/p/3">
+		<img class="img-w3h2" src="/images/3.jpg" alt="">
+		<span class="entry-title">炒面多做这一步会特香，吃一碗根本不够</span>
+	</a>
+	<div class="entry-header">
+		<div class="entry-meta">
+			<span class="entry-views">阅读(692)</span>
+		</div>
+	</div>
+</li>
+</ul>
+<div class="cl"></div>
+</div>
+
+
+<style>
+.wz-list{border-top:20px solid #f1f1f1;}
+.wz-list-title{border-bottom:1px solid #f0f0f0;padding:0 20px;position:relative;}
+.wz-list-title .title{font-size:18px;display:inline-block;border-bottom:2px solid #ff4c4c;margin-bottom:-1px;padding:10px 0 9px;}
+.wz-list-title .counter{color:#999;font-size:14px;position:absolute;top:12px;right:20px;}
+.wz-list-title .counter strong{color:#76b852;padding:0 2px;}
+.wz-list-content{padding:16px 20px 20px 20px;}
+.wz-list-content .hentry{margin-bottom:8px;position:relative;}
+.wz-list-content .hentry:last-child{margin-bottom:0;}
+.wz-list-content .entry-title{line-height:1.5;}.wz-list-content .entry-title a{font-size:16px;color:#333;vertical-align:baseline;}.wz-list-content .entry-title a:hover{color:#ff4c4c;text-decoration:underline;}
+.wz-list-content .entry-meta{position:absolute;top:0;right:0;color:#999;font-size:13px;}
+.wz-list-content .post-num{background-color:#999;color:#fff;display:inline-block;font-size:14px;width:18px;height:18px;line-height:18px;margin:0 8px 0 0;text-align:center;}
+.wz-list-content .post-num.num-1{background-color:#ff4c4c;}
+.wz-list-content .post-num.num-2{background-color:#76b852;}
+.wz-list-content .post-num.num-3{background-color:#ffbe02;}
+@media screen and (max-width:640px){
+.wz-list-content .entry-meta{display:none;}
+}
+</style>
+<div class="wz-list cl">
+<div class="wz-list-title">
+	<span class="title">最新发布</span> 
+	<div class="counter">
+		<span class="hours">今日更新<strong>0</strong>篇</span>&nbsp;&nbsp;
+		<span class="days">文章总数<strong>56</strong>篇</span>
+	</div>
+</div>
+<div class="wz-list-content">
+<div class="hentry">
+	<div class="entry-title"><span class="post-num num-1">1</span><a href="/p/1">超美的三亚,5天4晚全五星酒店高大上自由行</a></div>
+	<div class="entry-meta">
+		<span class="entry-views">08-15</span>
+	</div>
+</div><!-- .hentry -->
+<div class="hentry">
+	<div class="entry-title"><span class="post-num num-2">2</span><a href="/p/2">呼伦贝尔: 你不可错过的辽阔草原和兴安秋色!</a></div>
+	<div class="entry-meta">
+		<span class="entry-views">12-12</span>
+	</div>
+</div><!-- .hentry -->
+<div class="hentry">
+	<div class="entry-title"><span class="post-num num-3">3</span><a href="/p/3">世界杯最大牌女球迷，一举动令人钦佩</a></div>
+	<div class="entry-meta">
+		<span class="entry-views">05-12</span>
+	</div>
+</div><!-- .hentry -->
+<div class="hentry">
+	<div class="entry-title"><span class="post-num num-4">4</span><a href="/p/4">菜市场的这4种猪肉，再便宜也不能买，主妇必看</a></div>
+	<div class="entry-meta">
+		<span class="entry-views">04-12</span>
+	</div>
+</div><!-- .hentry -->
+<div class="hentry">
+	<div class="entry-title"><span class="post-num num-5">5</span><a href="/p/5">JEEP全新牧马人高清官图曝光,彰显与时俱进的新一代野性!</a></div>
+	<div class="entry-meta">
+		<span class="entry-views">11-12</span>
+	</div>
+</div><!-- .hentry -->
+</div>
+</div>
+
+<div class="tit-h60">热门</div>
+
+<div id="mz-list" style="background-color:#f1f1f1;">
+<?php if($relate_tuijian_list){foreach($relate_tuijian_list as $row){ ?>
+<div class="mz-list">
+<?php if(!empty($row['litpic'])){ ?><a class="mz-list-img-box" href="<?php echo model('Article')->getArticleDetailUrl(array('id'=>$row['id'])); ?>"><img class="img-w2h1" alt="<?php echo $row['title']; ?>" src="<?php echo $row['litpic']; ?>"></a><?php } ?>
+<div class="mz-list-title"><a href="<?php echo model('Article')->getArticleDetailUrl(array('id'=>$row['id'])); ?>"><?php echo $row['title']; ?></a></div>
+<div class="mz-list-time"><?php echo date("m-d H:i",$row['update_time']); ?>&nbsp;&nbsp;阅读(<?php echo $row['click']; ?>)&nbsp;&nbsp;<span class="zan">hot</span></div>
+<div class="mz-list-desc"><?php echo mb_strcut($row['description'],0,150,'UTF-8'); ?></div>
+</div>
+<?php }} ?>
+</div>
+
+<div class="tit-h60">最新</div>
+
 <div id="arclist">
 <?php if($list){foreach($list as $row){ ?><div class="list"><?php if(!empty($row['litpic'])){ ?><a class="limg" href="<?php echo model('Article')->getArticleDetailUrl(array('id'=>$row['id'])); ?>"><img alt="<?php echo $row['title']; ?>" src="<?php echo $row['litpic']; ?>"></a><?php } ?>
 <strong class="tit"><a href="<?php echo model('Article')->getArticleDetailUrl(array('id'=>$row['id'])); ?>"><?php echo $row['title']; ?></a></strong><p><?php echo mb_strcut($row['description'],0,150,'UTF-8'); ?>..</p>
-<div class="info"><span class="fl"><?php if(!empty($row['writer'])){ echo '<i>'.$row['writer'].'</i>'; }elseif(!empty($row['source'])){ echo '<i>'.$row['source'].'</i>'; } ?><em><?php echo date("m-d H:i",$row['update_time']); ?></em></span><span class="fr"><em><?php echo $row['click']; ?></em>人阅读</span></div><div class="cl"></div></div><?php }}else{echo '<div style="text-align:center;padding:20px;">暂无记录</div>';} ?></div>
+<div class="info"><span class="fl"><?php if(!empty($row['writer'])){ echo '<i>'.$row['writer'].'</i>'; }elseif(!empty($row['source'])){ echo '<i>'.$row['source'].'</i>'; } ?><em><?php echo date("m-d H:i",$row['update_time']); ?></em></span><span class="fr"><em><?php echo $row['click']; ?></em>人阅读</span></div><div class="cl"></div></div><?php }}else{echo '<div style="text-align:center;padding:20px;">暂无记录</div>';} ?>
+</div>
 
 </div><!-- fl_640 end -->
 
@@ -26,8 +325,190 @@
 <div class="side"><div class="stit"><h2>推荐阅读</h2><a href="javascript:getmore({limit:5,tuijian:1,mode:1,orderby:'rand()'});" class="more">换一换</a><div class="cl"></div></div>	
 <ul class="uli chs" id="xglist"><?php if($relate_tuijian_list){foreach($relate_tuijian_list as $row){ ?><li><a href="<?php echo model('Article')->getArticleDetailUrl(array('id'=>$row['id'])); ?>"><?php echo $row['title']; ?></a></li><?php }} ?></ul><div class="cl"></div></div>
 
+<div class="portal-two-columns" class="cl" style="border-top:0;margin-bottom:20px;">
+    <div class="block-content fl">
+        <div class="section-heading">
+            <strong class="section-title"><a href="/p/1">汽车行情</a></strong>
+            <ul class="section-more">
+                <li><a href="/p/1">大众</a></li>
+                <li><a href="/p/1">丰田</a></li>
+            </ul>
+        </div>
+        <div class="posts-wrap">
+            <div class="post-big">
+                <a class="thumbnail-link" href="/p/1">
+                    <img src="/images/1.jpg" class="img-w3h2" alt="" />
+					<span class="entry-title">世界杯最大牌女球迷，一举动令人钦佩</span>
+                </a>
+            </div>
+            <div class="post-big">
+                <a class="thumbnail-link" href="/p/1">
+                    <img src="/images/2.jpg" class="img-w3h2" alt="" />
+					<span class="entry-title">中国小将完成夏联首秀 助勇士拿下三连胜</span>
+                </a>
+            </div>
+            <div class="cl"></div>
+            <ul class="post-small">
+                <li><a href="/p/1">詹姆斯对湖人到底有多耐心 骑士老板看完哭了</a></li>
+                <li><a href="/p/1">皇马无情，C罗加盟尤文图斯几乎已成定局</a></li>
+                <li><a href="/p/1">三个罗纳尔多谁的历史地位更高？</a></li>
+                <li><a href="/p/1">马刺记者:莱昂纳德首选已不是湖人</a></li>
+                <li><a href="/p/1">摩洛哥撒哈拉攻略干货，解锁网红拍照点</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="cl"></div>
+</div>
+
+<div class="portal-two-columns" class="cl" style="border-top:0;margin-bottom:20px;">
+	<div class="section-heading">
+		<strong class="section-title"><a href="/p/1">优美图片</a></strong>
+		<ul class="section-more">
+			<li><a href="/p/1">唯美</a></li>
+			<li><a href="/p/1">写真</a></li>
+		</ul>
+	</div>
+    <div class="block-content fl">
+        <div class="posts-wrap" style="margin-bottom:-20px;">
+            <div class="post-big">
+                <a class="thumbnail-link" href="/p/1">
+                    <img src="/images/1.jpg" class="img-w3h2" alt="" />
+					<span class="entry-title">世界杯最大牌女球迷，一举动令人钦佩</span>
+                </a>
+            </div>
+            <div class="post-big">
+                <a class="thumbnail-link" href="/p/1">
+                    <img src="/images/2.jpg" class="img-w3h2" alt="" />
+					<span class="entry-title">中国小将完成夏联首秀 助勇士拿下三连胜</span>
+                </a>
+            </div>
+            <div class="post-big">
+                <a class="thumbnail-link" href="/p/1">
+                    <img src="/images/3.jpg" class="img-w3h2" alt="" />
+					<span class="entry-title">世界杯最大牌女球迷，一举动令人钦佩</span>
+                </a>
+            </div>
+            <div class="post-big">
+                <a class="thumbnail-link" href="/p/1">
+                    <img src="/images/4.jpg" class="img-w3h2" alt="" />
+					<span class="entry-title">世界杯最大牌女球迷，一举动令人钦佩</span>
+                </a>
+            </div>
+            <div class="cl"></div>
+        </div>
+    </div>
+    <div class="cl"></div>
+</div>
+
+<div style="margin-bottom:12px;">
+    <div style="font-size:20px;">相关</div>
+    <ul class="imglist w300 clear">
+        <li>
+            <a href="/p/1">
+                <img src="/images/1.jpg" />
+                <p>于千万人之中遇见你所要遇见的人于千万人之中遇见你所要遇见的人</p>
+            </a>
+        </li>
+        <li>
+            <a href="/p/2">
+                <img src="/images/2.jpg" />
+                <p>于千万人之中遇见你所要遇见的人于千万人之中遇见你所要遇见的人</p>
+            </a>
+        </li>
+        <li>
+            <a href="/p/3">
+                <img src="/images/3.jpg" />
+                <p>于千万人之中遇见你所要遇见的人于千万人之中遇见你所要遇见的人</p>
+            </a>
+        </li>
+        <li>
+            <a href="/p/4">
+                <img src="/images/4.jpg" />
+                <p>于千万人之中遇见你所要遇见的人于千万人之中遇见你所要遇见的人</p>
+            </a>
+        </li>
+    </ul>
+</div>
+
 <div class="side"><div class="stit"><h2>猜你喜欢</h2><a href="javascript:getmore({limit:5,mode:2,orderby:'rand()'});" class="more">换一换</a><div class="cl"></div></div>
 <div class="uli2" id="xglike"><?php if($relate_rand_list){foreach($relate_rand_list as $row){ ?><div class="suli"><?php if(!empty($row['litpic'])){ ?><a class="limg" href="<?php echo model('Article')->getArticleDetailUrl(array('id'=>$row['id'])); ?>"><img alt="<?php echo $row['title']; ?>" src="<?php echo $row['litpic']; ?>"></a><?php } ?><a href="<?php echo model('Article')->getArticleDetailUrl(array('id'=>$row['id'])); ?>"><?php echo $row['title']; ?></a><div class="sulii"><?php if(!empty($row['writer'])){echo '<span class="time">'.$row['writer'].'</span>';}elseif(!empty($row['source'])){echo '<span class="time">'.$row['source'].'</span>';} ?> 阅读(<?php echo $row['click']; ?>)</div><div class="cl"></div></div><?php }} ?></div></div>
+
+<style>
+/* 图片列表 */
+#one-img-list{ /* border-top:20px solid #f1f1f1;background-color:#fff;margin-bottom:20px; */ }
+#one-img-list ul{ /* padding:20px 20px 0 20px; */ }
+#one-img-list ul li{margin-bottom:20px;}#one-img-list ul li:last-child{margin-bottom:0;}
+#one-img-list .thumbnail-link{display:block;}
+#one-img-list .thumbnail-link img{width:100%;height:auto;}
+#one-img-list .entry-title{ /* font-size:20px; */ font-size:18px;display:block;margin-top:10px;line-height:1.5;margin-bottom:4px;}
+#one-img-list .thumbnail-link:hover span{color:#09C1F5;}
+#one-img-list .entry-meta{color:#a2a2a2;}
+</style>
+<div class="side"><div class="stit"><strong class="stith">图文热门</strong><div class="cl"></div></div>
+<div id="one-img-list">
+<ul>
+<li>
+	<a class="thumbnail-link" href="/p/1">
+		<img class="img-w2h1" src="/images/201811201717328435.png" alt="">
+		<span class="entry-title">炒面多做这一步会特香，吃一碗根本不够</span>
+	</a>
+	<div class="entry-header">
+		<div class="entry-meta"><span class="entry-views">11-23 11:00 阅读(692)</span></div><!-- .entry-meta -->				
+	</div>
+</li>
+<li>
+	<a class="thumbnail-link" href="/p/2">
+		<img class="img-w2h1" src="/images/201811201717328435.png" alt="">
+		<span class="entry-title">炒面多做这一步会特香，吃一碗根本不够</span>
+	</a>
+	<div class="entry-header">
+		<div class="entry-meta"><span class="entry-views">11-23 11:00 阅读(692)</span></div><!-- .entry-meta -->				
+	</div>
+</li>
+<li>
+	<a class="thumbnail-link" href="/p/3">
+		<img class="img-w2h1" src="/images/201811201717328435.png" alt="">
+		<span class="entry-title">炒面多做这一步会特香，吃一碗根本不够</span>
+	</a>
+	<div class="entry-header">
+		<div class="entry-meta"><span class="entry-views">11-23 11:00 阅读(692)</span></div><!-- .entry-meta -->				
+	</div>
+</li>
+</ul>
+</div>
+</div>
+
+<style>
+/* 右侧图文列表 */
+#r-post-img-list{border:1px solid #e9e9e9;margin-bottom:20px;padding:15px;background-color:#fff;}
+#r-post-img-list .widget-title{border-left:4px solid #f33;padding-left:10px;color:#333;line-height:1;margin-bottom:15px;}
+#r-post-img-list .widget-title strong{font-weight:700;font-size:16px;}
+#r-post-img-list .thumbnail-wrap img{display:block;width:100%;height:auto;}
+#r-post-img-list .one-img{position:relative;margin-bottom:12px;}
+#r-post-img-list .one-img .entry-wrap{background-color:rgba(0,0,0,.3);display: block;position: absolute;bottom: 0;left: 0;font-size: 14px;height: 30px;line-height: 30px;overflow: hidden;width: 100%;}
+#r-post-img-list .one-img .entry-wrap a{color:#fff;display:block;padding:0 10px;}
+#r-post-img-list .post-list{font-size:15px;padding-left:25px;list-style:none;margin-bottom:10px;line-height:1.45;position:relative;}
+#r-post-img-list .post-list span{background-color:#f0f0f0;color:#999;display:inline-block;font-size:13px;width:18px;height:18px;line-height:18px;text-align:center;position:absolute;left:0;top:2px;}
+#r-post-img-list .post-list .num-1{background-color:#ffbe02;color:#fff;}
+#r-post-img-list .post-list .num-2{background-color:#007fdb;color:#fff;}
+#r-post-img-list .post-list .num-3{background-color:#46b450;color:#fff;}
+#r-post-img-list .post-list a:hover{color:#ff4c4c;text-decoration:none;}
+#r-post-img-list .post-list:last-child,#r-post-img-list .one-img:last-child{margin-bottom:0;}
+@media screen and (max-width:960px){
+#r-post-img-list{display:none;}
+}
+</style>
+<div id="r-post-img-list">
+	<div class="widget-title"><strong>评论最多的文章</strong></div>
+	<ul>
+		<li class="one-img"><a href="/p/1"><div class="thumbnail-wrap"><img src="/images/1.jpg" class="img-w2h1" alt=""></div></a><div class="entry-wrap"><a href="https://www.zhutibaba.com/demo/menhu1/87.html">拉丁美洲的春季 秘鲁探秘的最佳时节</a></div></li>
+		<li class="post-list"><span class="num-1">1</span><a href="/p/1">世界杯最大牌女球迷，一举动令人钦佩</a></li>
+		<li class="post-list"><span class="num-2">2</span><a href="/p/2">呼伦贝尔: 不可错过的辽阔草原和兴安秋色</a></li>
+		<li class="post-list"><span class="num-3">3</span><a href="/p/3">三江源头 这家自主车企如何传递品牌“温度”</a></li>
+		<li class="post-list"><span>4</span><a href="/p/4">在WordPress网站写的第一篇文章</a></li>
+		<li class="post-list"><span>5</span><a href="/p/5">130亿美元的中国电竞市场 腾讯只想当主演</a></li>
+	</ul>
+</div>
 
 <div class="side"><div class="stit"><div class="stith"><strong>友情链接</strong></div><div class="cl"></div></div>
 <div class="rtags mt10"><?php if($friendlink_list){foreach($friendlink_list as $row){ ?><a href="<?php echo $row['url']; ?>"><?php echo $row['name']; ?></a><?php }} ?></div></div>

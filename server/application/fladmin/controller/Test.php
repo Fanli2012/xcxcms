@@ -1,4 +1,5 @@
 <?php
+
 namespace app\fladmin\controller;
 
 class Test extends Base

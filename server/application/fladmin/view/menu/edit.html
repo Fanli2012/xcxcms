@@ -23,7 +23,7 @@
     </tr>
     <tr>
         <td align="right"><font color="red">*</font>名称：</td>
-        <td><input name="name" type="text" id="name" value="<?php echo $post["name"]; ?>" class="required" style="width:30%" placeholder="在此输入菜单名称"><input style="display:none;" name="id" type="text" id="id" value="<?php echo $id; ?>"></td>
+        <td><input autocomplete="off" name="name" type="text" id="name" value="<?php echo $post["name"]; ?>" class="required" style="width:30%" placeholder="在此输入菜单名称"><input style="display:none;" name="id" type="text" id="id" value="<?php echo $id; ?>"></td>
     </tr>
 	<tr>
         <td align="right"><font color="red">*</font>模型：</td>
@@ -39,11 +39,11 @@
     </tr>
     <tr>
         <td align="right">参数：</td>
-        <td><input name="data" type="text" id="data" value="<?php echo $post["data"]; ?>" style="width:30%"></td>
+        <td><input autocomplete="off" name="data" type="text" id="data" value="<?php echo $post["data"]; ?>" style="width:30%"></td>
     </tr>
     <tr>
         <td align="right">图标：</td>
-        <td><input name="icon" type="text" id="icon" value="<?php echo $post["icon"]; ?>" style="width:30%"> <small style="color:#999">(Glyphicons字体图标，如glyphicon glyphicon-home)</small></td>
+        <td><input autocomplete="off" name="icon" type="text" id="icon" value="<?php echo $post["icon"]; ?>" style="width:30%"> <small style="color:#999">(Glyphicons字体图标，如glyphicon glyphicon-home)</small></td>
     </tr>
     <tr>
         <td align="right">备注：</td>

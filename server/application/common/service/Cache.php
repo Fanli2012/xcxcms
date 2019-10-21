@@ -11,9 +11,9 @@ class Cache
 
     public function __construct()
     {
-        
+
     }
-    
+
     /**
      * 读取缓存信息
      *
@@ -24,18 +24,19 @@ class Cache
      */
     public function rcache($key = null, $prefix = '', $fields = '*')
     {
-        if ($key===null || !C('cache_open')) return array();
+        if ($key === null || !C('cache_open')) return array();
         $ins = Cache::getInstance('cacheredis');
-        $cache_info = $ins->hget($key,$prefix,$fields);
+        $cache_info = $ins->hget($key, $prefix, $fields);
         if ($cache_info === false) {
             //取单个字段且未被缓存
-            $data  = array();
+            $data = array();
         } elseif (is_array($cache_info)) {
             //如果有一个键值为false(即未缓存)，则整个函数返回空，让系统重新生成全部缓存
             $data = $cache_info;
             foreach ($cache_info as $k => $v) {
                 if ($v === false) {
-                    $data = array();break;
+                    $data = array();
+                    break;
                 }
             }
         } else {
@@ -48,7 +49,7 @@ class Cache
         }
         return $data;
     }
-    
+
     /**
      * 写入缓存
      *
@@ -60,17 +61,17 @@ class Cache
      */
     public function wcache($key = null, $data = array(), $prefix, $period = 0)
     {
-        if ($key===null || !C('cache_open') || !is_array($data)) return;
+        if ($key === null || !C('cache_open') || !is_array($data)) return;
         $period = intval($period);
         if ($period != 0) {
             $data['cache_expiration_time'] = TIMESTAMP + $period * 60;
         }
         $ins = Cache::getInstance('cacheredis');
         $ins->hset($key, $prefix, $data);
-        $cache_info = $ins->hget($key,$prefix);
+        $cache_info = $ins->hget($key, $prefix);
         return true;
     }
-    
+
     /**
      * 删除缓存
      *
@@ -80,7 +81,7 @@ class Cache
      */
     public function dcache($key = null, $prefix = '')
     {
-        if ($key===null || !C('cache_open')) return true;
+        if ($key === null || !C('cache_open')) return true;
         $ins = Cache::getInstance('cacheredis');
         return $ins->hdel($key, $prefix);
     }

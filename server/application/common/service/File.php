@@ -24,7 +24,7 @@ class File
             $save_dir = './';
         }
         if (0 !== strrpos($save_dir, '/')) {
-            $save_dir.= '/';
+            $save_dir .= '/';
         }
         //创建保存目录
         if (!file_exists($save_dir) && !mkdir($save_dir, 0777, true)) {
@@ -56,7 +56,7 @@ class File
             'save_path' => $save_dir . $filename
         );
     }
-    
+
     /**
      * 简单的下载文件
      * 示例
@@ -64,11 +64,11 @@ class File
      */
     public static function simpleDownFile($url, $path)
     {
-        $arr = parse_url($url);
-        $fileName = basename($arr['path']);
-        $file = file_get_contents($url);
-        file_put_contents($path.$fileName, $file);
+        $arr = parse_url($url);
+        $fileName = basename($arr['path']);
+        $file = file_get_contents($url);
+        file_put_contents($path . $fileName, $file);
     }
-    
-    
+
+
 }

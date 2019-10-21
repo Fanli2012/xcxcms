@@ -24,7 +24,7 @@
 	<tr>
 	  <td><?php echo $row["id"]; ?></td>
 	  <td><?php echo $row["user_name"]; ?></td>
-	  <td>{$row["company_name"]|default="-"}</td>
+	  <td><?php if($row['head_img']){echo '<img src="'.$row['head_img'].'" style="width:20px;height:20px;margin-right:5px;">';} ?>{$row["company_name"]|default="-"}</td>
 	  <td>{$row["status_text"]|default="-"}</td>
 	  <td>{$row["article_count"]|default="-"}</td>
 	  <td><a href="{:url('fladmin/Shop/index')}?category_id=<?php echo $row["category_id"]; ?>">{$row["category_text"]|default="-"}</a></td>

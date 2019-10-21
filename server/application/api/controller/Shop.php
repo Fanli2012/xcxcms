@@ -47,26 +47,26 @@ class Shop extends Base
             }
         }
         
-		exit(json_encode(ReturnData::create(ReturnData::SUCCESS,$res)));
+		Util::echo_json(ReturnData::create(ReturnData::SUCCESS, $res));
     }
     
     //详情
     public function detail()
 	{
         //参数
-        if(!checkIsNumber(input('id',null))){exit(json_encode(ReturnData::create(ReturnData::PARAMS_ERROR)));}
+        if(!checkIsNumber(input('id',null))){Util::echo_json(ReturnData::create(ReturnData::PARAMS_ERROR));}
         $id = input('id');
         $where['id'] = $id;
         
 		$res = $this->getLogic()->getOne($where, '*');
-        if(!$res){exit(json_encode(ReturnData::create(ReturnData::PARAMS_ERROR)));}
+        if(!$res){Util::echo_json(ReturnData::create(ReturnData::PARAMS_ERROR));}
         
         $res['introduction'] = mb_substr($res['introduction'], 0, 36, 'utf-8');
         
         unset($res['password']);
         unset($res['pay_password']);
         
-		exit(json_encode(ReturnData::create(ReturnData::SUCCESS,$res)));
+		Util::echo_json(ReturnData::create(ReturnData::SUCCESS, $res));
     }
     
     //添加
@@ -76,14 +76,14 @@ class Shop extends Base
         {
             $res = $this->getLogic()->add($_POST);
             
-            exit(json_encode($res));
+            Util::echo_json($res);
         }
     }
     
     //修改
     public function edit()
     {
-        if(!checkIsNumber(input('id',null))){exit(json_encode(ReturnData::create(ReturnData::PARAMS_ERROR)));}
+        if(!checkIsNumber(input('id',null))){Util::echo_json(ReturnData::create(ReturnData::PARAMS_ERROR));}
         $id = input('id');
         
         if(Helper::isPostRequest())
@@ -93,14 +93,14 @@ class Shop extends Base
             
             $res = $this->getLogic()->edit($_POST,$where);
             
-            exit(json_encode($res));
+            Util::echo_json($res);
         }
     }
     
     //删除
     public function del()
     {
-        if(!checkIsNumber(input('id',null))){exit(json_encode(ReturnData::create(ReturnData::PARAMS_ERROR)));}
+        if(!checkIsNumber(input('id',null))){Util::echo_json(ReturnData::create(ReturnData::PARAMS_ERROR));}
         $id = input('id');
         
         if(Helper::isPostRequest())
@@ -110,7 +110,7 @@ class Shop extends Base
             
             $res = $this->getLogic()->del($where);
             
-            exit(json_encode($res));
+            Util::echo_json($res);
         }
     }
 }

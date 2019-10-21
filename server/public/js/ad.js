@@ -112,6 +112,12 @@ function getItems(arcID)
 	return value;
 }
 
+$(function(){
+	// 图片宽高比3:2
+	$(".img-w3h2").height(function(){return parseInt($(this).width()*2/3);});
+	// 图片宽高比2:1
+	$(".img-w2h1").height(function(){return parseInt($(this).width()/2);});
+});
 
 
 

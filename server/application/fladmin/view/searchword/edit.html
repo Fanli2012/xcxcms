@@ -9,11 +9,11 @@
 <tbody>
     <tr>
         <td align="right"><font color="red">*</font>名称：</td>
-        <td><input name="name" type="text" id="name" value="<?php echo $post["name"]; ?>" class="required" style="width:30%" placeholder="在此输入名称"> <input style="display:none;" type="text" name="id" id="id" value="<?php echo $id; ?>"></td>
+        <td><input autocomplete="off" name="name" type="text" id="name" value="<?php echo $post["name"]; ?>" class="required" style="width:30%" placeholder="在此输入名称"> <input style="display:none;" type="text" name="id" id="id" value="<?php echo $id; ?>"></td>
     </tr>
     <tr>
         <td align="right"><font color="red">*</font>别名：</td>
-        <td><input name="filename" type="text" id="filename" class="required" value="<?php echo $post["filename"]; ?>" size="20"> </td>
+        <td><input autocomplete="off" name="filename" type="text" id="filename" class="required" value="<?php echo $post["filename"]; ?>" size="20"> </td>
     </tr>
     <tr>
         <td align="right">SEO标题：</td>

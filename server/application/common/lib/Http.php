@@ -1,4 +1,5 @@
 <?php
+
 namespace app\common\lib;
 
 /**
@@ -14,7 +15,7 @@ class Http
         $req = self::sendRequest($url, $params, 'POST', $options);
         return $req['ret'] ? $req['msg'] : '';
     }
-    
+
     /**
      * 发送一个GET请求
      */
@@ -23,7 +24,7 @@ class Http
         $req = self::sendRequest($url, $params, 'GET', $options);
         return $req['ret'] ? $req['msg'] : '';
     }
-    
+
     /**
      * CURL发送Request请求,含POST和REQUEST
      * @param string $url 请求的链接
@@ -40,20 +41,14 @@ class Http
 
         $ch = curl_init();
         $defaults = [];
-        if ('GET' == $method)
-        {
+        if ('GET' == $method) {
             $geturl = $query_string ? $url . (stripos($url, "?") !== FALSE ? "&" : "?") . $query_string : $url;
             $defaults[CURLOPT_URL] = $geturl;
-        }
-        else
-        {
+        } else {
             $defaults[CURLOPT_URL] = $url;
-            if ($method == 'POST')
-            {
+            if ($method == 'POST') {
                 $defaults[CURLOPT_POST] = 1;
-            }
-            else
-            {
+            } else {
                 $defaults[CURLOPT_CUSTOMREQUEST] = $method;
             }
             $defaults[CURLOPT_POSTFIELDS] = $query_string;
@@ -69,27 +64,25 @@ class Http
         // disable 100-continue
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Expect:'));
 
-        if ('https' == $protocol)
-        {
+        if ('https' == $protocol) {
             $defaults[CURLOPT_SSL_VERIFYPEER] = FALSE;
             $defaults[CURLOPT_SSL_VERIFYHOST] = FALSE;
         }
 
-        curl_setopt_array($ch, (array) $options + $defaults);
+        curl_setopt_array($ch, (array)$options + $defaults);
 
         $ret = curl_exec($ch);
         $err = curl_error($ch);
 
-        if (FALSE === $ret || !empty($err))
-        {
+        if (FALSE === $ret || !empty($err)) {
             $errno = curl_errno($ch);
             $info = curl_getinfo($ch);
             curl_close($ch);
             return [
-                'ret'   => FALSE,
+                'ret' => FALSE,
                 'errno' => $errno,
-                'msg'   => $err,
-                'info'  => $info,
+                'msg' => $err,
+                'info' => $info,
             ];
         }
         curl_close($ch);
@@ -98,7 +91,7 @@ class Http
             'msg' => $ret,
         ];
     }
-    
+
     /**
      * 异步发送一个请求
      * @param string $url 请求的链接
@@ -111,24 +104,20 @@ class Http
         $method = strtoupper($method);
         $method = $method == 'POST' ? 'POST' : 'GET';
         //构造传递的参数
-        if (is_array($params))
-        {
+        if (is_array($params)) {
             $post_params = [];
-            foreach ($params as $k => &$v)
-            {
+            foreach ($params as $k => &$v) {
                 if (is_array($v))
                     $v = implode(',', $v);
                 $post_params[] = $k . '=' . urlencode($v);
             }
             $post_string = implode('&', $post_params);
-        }else
-        {
+        } else {
             $post_string = $params;
         }
         $parts = parse_url($url);
         //构造查询的参数
-        if ($method == 'GET' && $post_string)
-        {
+        if ($method == 'GET' && $post_string) {
             $parts['query'] = isset($parts['query']) ? $parts['query'] . '&' . $post_string : $post_string;
             $post_string = '';
         }
@@ -140,10 +129,10 @@ class Http
         //设置超时时间
         stream_set_timeout($fp, 3);
         $out = "{$method} {$parts['path']}{$parts['query']} HTTP/1.1\r\n";
-        $out.= "Host: {$parts['host']}\r\n";
-        $out.= "Content-Type: application/x-www-form-urlencoded\r\n";
-        $out.= "Content-Length: " . strlen($post_string) . "\r\n";
-        $out.= "Connection: Close\r\n\r\n";
+        $out .= "Host: {$parts['host']}\r\n";
+        $out .= "Content-Type: application/x-www-form-urlencoded\r\n";
+        $out .= "Content-Length: " . strlen($post_string) . "\r\n";
+        $out .= "Connection: Close\r\n\r\n";
         if ($post_string !== '')
             $out .= $post_string;
         fwrite($fp, $out);
@@ -152,7 +141,7 @@ class Http
         fclose($fp);
         return TRUE;
     }
-    
+
     /**
      * 发送文件到客户端
      * @param string $file
@@ -161,8 +150,7 @@ class Http
      */
     public static function sendToBrowser($file, $delaftersend = true, $exitaftersend = true)
     {
-        if (file_exists($file) && is_readable($file))
-        {
+        if (file_exists($file) && is_readable($file)) {
             header('Content-Description: File Transfer');
             header('Content-Type: application/octet-stream');
             header('Content-Disposition: attachment;filename = ' . basename($file));
@@ -174,12 +162,10 @@ class Http
             ob_clean();
             flush();
             readfile($file);
-            if ($delaftersend)
-            {
+            if ($delaftersend) {
                 unlink($file);
             }
-            if ($exitaftersend)
-            {
+            if ($exitaftersend) {
                 exit;
             }
         }

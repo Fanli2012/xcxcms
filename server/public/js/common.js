@@ -13,7 +13,7 @@ function messageNotice(message)
  */
 function formatDateTime(timestamp,format='Y-m-d H:i:s')
 {
-    if(timestamp.length==10)
+    if(String(timestamp).length == 10)
     {
         timestamp = timestamp * 1000;
     }

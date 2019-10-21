@@ -1,78 +1,105 @@
 <?php
+
 namespace app\shop\controller;
+
+use think\Db;
+use app\common\lib\Helper;
+use app\common\lib\ReturnData;
+use app\common\logic\SlideLogic;
 
 class Slide extends Base
 {
     public function _initialize()
-	{
-		parent::_initialize();
+    {
+        parent::_initialize();
     }
-    
+
+    public function getLogic()
+    {
+        return new SlideLogic();
+    }
+
+    //列表
     public function index()
     {
-		$list = parent::pageList('slide','','is_show asc,rank desc');
-		
-		$this->assign('page',$list->render());
-        $this->assign('posts',$list);
-		
-		return $this->fetch();
-    }
-    
-    public function doadd()
-    {
-		if(isset($_POST['editorValue'])){unset($_POST['editorValue']);}
-		if(db('slide')->insert($_POST))
-        {
-            $this->success('添加成功', CMS_ADMIN.'Slide' , 1);
+        $where = array();
+        if (!empty($_REQUEST["keyword"])) {
+            $where['title'] = array('like', '%' . $_REQUEST['keyword'] . '%');
         }
-		else
-		{
-			$this->error('添加失败！请修改后重新添加', CMS_ADMIN.'Slide/add' , 3);
-		}
+        $where['shop_id'] = $this->login_info['id'];
+        $posts = $this->getLogic()->getPaginate($where, ['id' => 'desc']);
+
+        $this->assign('page', $posts->render());
+        $list = $posts->toArray();
+        $this->assign('list', $list);
+
+        //echo '<pre>';print_r($list);exit;
+        return $this->fetch();
     }
-    
+
+    //添加
     public function add()
     {
+        $where['shop_id'] = $this->login_info['id'];
+        $count = model('Slide')->getCount($where);
+        if ($count >= 5) {
+            $this->error('最多5张轮播图', url('index'));
+        }
+
+        if (Helper::isPostRequest()) {
+            $_POST['shop_id'] = $this->login_info['id'];
+            $res = $this->getLogic()->add($_POST);
+            if ($res['code'] == ReturnData::SUCCESS) {
+                $this->success($res['msg'], url('index'), '', 1);
+            }
+
+            $this->error($res['msg']);
+        }
+
         return $this->fetch();
     }
-    
+
+    //修改
     public function edit()
     {
-        if(!empty($_GET["id"])){$id = $_GET["id"];}else{$id="";}
-        if(preg_match('/[0-9]*/',$id)){}else{exit;}
-        
-        $this->assign('id',$id);
-		$this->assign('row',db('slide')->where("id=$id")->find());
-        
+        if (Helper::isPostRequest()) {
+            $where['id'] = $_POST['id'];
+            unset($_POST['id']);
+
+            $res = $this->getLogic()->edit($_POST, $where);
+            if ($res['code'] == ReturnData::SUCCESS) {
+                $this->success($res['msg'], url('index'), '', 1);
+            }
+
+            $this->error($res['msg']);
+        }
+
+        if (!checkIsNumber(input('id', null))) {
+            $this->error('参数错误');
+        }
+        $where['id'] = input('id');
+        $this->assign('id', $where['id']);
+
+        $post = $this->getLogic()->getOne($where);
+        $this->assign('post', $post);
+
         return $this->fetch();
     }
-    
-    public function doedit()
-    {
-        if(!empty($_POST["id"])){$id = $_POST["id"];unset($_POST["id"]);}else{$id="";exit;}
-        if(isset($_POST['editorValue'])){unset($_POST['editorValue']);}
-		
-		if(db('slide')->where("id=$id")->update($_POST))
-        {
-            $this->success('修改成功', CMS_ADMIN.'Slide' , 1);
-        }
-		else
-		{
-			$this->error('修改失败', CMS_ADMIN.'Slide/edit?id='.$id , 3);
-		}
-    }
-    
+
+    //删除
     public function del()
     {
-		if(!empty($_GET["id"])){$id = $_GET["id"];}else{$this->error('删除失败！请重新提交',CMS_ADMIN.'Slide' , 3);}
-		
-		if(db('slide')->where("id in ($id)")->delete())
-        {
-            $this->success('删除成功', CMS_ADMIN.'Slide' , 1);
+        if (!checkIsNumber(input('id', null))) {
+            $this->error('删除失败！请重新提交');
         }
-		else
-		{
-			$this->error('删除失败！请重新提交', CMS_ADMIN.'Slide', 3);
-		}
+        $where['id'] = input('id');
+        $where['shop_id'] = $this->login_info['id'];
+
+        $res = $this->getLogic()->del($where);
+        if ($res['code'] == ReturnData::SUCCESS) {
+            $this->success("删除成功");
+        }
+
+        $this->error($res['msg']);
     }
 }

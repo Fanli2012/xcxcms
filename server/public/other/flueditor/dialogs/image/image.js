@@ -470,6 +470,11 @@
                     } else if (prev === 'queued') {
                         $li.off('mouseenter mouseleave');
                         $btns.remove();
+                    } else if (prev === 'invalid') {
+                        if (cur === 'cancelled') {
+                            fileCount++;
+                            fileSize += file.size;
+                        }
                     }
                     // 成功
                     if (cur === 'error' || cur === 'invalid') {
@@ -715,11 +720,15 @@
 
             uploader.on('uploadSuccess', function (file, ret) {
                 var $file = $('#' + file.id);
+				uploader.stop();
+                setTimeout(function () { uploader.upload(); }, 1000);
                 try {
                     var responseText = (ret._raw || ret),
                         json = utils.str2json(responseText);
                     if (json.state == 'SUCCESS') {
-                        _this.imageList.push(json);
+						json.index = file.id.match(/\d+/);
+                        //_this.imageList.push(json);
+						_this.imageList[$file.index()] = json;
                         $file.append('<span class="success"></span>');
                     } else {
                         $file.find('.error').text(json.state).show();
@@ -771,14 +780,17 @@
             var i, data, list = [],
                 align = getAlign(),
                 prefix = editor.getOpt('imageUrlPrefix');
+            this.imageList.sort(function(x, y) {
+                if(x.index <= y.index) return -1;
+                return 1;
+            });
             for (i = 0; i < this.imageList.length; i++) {
                 data = this.imageList[i];
                 list.push({
                     src: prefix + data.url,
                     _src: prefix + data.url,
-                    //title: data.title,
-                    //alt: data.original,
-					alt: '',
+                    title: data.title,
+                    alt: data.original,
                     floatStyle: align
                 });
             }

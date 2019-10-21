@@ -1,5 +1,7 @@
 <?php
+
 namespace app\wap\controller;
+
 use think\Db;
 use think\Request;
 use app\common\lib\ReturnData;
@@ -9,40 +11,40 @@ use app\common\logic\GoodsLogic;
 class Goods extends Base
 {
     public function _initialize()
-	{
-		parent::_initialize();
+    {
+        parent::_initialize();
     }
-    
+
     public function getLogic()
     {
         return new GoodsLogic();
     }
-    
+
     //列表
     public function index()
-	{
+    {
         $where = [];
         $title = '';
-        
+
         $key = input('key', null);
-        if($key != null)
-        {
+        if ($key != null) {
             $arr_key = logic('Article')->getArrByString($key);
-            if(!$arr_key){$this->error('您访问的页面不存在或已被删除', '/' , '', 3);}
-            
+            if (!$arr_key) {
+                $this->error('您访问的页面不存在或已被删除', '/', '', 3);
+            }
+
             //分类id
-            if(isset($arr_key['f']) && $arr_key['f']>0)
-            {
+            if (isset($arr_key['f']) && $arr_key['f'] > 0) {
                 $type_id = $where['type_id'] = $arr_key['f'];
-                
-                $post = model('GoodsType')->getOne(['id'=>$arr_key['f']]);
-                $this->assign('post',$post);
-                
+
+                $post = model('GoodsType')->getOne(['id' => $arr_key['f']]);
+                $this->assign('post', $post);
+
                 //面包屑导航
                 $this->assign('bread', logic('Goods')->get_goods_type_path($where['type_id']));
             }
         }
-        
+
         /* $key = input('key', null);
         if($key != null)
         {
@@ -95,7 +97,7 @@ class Goods extends Base
                 $title = $title.model('Category')->getDb()->where(['id'=>$where['fl_goods.category_id']])->value('name');
             }
         } */
-        
+
         /* $where['delete_time'] = 0;
         $where['status'] = 0;
         $list = $this->getLogic()->getPaginate($where, 'id desc', ['content']);
@@ -107,136 +109,139 @@ class Goods extends Base
         $page = preg_replace('/\?page=1"/', '"', $page);
         $this->assign('page', $page);
         $this->assign('list', $list); */
-        
+
         $pagesize = 11;
         $offset = 0;
-        if(isset($_REQUEST['page'])){$offset = ($_REQUEST['page']-1)*$pagesize;}
+        if (isset($_REQUEST['page'])) {
+            $offset = ($_REQUEST['page'] - 1) * $pagesize;
+        }
         $where['status'] = 0;
         $where['delete_time'] = 0;
-		$res = logic('Goods')->getList($where, 'id desc', ['content'], $offset, $pagesize);
-        if($res['list'])
-        {
-            foreach($res['list'] as $k => $v)
-            {
-                
+        $res = logic('Goods')->getList($where, 'id desc', ['content'], $offset, $pagesize);
+        if ($res['list']) {
+            foreach ($res['list'] as $k => $v) {
+
             }
         }
-        $this->assign('list',$res['list']);
-        $totalpage = ceil($res['count']/$pagesize);
-        $this->assign('totalpage',$totalpage);
-        if(isset($_REQUEST['page_ajax']) && $_REQUEST['page_ajax']==1)
-        {
-    		$html = '';
-            if($res['list'])
-            {
-                foreach($res['list'] as $k => $v)
-                {
-                    $html .= '<li><a href="'.model('Goods')->getGoodsDetailUrl(array('id'=>$v['id'])).'">';
-                    $html .= '<img src="'.$v['litpic'].'" alt="'.$v['title'].'" />';
+        $this->assign('list', $res['list']);
+        $totalpage = ceil($res['count'] / $pagesize);
+        $this->assign('totalpage', $totalpage);
+        if (isset($_REQUEST['page_ajax']) && $_REQUEST['page_ajax'] == 1) {
+            $html = '';
+            if ($res['list']) {
+                foreach ($res['list'] as $k => $v) {
+                    $html .= '<li><a href="' . model('Goods')->getGoodsDetailUrl(array('id' => $v['id'])) . '">';
+                    $html .= '<img src="' . $v['litpic'] . '" alt="' . $v['title'] . '" />';
                     $html .= '<div class="goods_info">';
-                    $html .= '<div class="goods_tit">'.$v['title'].'</div>';
-                    $html .= '<div class="goods_price">￥'.$v['price'].'</div>';
+                    $html .= '<div class="goods_tit">' . $v['title'] . '</div>';
+                    $html .= '<div class="goods_price">￥' . $v['price'] . '</div>';
                     $html .= '</div></a></li>';
                 }
             }
-            
-    		exit(json_encode($html));
-    	}
-        
+
+            exit(json_encode($html));
+        }
+
         //推荐商品
         $relate_tuijian_list = cache("index_goods_detail_relate_tuijian_list_$key");
-        if(!$relate_tuijian_list)
-        {
+        if (!$relate_tuijian_list) {
             $where_tuijian['delete_time'] = 0;
             $where_tuijian['status'] = 0;
             $where_tuijian['tuijian'] = 1;
-            if(isset($type_id)){$where_tuijian['type_id'] = $type_id;}
+            if (isset($type_id)) {
+                $where_tuijian['type_id'] = $type_id;
+            }
             $relate_tuijian_list = logic('Goods')->getAll($where_tuijian, 'update_time desc', ['content'], 5);
-            cache("index_goods_detail_relate_tuijian_list_$key",$relate_tuijian_list,2592000);
+            cache("index_goods_detail_relate_tuijian_list_$key", $relate_tuijian_list, 2592000);
         }
-        $this->assign('relate_tuijian_list',$relate_tuijian_list);
-        
+        $this->assign('relate_tuijian_list', $relate_tuijian_list);
+
         //随机商品
         $relate_rand_list = cache("index_goods_detail_relate_rand_list_$key");
-        if(!$relate_rand_list)
-        {
+        if (!$relate_rand_list) {
             $where_rand['delete_time'] = 0;
             $where_rand['status'] = 0;
-            if(isset($type_id)){$where_rand['type_id'] = $type_id;}
+            if (isset($type_id)) {
+                $where_rand['type_id'] = $type_id;
+            }
             $relate_rand_list = logic('Goods')->getAll($where_rand, 'rand()', ['content'], 5);
-            cache("index_goods_detail_relate_rand_list_$key",$relate_rand_list,2592000);
+            cache("index_goods_detail_relate_rand_list_$key", $relate_rand_list, 2592000);
         }
-        $this->assign('relate_rand_list',$relate_rand_list);
-        
+        $this->assign('relate_rand_list', $relate_rand_list);
+
         //seo标题设置
-        $title = $title.'最新动态';
-        $this->assign('title',$title);
+        $title = $title . '最新动态';
+        $this->assign('title', $title);
         return $this->fetch();
     }
-	
+
     //详情
     public function detail()
-	{
-        if(!checkIsNumber(input('id',null))){$this->error('您访问的页面不存在或已被删除', '/' , '', 3);}
+    {
+        if (!checkIsNumber(input('id', null))) {
+            $this->error('您访问的页面不存在或已被删除', '/', '', 3);
+        }
         $id = input('id');
-        
+
         $post = cache("index_goods_detail_$id");
-        if(!$post)
-        {
+        if (!$post) {
             $where['id'] = $id;
             $post = $this->getLogic()->getOne($where);
-            if(!$post){$this->error('您访问的页面不存在或已被删除', '/' , '', 3);}
-            cache("index_goods_detail_$id",$post,2592000);
-            
+            if (!$post) {
+                $this->error('您访问的页面不存在或已被删除', '/', '', 3);
+            }
+            cache("index_goods_detail_$id", $post, 2592000);
+
         }
-        $this->assign('post',$post);
-        
+        $this->assign('post', $post);
+
         //最新文章
         $relate_zuixin_list = cache("index_goods_detail_relate_zuixin_list_$id");
-        if(!$relate_zuixin_list)
-        {
+        if (!$relate_zuixin_list) {
             $where_zuixin['delete_time'] = 0;
             $where_zuixin['status'] = 0;
             $where_zuixin['type_id'] = $post['type_id'];
-            $where_zuixin['id'] = ['<',$id];
+            $where_zuixin['id'] = ['<', $id];
             $relate_zuixin_list = logic('Goods')->getAll($where_zuixin, 'update_time desc', ['content'], 5);
-            if(!$relate_zuixin_list){unset($where_zuixin['id']);$relate_zuixin_list = logic('Goods')->getAll($where_zuixin, 'update_time desc', ['content'], 5);}
-            cache("index_goods_detail_relate_zuixin_list_$id",$relate_zuixin_list,2592000);
+            if (!$relate_zuixin_list) {
+                unset($where_zuixin['id']);
+                $relate_zuixin_list = logic('Goods')->getAll($where_zuixin, 'update_time desc', ['content'], 5);
+            }
+            cache("index_goods_detail_relate_zuixin_list_$id", $relate_zuixin_list, 2592000);
         }
-        $this->assign('relate_zuixin_list',$relate_zuixin_list);
-        
+        $this->assign('relate_zuixin_list', $relate_zuixin_list);
+
         //随机文章
         $relate_rand_list = cache("index_goods_detail_relate_rand_list_$id");
-        if(!$relate_rand_list)
-        {
+        if (!$relate_rand_list) {
             $where_rand['delete_time'] = 0;
             $where_rand['status'] = 0;
             $where_rand['type_id'] = $post['type_id'];
             $relate_rand_list = logic('Goods')->getAll($where_rand, 'rand()', ['content'], 5);
-            cache("index_goods_detail_relate_rand_list_$id",$relate_rand_list,2592000);
+            cache("index_goods_detail_relate_rand_list_$id", $relate_rand_list, 2592000);
         }
-        $this->assign('relate_rand_list',$relate_rand_list);
-        
+        $this->assign('relate_rand_list', $relate_rand_list);
+
         //面包屑导航
         $this->assign('bread', logic('Goods')->get_goods_type_path($post['type_id']));
-        
+
         return $this->fetch();
     }
-    
-	public function test()
+
+    public function test()
     {
         //echo '<pre>';print_r(request());exit;
-		//echo (dirname('/images/uiui/1.jpg'));
-		//echo '<pre>';
-		//$str='<p><img border="0" src="./images/1.jpg" alt=""/></p>';
-		
-		//echo getfirstpic($str);
-		//$imagepath='.'.getfirstpic($str);
-		//$image = new \Think\Image(); 
-		//$image->open($imagepath);
-		// 按照原图的比例生成一个最大为240*180的缩略图并保存为thumb.jpg
-		//$image->thumb(CMS_IMGWIDTH, CMS_IMGHEIGHT)->save('./images/1thumb.jpg');
-        
+        //echo (dirname('/images/uiui/1.jpg'));
+        //echo '<pre>';
+        //$str='<p><img border="0" src="./images/1.jpg" alt=""/></p>';
+
+        //echo getfirstpic($str);
+        //$imagepath='.'.getfirstpic($str);
+        //$image = new \Think\Image();
+        //$image->open($imagepath);
+        // 按照原图的比例生成一个最大为240*180的缩略图并保存为thumb.jpg
+        //$image->thumb(CMS_IMGWIDTH, CMS_IMGHEIGHT)->save('./images/1thumb.jpg');
+
         return $this->fetch();
     }
 }

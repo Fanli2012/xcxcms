@@ -1,6 +1,5 @@
 <?php require 'tpl/header.php';?>
 	<div class="main">
-		
 		<form action="index.php?step=3" method="post">
 		<table class="table1 zebra">
 			<tr>
@@ -30,12 +29,12 @@
 			</tr>
 			<tr>
 				<td><font class="red">*</font>&nbsp;数据库名称：</td>
-				<td><input type="text" class="text" value="NoneCMS" name="DB_NAME" /></td>
+				<td><input type="text" class="text" value="nbnbk" name="DB_NAME" /></td>
 				<td>不存在则自动创建</td>
 			</tr>
 			<tr>
 				<td><font class="red">*</font>&nbsp;数据库表前缀：</td>
-				<td><input type="text" class="text" value="none_" name="DB_PREFIX" /></td>
+				<td><input type="text" class="text" value="fl_" name="DB_PREFIX" /></td>
 				<td>不推荐使用默认表前缀</td>
 			</tr>
 			<tr>
@@ -53,11 +52,11 @@
 				<td><input type="text" class="text" value="<?php echo $weburl;?>" name="SITE_URL" /></td>
 				<td>请带上协议头http://或https://</td>
 			</tr>
-			<tr>
+			<!-- <tr>
 				<td><font class="red">*</font>&nbsp;网站主题：</td>
-				<td><input type="radio" name="SITE_THEME" value="default" checked="checked">企业站  <input type="radio" name="SITE_THEME" value="blog">个人博客</td>
+				<td><input type="radio" name="SITE_THEME" value="default" checked="checked">企业站 <input type="radio" name="SITE_THEME" value="blog">个人博客</td>
 				<td>&nbsp;</td>
-			</tr>
+			</tr> -->
 			<tr>
 				<th>网站超级管理员</th>
 				<th>&nbsp;</th>
@@ -65,24 +64,24 @@
 			</tr>
 			<tr>
 				<td><font class="red">*</font>&nbsp;用户名：</td>
-				<td><input type="text" class="text" value="NoneCMS" name="username" /></td>
+				<td><input type="text" class="text" value="admin888" name="username" readonly="readonly" /></td>
 				<td>&nbsp;</td>
 			</tr>
 			<tr>
 				<td><font class="red">*</font>&nbsp;密　码：</td>
-				<td><input type="text" class="text" value="" name="password" /></td>
+				<td><input type="text" class="text" value="123456" name="password" readonly="readonly" /></td>
 				<td>请设置最少6位密码</td>
 			</tr>
-			<tr>
+			<!-- <tr>
 				<td><font class="red"></font>&nbsp;E-mail：</td>
 				<td><input type="text" class="text" value="" name="email" /></td>
 				<td>&nbsp;</td>
-			</tr>			
-			<tr>
+			</tr> -->
+			<!-- <tr>
 				<td>测试数据：</td>
 				<td><label><input type="checkbox" value="1" name="add_test" /><?php echo $lang['test_data_intro']; ?></label></td>
 				<td>&nbsp;</td>
-			</tr>			
+			</tr> -->
 		</table>
 		<div class="action"><a href="javascript:history.go(-1);" class="btn_blue">上一步</a>&nbsp;&nbsp;&nbsp;<a href="javascript:void(0);" class="btn_blue" onclick="postData()">下一步</a></div>
 		</form>
@@ -95,11 +94,9 @@ function postData() {
 			alert(data.info);
 			return false;
 		} else {
-
 			window.location.href = 'index.php?step=4';
 		}
 	},'json');
 }
 </script>
-</body>
-</html>
+</body></html>

@@ -1,0 +1,85 @@
+<!DOCTYPE html><html><head><meta http-equiv="content-type" content="text/html;charset=utf-8"/>
+<title>转换为帐户余额</title><meta name="keywords" content="转换为帐户余额"><meta name="description" content="转换为帐户余额"><meta content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=0" name="viewport">
+<link href="<?php echo sysconfig('CMS_BASEHOST'); ?>/css/weixin/style.css" type="text/css" rel="stylesheet">
+<script type="text/javascript" src="<?php echo sysconfig('CMS_BASEHOST'); ?>/js/jquery.min.js"></script>
+<script type="text/javascript" src="<?php echo sysconfig('CMS_BASEHOST'); ?>/js/weixin/mobile.js"></script>
+<link href="<?php echo sysconfig('CMS_BASEHOST'); ?>/css/font-awesome.min.css" type="text/css" rel="stylesheet"></head><body>
+<div class="classreturn loginsignup">
+    <div class="ds-in-bl return"><a href="javascript:history.back(-1);"><img src="<?php echo sysconfig('CMS_BASEHOST'); ?>/images/weixin/return.png" alt="返回"></a></div>
+    <div class="ds-in-bl tit center"><span>转换为帐户余额</span></div>
+</div>
+
+<style>
+.account{text-align:center;}
+.account .icon{color:#FFCC00;font-size:100px;}
+.account .money{color:#353535;font-size:36px;}
+.account .tit{color:#000;font-size:18px;}
+.bottoma{display:block;font-size:18px;padding:10px;border-radius:2px;}
+</style>
+<div class="floor account">
+    <div style="margin:10px;"><input autocomplete="off" name="money" type="text" id="money" placeholder="请输入金额"  style="width:100%;text-align:center;border:1px solid #bfbfbf;color:#999;box-sizing:border-box;" class="bottoma"></div>
+    <a style="margin:0 10px 10px 10px;background-color:#1aad19;text-align:center;color:#fff;border:1px solid #179e16;" class="bottoma" href="javascript:chongzhi();">提交</a>
+</div>
+
+<script type="text/javascript" src="<?php echo sysconfig('CMS_BASEHOST'); ?>/js/layer/mobile/layer.js"></script>
+<script>
+function chongzhi()
+{
+    var money = $('#money').val();
+    var re = /^[0-9]+$/; //判断字符串是否为数字
+    
+    if(money == '')
+    {
+		//提示
+        layer.open({
+            content: '请输入金额'
+            ,skin: 'msg'
+            ,time: 2 //2秒后自动关闭
+        });
+		
+        return false;
+    }
+	
+    if(!re.test(money))
+    {
+        //提示
+        layer.open({
+            content: '金额格式不正确'
+            ,skin: 'msg'
+            ,time: 2 //2秒后自动关闭
+        });
+        
+        return false;
+    }
+    
+    //询问框
+    layer.open({
+        content: '确定要提交吗？'
+        ,btn: ['确定', '取消']
+        ,yes: function(){
+            var url = '<?php echo sysconfig('CMS_API_URL').'/user_referral_commission/user_referral_commission_turn_user_money'; ?>';
+            
+            $.post(url,{access_token:'<?php echo $login_info['token']['token']; ?>',money:money},function(res)
+            {
+                //提示
+                layer.open({
+                    content: res.msg
+                    ,skin: 'msg'
+                    ,time: 2 //2秒后自动关闭
+                });
+                
+                if(res.code==0)
+                {
+					window.history.go(-1);
+                }
+                else
+                {
+                    
+                }
+            },'json');
+        }
+    });
+}
+</script>
+{include file="common/footer"/}
+</body></html>

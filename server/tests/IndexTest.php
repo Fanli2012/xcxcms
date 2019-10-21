@@ -10,10 +10,13 @@
 // +----------------------------------------------------------------------
 namespace tests;
 
-class IndexTest extends TestCase
+use app\index\controller\Index;
+
+class IndexTest extends IndexBase
 {
-    public function testSomethingIsTrue()
+    public function testHelloWorld()
     {
         $this->assertTrue(true);
+        //$this->visit('/index/index/hello_world_test')->see('Hello world!');
     }
 }

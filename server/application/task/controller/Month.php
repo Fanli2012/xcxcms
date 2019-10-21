@@ -2,6 +2,7 @@
 /**
  * 定时自动执行任务控制器
  */
+
 namespace app\task\controller;
 
 class Month extends Base
@@ -88,11 +89,11 @@ class Month extends Base
                 $mapOrderBill['ob_no'] = $orderBillList[$key]['ob_no'];
                 $orderBillRec = $orderBillModel->where($mapOrderBill)->field('ob_no')->find();
                 if (!empty($orderBillRec)) {
-                    $rs[] = $orderBillModel->save($orderBillList[$key],$mapOrderBill);
+                    $rs[] = $orderBillModel->save($orderBillList[$key], $mapOrderBill);
                 } else {
                     $rs[] = $orderBillModel->insert($orderBillList[$key]);
                 }
-                $rs[] = $orderModel->save(['ob_no'=>$orderBillList[$key]['ob_no']],$mapOrder);
+                $rs[] = $orderModel->save(['ob_no' => $orderBillList[$key]['ob_no']], $mapOrder);
             }
         }
 

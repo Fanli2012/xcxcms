@@ -173,6 +173,13 @@
                         </div>
                     </div>
                     <div class="form-group">
+                        <label class="col-sm-3 control-label"><span class="text-danger">*</span>联系我们</label>
+                        <div class="col-sm-9">
+<!-- 加载编辑器的容器 --><script id="contactus" name="contactus" type="text/plain"><?php echo $post["contactus"]; ?></script>
+<!-- 实例化编辑器 --><script type="text/javascript">var ue = UE.getEditor('contactus',{maximumWords:2000,initialFrameHeight:320,enableAutoSave:false});</script>
+                        </div>
+                    </div>
+                    <div class="form-group">
                         <div class="col-sm-offset-3 col-sm-8">
                             <button type="submit" onclick="" class="btn btn-success">保存</button></div>
                     </div>

@@ -6,7 +6,7 @@
 <div class="bread" style="padding:12px 20px;"><a href="/"><?php echo sysconfig('CMS_INDEXNAME'); ?></a> > <?php if(isset($bread)){echo $bread;} ?></div>
 <div class="zinfo" style="padding-left:20px;padding-right:20px;"><h1><?php echo $post['name']; ?></h1><?php if(!empty($post['content'])){echo '<div class="zdes">'.$post['content'].'</div>';} ?></div><div id="lad1"><script>ljs1();</script></div>
 
-<?php if($list->total()){foreach($list as $row){ ?><div class="list"><?php if(!empty($row['litpic'])){ ?><a class="limg" href="<?php echo model('Article')->getArticleDetailUrl(array('id'=>$row['id'])); ?>"><img alt="<?php echo $row['title']; ?>" src="<?php echo $row['litpic']; ?>"></a><?php } ?>
+<?php if($list['data']){foreach($list['data'] as $row){ ?><div class="list"><?php if(!empty($row['litpic'])){ ?><a class="limg" href="<?php echo model('Article')->getArticleDetailUrl(array('id'=>$row['id'])); ?>"><img alt="<?php echo $row['title']; ?>" src="<?php echo $row['litpic']; ?>"></a><?php } ?>
 <strong class="tit"><a href="<?php echo model('Article')->getArticleDetailUrl(array('id'=>$row['id'])); ?>"><?php echo $row['title']; ?></a></strong><p><?php echo mb_strcut($row['description'],0,150,'UTF-8'); ?>..</p>
 <div class="info"><span class="fl"><em><?php echo date("m-d H:i",$row['update_time']); ?></em></span><span class="fr"><em><?php echo $row['click']; ?></em>人阅读</span></div><div class="cl"></div></div><?php }}else{echo '<div style="text-align:center;padding:20px;">暂无记录</div>';} ?><div id="lad2"><script>ljs2();</script></div>
 

@@ -1,5 +1,7 @@
 <?php
+
 namespace app\index\controller;
+
 use think\Db;
 use think\Log;
 use think\Request;
@@ -11,12 +13,12 @@ class Download extends Base
 {
     //pdf下载
     public function pdf()
-	{
+    {
         $file = $_GET['file'];
-        $arr = explode('/',$file);
+        $arr = explode('/', $file);
         header('Content-type: application/pdf');
-        header('Content-Disposition: attachment; filename="'.array_pop($arr).'"');
+        header('Content-Disposition: attachment; filename="' . array_pop($arr) . '"');
         readfile(file);
     }
-	
+
 }

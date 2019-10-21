@@ -1,16 +1,17 @@
 <?php
+
 namespace app\common\lib;
 
 /**
- * »ù±¾Í¼Æ¬´¦Àí£¬ÓÃÓÚÍê³ÉÍ¼Æ¬ËõÈë£¬Ë®Ó¡Ìí¼Ó
- * µ±Ë®Ó¡Í¼³¬¹ıÄ¿±êÍ¼Æ¬³ß´çÊ±£¬Ë®Ó¡Í¼ÄÜ×Ô¶¯ÊÊÓ¦Ä¿±êÍ¼Æ¬¶øËõĞ¡
- * Ë®Ó¡Í¼¿ÉÒÔÉèÖÃ¸ú±³¾°µÄºÏ²¢¶È
+ * åŸºæœ¬å›¾ç‰‡å¤„ç†ï¼Œç”¨äºå®Œæˆå›¾ç‰‡ç¼©å…¥ï¼Œæ°´å°æ·»åŠ 
+ * å½“æ°´å°å›¾è¶…è¿‡ç›®æ ‡å›¾ç‰‡å°ºå¯¸æ—¶ï¼Œæ°´å°å›¾èƒ½è‡ªåŠ¨é€‚åº”ç›®æ ‡å›¾ç‰‡è€Œç¼©å°
+ * æ°´å°å›¾å¯ä»¥è®¾ç½®è·ŸèƒŒæ™¯çš„åˆå¹¶åº¦
  *
  * Copyright(c) 2005 by ustb99. All rights reserved
  *
  * To contact the author write to {@link mailto:ustb80@163.com}
  *
- * @author Å¼È»
+ * @author å¶ç„¶
  * @version $Id: thumb.class.php,v 1.9 2006/09/30 09:31:56 zengjian Exp $
  * @package system
  */
@@ -19,82 +20,82 @@ namespace app\common\lib;
  * ThumbHandler
  * @access public
  */
-
 /*
- Ê¹ÓÃ·½·¨:
-    ×Ô¶¯²ÃÇĞ:
-    ³ÌĞò»á°´ÕÕÍ¼Æ¬µÄ³ß´ç´ÓÖĞ²¿²ÃÇĞ×î´óµÄÕı·½ĞÎ£¬²¢°´Ä¿±ê³ß´ç½øĞĞËõÂÔ
+ ä½¿ç”¨æ–¹æ³•:
+    è‡ªåŠ¨è£åˆ‡:
+    ç¨‹åºä¼šæŒ‰ç…§å›¾ç‰‡çš„å°ºå¯¸ä»ä¸­éƒ¨è£åˆ‡æœ€å¤§çš„æ­£æ–¹å½¢ï¼Œå¹¶æŒ‰ç›®æ ‡å°ºå¯¸è¿›è¡Œç¼©ç•¥
  
     $t->setSrcImg("img/test.jpg");
-    $t->setCutType(1);//ÕâÒ»¾ä¾ÍOKÁË
+    $t->setCutType(1);//è¿™ä¸€å¥å°±OKäº†
     $t->setDstImg("tmp/new_test.jpg");
     $t->createImg(60,60);
  
-    ÊÖ¹¤²ÃÇĞ:
-    ³ÌĞò»á°´ÕÕÖ¸¶¨µÄÎ»ÖÃ´ÓÔ´Í¼ÉÏÈ¡Í¼
+    æ‰‹å·¥è£åˆ‡:
+    ç¨‹åºä¼šæŒ‰ç…§æŒ‡å®šçš„ä½ç½®ä»æºå›¾ä¸Šå–å›¾
  
     $t->setSrcImg("img/test.jpg");
-    $t->setCutType(2);//Ö¸Ã÷ÎªÊÖ¹¤²ÃÇĞ
-    $t->setSrcCutPosition(100, 100);// Ô´Í¼Æğµã×ø±ê
-    $t->setRectangleCut(300, 200);// ²ÃÇĞ³ß´ç
+    $t->setCutType(2);//æŒ‡æ˜ä¸ºæ‰‹å·¥è£åˆ‡
+    $t->setSrcCutPosition(100, 100);// æºå›¾èµ·ç‚¹åæ ‡
+    $t->setRectangleCut(300, 200);// è£åˆ‡å°ºå¯¸
     $t->setDstImg("tmp/new_test.jpg");
     $t->createImg(300,200); 
 */
+
 class ThumbHandler
 {
-    var $dst_img;// Ä¿±êÎÄ¼ş
-    var $h_src; // Í¼Æ¬×ÊÔ´¾ä±ú
-    var $h_dst;// ĞÂÍ¼¾ä±ú
-    var $h_mask;// Ë®Ó¡¾ä±ú
-    var $img_create_quality = 100;// Í¼Æ¬Éú³ÉÖÊÁ¿
-    var $img_display_quality = 80;// Í¼Æ¬ÏÔÊ¾ÖÊÁ¿,Ä¬ÈÏÎª75
-    var $img_scale = 0;// Í¼Æ¬Ëõ·Å±ÈÀı
-    var $src_w = 0;// Ô­Í¼¿í¶È
-    var $src_h = 0;// Ô­Í¼¸ß¶È
-    var $dst_w = 0;// ĞÂÍ¼×Ü¿í¶È
-    var $dst_h = 0;// ĞÂÍ¼×Ü¸ß¶È
-    var $fill_w;// Ìî³äÍ¼ĞÎ¿í
-    var $fill_h;// Ìî³äÍ¼ĞÎ¸ß
-    var $copy_w;// ¿½±´Í¼ĞÎ¿í
-    var $copy_h;// ¿½±´Í¼ĞÎ¸ß
-    var $src_x = 0;// Ô­Í¼»æÖÆÆğÊ¼ºá×ø±ê
-    var $src_y = 0;// Ô­Í¼»æÖÆÆğÊ¼×İ×ø±ê
-    var $start_x;// ĞÂÍ¼»æÖÆÆğÊ¼ºá×ø±ê
-    var $start_y;// ĞÂÍ¼»æÖÆÆğÊ¼×İ×ø±ê
-    var $mask_word;// Ë®Ó¡ÎÄ×Ö
-    var $mask_img;// Ë®Ó¡Í¼Æ¬
-    var $mask_pos_x = 0;// Ë®Ó¡ºá×ø±ê
-    var $mask_pos_y = 0;// Ë®Ó¡×İ×ø±ê
-    var $mask_offset_x = 5;// Ë®Ó¡ºáÏòÆ«ÒÆ
-    var $mask_offset_y = 5;// Ë®Ó¡×İÏòÆ«ÒÆ
-    var $font_w;// Ë®Ó¡×ÖÌå¿í
-    var $font_h;// Ë®Ó¡×ÖÌå¸ß
-    var $mask_w;// Ë®Ó¡¿í
-    var $mask_h;// Ë®Ó¡¸ß
-    var $mask_font_color = "#ffffff";// Ë®Ó¡ÎÄ×ÖÑÕÉ«
-    var $mask_font = 2;// Ë®Ó¡×ÖÌå
-    var $font_size;// ³ß´ç
-    var $mask_position = 0;// Ë®Ó¡Î»ÖÃ
-    var $mask_img_pct = 50;// Í¼Æ¬ºÏ²¢³Ì¶È,ÖµÔ½´ó£¬ºÏ²¢³ÌĞòÔ½µÍ
-    var $mask_txt_pct = 50;// ÎÄ×ÖºÏ²¢³Ì¶È,ÖµÔ½Ğ¡£¬ºÏ²¢³ÌĞòÔ½µÍ
-    var $img_border_size = 0;// Í¼Æ¬±ß¿ò³ß´ç
-    var $img_border_color;// Í¼Æ¬±ß¿òÑÕÉ«
-    var $_flip_x=0;// Ë®Æ½·­×ª´ÎÊı
-    var $_flip_y=0;// ´¹Ö±·­×ª´ÎÊı
-	
-    var $cut_type=0;// ¼ôÇĞÀàĞÍ
-    var $img_type;// ÎÄ¼şÀàĞÍ
- 
-    // ÎÄ¼şÀàĞÍ¶¨Òå,²¢Ö¸³öÁËÊä³öÍ¼Æ¬µÄº¯Êı
+    var $dst_img;// ç›®æ ‡æ–‡ä»¶
+    var $h_src; // å›¾ç‰‡èµ„æºå¥æŸ„
+    var $h_dst;// æ–°å›¾å¥æŸ„
+    var $h_mask;// æ°´å°å¥æŸ„
+    var $img_create_quality = 100;// å›¾ç‰‡ç”Ÿæˆè´¨é‡
+    var $img_display_quality = 80;// å›¾ç‰‡æ˜¾ç¤ºè´¨é‡,é»˜è®¤ä¸º75
+    var $img_scale = 0;// å›¾ç‰‡ç¼©æ”¾æ¯”ä¾‹
+    var $src_w = 0;// åŸå›¾å®½åº¦
+    var $src_h = 0;// åŸå›¾é«˜åº¦
+    var $dst_w = 0;// æ–°å›¾æ€»å®½åº¦
+    var $dst_h = 0;// æ–°å›¾æ€»é«˜åº¦
+    var $fill_w;// å¡«å……å›¾å½¢å®½
+    var $fill_h;// å¡«å……å›¾å½¢é«˜
+    var $copy_w;// æ‹·è´å›¾å½¢å®½
+    var $copy_h;// æ‹·è´å›¾å½¢é«˜
+    var $src_x = 0;// åŸå›¾ç»˜åˆ¶èµ·å§‹æ¨ªåæ ‡
+    var $src_y = 0;// åŸå›¾ç»˜åˆ¶èµ·å§‹çºµåæ ‡
+    var $start_x;// æ–°å›¾ç»˜åˆ¶èµ·å§‹æ¨ªåæ ‡
+    var $start_y;// æ–°å›¾ç»˜åˆ¶èµ·å§‹çºµåæ ‡
+    var $mask_word;// æ°´å°æ–‡å­—
+    var $mask_img;// æ°´å°å›¾ç‰‡
+    var $mask_pos_x = 0;// æ°´å°æ¨ªåæ ‡
+    var $mask_pos_y = 0;// æ°´å°çºµåæ ‡
+    var $mask_offset_x = 5;// æ°´å°æ¨ªå‘åç§»
+    var $mask_offset_y = 5;// æ°´å°çºµå‘åç§»
+    var $font_w;// æ°´å°å­—ä½“å®½
+    var $font_h;// æ°´å°å­—ä½“é«˜
+    var $mask_w;// æ°´å°å®½
+    var $mask_h;// æ°´å°é«˜
+    var $mask_font_color = "#ffffff";// æ°´å°æ–‡å­—é¢œè‰²
+    var $mask_font = 2;// æ°´å°å­—ä½“
+    var $font_size;// å°ºå¯¸
+    var $mask_position = 0;// æ°´å°ä½ç½®
+    var $mask_img_pct = 50;// å›¾ç‰‡åˆå¹¶ç¨‹åº¦,å€¼è¶Šå¤§ï¼Œåˆå¹¶ç¨‹åºè¶Šä½
+    var $mask_txt_pct = 50;// æ–‡å­—åˆå¹¶ç¨‹åº¦,å€¼è¶Šå°ï¼Œåˆå¹¶ç¨‹åºè¶Šä½
+    var $img_border_size = 0;// å›¾ç‰‡è¾¹æ¡†å°ºå¯¸
+    var $img_border_color;// å›¾ç‰‡è¾¹æ¡†é¢œè‰²
+    var $_flip_x = 0;// æ°´å¹³ç¿»è½¬æ¬¡æ•°
+    var $_flip_y = 0;// å‚ç›´ç¿»è½¬æ¬¡æ•°
+
+    var $cut_type = 0;// å‰ªåˆ‡ç±»å‹
+    var $img_type;// æ–‡ä»¶ç±»å‹
+
+    // æ–‡ä»¶ç±»å‹å®šä¹‰,å¹¶æŒ‡å‡ºäº†è¾“å‡ºå›¾ç‰‡çš„å‡½æ•°
     var $all_type = array(
-        "jpg"  => array("output"=>"imagejpeg"),
-        "gif"  => array("output"=>"imagegif"),
-        "png"  => array("output"=>"imagepng"),
-        "wbmp" => array("output"=>"image2wbmp"),
-        "jpeg" => array("output"=>"imagejpeg"));
- 
+        "jpg" => array("output" => "imagejpeg"),
+        "gif" => array("output" => "imagegif"),
+        "png" => array("output" => "imagepng"),
+        "wbmp" => array("output" => "image2wbmp"),
+        "jpeg" => array("output" => "imagejpeg"));
+
     /**
-     * ¹¹Ôìº¯Êı
+     * æ„é€ å‡½æ•°
      */
     function ThumbHandler()
     {
@@ -102,911 +103,832 @@ class ThumbHandler
         $this->font = 2;
         $this->font_size = 12;
     }
- 
+
     /**
-     * È¡µÃÍ¼Æ¬µÄ¿í
+     * å–å¾—å›¾ç‰‡çš„å®½
      */
     function getImgWidth($src)
     {
         return imagesx($src);
     }
- 
+
     /**
-     * È¡µÃÍ¼Æ¬µÄ¸ß
+     * å–å¾—å›¾ç‰‡çš„é«˜
      */
     function getImgHeight($src)
     {
         return imagesy($src);
     }
- 
+
     /**
-     * ÉèÖÃÍ¼Æ¬Éú³ÉÂ·¾¶
+     * è®¾ç½®å›¾ç‰‡ç”Ÿæˆè·¯å¾„
      *
-     * @param string $src_img Í¼Æ¬Éú³ÉÂ·¾¶
+     * @param string $src_img å›¾ç‰‡ç”Ÿæˆè·¯å¾„
      */
-    function setSrcImg($src_img, $img_type=null)
+    function setSrcImg($src_img, $img_type = null)
     {
-        if(!file_exists($src_img))
-        {
-            die("Í¼Æ¬²»´æÔÚ");
+        if (!file_exists($src_img)) {
+            die("å›¾ç‰‡ä¸å­˜åœ¨");
         }
-        
-        if(!empty($img_type))
-        {
+
+        if (!empty($img_type)) {
             $this->img_type = $img_type;
-        }
-        else
-        {
+        } else {
             $this->img_type = $this->_getImgType($src_img);
         }
-        
+
         $this->_checkValid($this->img_type);
- 
-        // file_get_contentsº¯ÊıÒªÇóphp°æ±¾>4.3.0
+
+        // file_get_contentså‡½æ•°è¦æ±‚phpç‰ˆæœ¬>4.3.0
         $src = '';
-        if(function_exists("file_get_contents"))
-        {
+        if (function_exists("file_get_contents")) {
             $src = file_get_contents($src_img);
-        }
-        else
-        {
-            $handle = fopen ($src_img, "r");
-            while (!feof ($handle))
-            {
+        } else {
+            $handle = fopen($src_img, "r");
+            while (!feof($handle)) {
                 $src .= fgets($fd, 4096);
             }
-            fclose ($handle);
+            fclose($handle);
         }
-        if(empty($src))
-        {
-            die("Í¼Æ¬Ô´Îª¿Õ");
+        if (empty($src)) {
+            die("å›¾ç‰‡æºä¸ºç©º");
         }
         $this->h_src = @ImageCreateFromString($src);
         $this->src_w = $this->getImgWidth($this->h_src);
         $this->src_h = $this->getImgHeight($this->h_src);
     }
- 
+
     /**
-     * ÉèÖÃÍ¼Æ¬Éú³ÉÂ·¾¶
+     * è®¾ç½®å›¾ç‰‡ç”Ÿæˆè·¯å¾„
      *
-     * @param    string    $dst_img   Í¼Æ¬Éú³ÉÂ·¾¶
+     * @param    string $dst_img å›¾ç‰‡ç”Ÿæˆè·¯å¾„
      */
     function setDstImg($dst_img)
     {
-        $arr  = explode('/',$dst_img);
+        $arr = explode('/', $dst_img);
         $last = array_pop($arr);
-        $path = implode('/',$arr);
+        $path = implode('/', $arr);
         $this->_mkdirs($path);
         $this->dst_img = $dst_img;
     }
- 
+
     /**
-     * ÉèÖÃÍ¼Æ¬µÄÏÔÊ¾ÖÊÁ¿
+     * è®¾ç½®å›¾ç‰‡çš„æ˜¾ç¤ºè´¨é‡
      *
-     * @param    string      $n    ÖÊÁ¿
+     * @param    string $n è´¨é‡
      */
     function setImgDisplayQuality($n)
     {
         $this->img_display_quality = (int)$n;
     }
- 
+
     /**
-     * ÉèÖÃÍ¼Æ¬µÄÉú³ÉÖÊÁ¿
+     * è®¾ç½®å›¾ç‰‡çš„ç”Ÿæˆè´¨é‡
      *
-     * @param    string      $n    ÖÊÁ¿
+     * @param    string $n è´¨é‡
      */
     function setImgCreateQuality($n)
     {
         $this->img_create_quality = (int)$n;
     }
- 
+
     /**
-     * ÉèÖÃÎÄ×ÖË®Ó¡
+     * è®¾ç½®æ–‡å­—æ°´å°
      *
-     * @param    string     $word    Ë®Ó¡ÎÄ×Ö
-     * @param    integer    $font    Ë®Ó¡×ÖÌå
-     * @param    string     $color   Ë®Ó¡×ÖÌåÑÕÉ«
+     * @param    string $word æ°´å°æ–‡å­—
+     * @param    integer $font æ°´å°å­—ä½“
+     * @param    string $color æ°´å°å­—ä½“é¢œè‰²
      */
     function setMaskWord($word)
     {
         $this->mask_word .= $word;
     }
- 
+
     /**
-     * ÉèÖÃ×ÖÌåÑÕÉ«
+     * è®¾ç½®å­—ä½“é¢œè‰²
      *
-     * @param    string     $color    ×ÖÌåÑÕÉ«
+     * @param    string $color å­—ä½“é¢œè‰²
      */
-    function setMaskFontColor($color="#ffffff")
+    function setMaskFontColor($color = "#ffffff")
     {
         $this->mask_font_color = $color;
     }
- 
+
     /**
-     * ÉèÖÃË®Ó¡×ÖÌå
+     * è®¾ç½®æ°´å°å­—ä½“
      *
-     * @param    string|integer    $font    ×ÖÌå
+     * @param    string|integer $font å­—ä½“
      */
-    function setMaskFont($font=2)
+    function setMaskFont($font = 2)
     {
-        if(!is_numeric($font) && !file_exists($font))
-        {
-            die("×ÖÌåÎÄ¼ş²»´æÔÚ");
+        if (!is_numeric($font) && !file_exists($font)) {
+            die("å­—ä½“æ–‡ä»¶ä¸å­˜åœ¨");
         }
         $this->font = $font;
     }
- 
+
     /**
-     * ÉèÖÃÎÄ×Ö×ÖÌå´óĞ¡,½ö¶Ôtruetype×ÖÌåÓĞĞ§
+     * è®¾ç½®æ–‡å­—å­—ä½“å¤§å°,ä»…å¯¹truetypeå­—ä½“æœ‰æ•ˆ
      */
     function setMaskFontSize($size = "12")
     {
         $this->font_size = $size;
     }
- 
+
     /**
-     * ÉèÖÃÍ¼Æ¬Ë®Ó¡
+     * è®¾ç½®å›¾ç‰‡æ°´å°
      *
-     * @param    string    $img     Ë®Ó¡Í¼Æ¬Ô´
+     * @param    string $img æ°´å°å›¾ç‰‡æº
      */
     function setMaskImg($img)
     {
         $this->mask_img = $img;
     }
- 
+
     /**
-     * ÉèÖÃË®Ó¡ºáÏòÆ«ÒÆ
+     * è®¾ç½®æ°´å°æ¨ªå‘åç§»
      *
-     * @param    integer     $x    ºáÏòÆ«ÒÆÁ¿
+     * @param    integer $x æ¨ªå‘åç§»é‡
      */
     function setMaskOffsetX($x)
     {
         $this->mask_offset_x = (int)$x;
     }
- 
+
     /**
-     * ÉèÖÃË®Ó¡×İÏòÆ«ÒÆ
+     * è®¾ç½®æ°´å°çºµå‘åç§»
      *
-     * @param    integer     $y    ×İÏòÆ«ÒÆÁ¿
+     * @param    integer $y çºµå‘åç§»é‡
      */
     function setMaskOffsetY($y)
     {
         $this->mask_offset_y = (int)$y;
     }
- 
+
     /**
-     * Ö¸¶¨Ë®Ó¡Î»ÖÃ
+     * æŒ‡å®šæ°´å°ä½ç½®
      *
-     * @param    integer     $position    Î»ÖÃ,1:×óÉÏ,2:×óÏÂ,3:ÓÒÉÏ,0/4:ÓÒÏÂ
+     * @param    integer $position ä½ç½®,1:å·¦ä¸Š,2:å·¦ä¸‹,3:å³ä¸Š,0/4:å³ä¸‹
      */
-    function setMaskPosition($position=0)
+    function setMaskPosition($position = 0)
     {
         $this->mask_position = (int)$position;
     }
- 
+
     /**
-     * ÉèÖÃÍ¼Æ¬ºÏ²¢³Ì¶È
+     * è®¾ç½®å›¾ç‰‡åˆå¹¶ç¨‹åº¦
      *
-     * @param    integer     $n    ºÏ²¢³Ì¶È
+     * @param    integer $n åˆå¹¶ç¨‹åº¦
      */
     function setMaskImgPct($n)
     {
         $this->mask_img_pct = (int)$n;
     }
- 
+
     /**
-     * ÉèÖÃÎÄ×ÖºÏ²¢³Ì¶È
+     * è®¾ç½®æ–‡å­—åˆå¹¶ç¨‹åº¦
      *
-     * @param    integer     $n    ºÏ²¢³Ì¶È
+     * @param    integer $n åˆå¹¶ç¨‹åº¦
      */
     function setMaskTxtPct($n)
     {
         $this->mask_txt_pct = (int)$n;
     }
- 
+
     /**
-     * ÉèÖÃËõÂÔÍ¼±ß¿ò
+     * è®¾ç½®ç¼©ç•¥å›¾è¾¹æ¡†
      *
-     * @param    (ÀàĞÍ)     (²ÎÊıÃû)    (ÃèÊö)
+     * @param    (ç±»å‹)     (å‚æ•°å)    (æè¿°)
      */
-    function setDstImgBorder($size=1, $color="#000000")
+    function setDstImgBorder($size = 1, $color = "#000000")
     {
-        $this->img_border_size  = (int)$size;
+        $this->img_border_size = (int)$size;
         $this->img_border_color = $color;
     }
- 
+
     /**
-     * Ë®Æ½·­×ª
+     * æ°´å¹³ç¿»è½¬
      */
     function flipH()
     {
         $this->_flip_x++;
     }
- 
+
     /**
-     * ´¹Ö±·­×ª
+     * å‚ç›´ç¿»è½¬
      */
     function flipV()
     {
         $this->_flip_y++;
     }
- 
+
     /**
-     * ÉèÖÃ¼ôÇĞÀàĞÍ
+     * è®¾ç½®å‰ªåˆ‡ç±»å‹
      *
-     * @param    (ÀàĞÍ)     (²ÎÊıÃû)    (ÃèÊö)
+     * @param    (ç±»å‹)     (å‚æ•°å)    (æè¿°)
      */
     function setCutType($type)
     {
         $this->cut_type = (int)$type;
     }
- 
+
     /**
-     * ÉèÖÃÍ¼Æ¬¼ôÇĞ
+     * è®¾ç½®å›¾ç‰‡å‰ªåˆ‡
      *
-     * @param    integer     $width    ¾ØĞÎ¼ôÇĞ
+     * @param    integer $width çŸ©å½¢å‰ªåˆ‡
      */
     function setRectangleCut($width, $height)
     {
         $this->fill_w = (int)$width;
         $this->fill_h = (int)$height;
     }
- 
+
     /**
-     * ÉèÖÃÔ´Í¼¼ôÇĞÆğÊ¼×ø±êµã
+     * è®¾ç½®æºå›¾å‰ªåˆ‡èµ·å§‹åæ ‡ç‚¹
      *
-     * @param    (ÀàĞÍ)     (²ÎÊıÃû)    (ÃèÊö)
+     * @param    (ç±»å‹)     (å‚æ•°å)    (æè¿°)
      */
     function setSrcCutPosition($x, $y)
     {
-        $this->src_x  = (int)$x;
-        $this->src_y  = (int)$y;
+        $this->src_x = (int)$x;
+        $this->src_y = (int)$y;
     }
- 
+
     /**
-     * ´´½¨Í¼Æ¬,Ö÷º¯Êı
-     * @param    integer    $a     µ±È±ÉÙµÚ¶ş¸ö²ÎÊıÊ±£¬´Ë²ÎÊı½«ÓÃ×÷°Ù·Ö±È£¬
-     *                             ·ñÔò×÷Îª¿í¶ÈÖµ
-     * @param    integer    $b     Í¼Æ¬Ëõ·ÅºóµÄ¸ß¶È
+     * åˆ›å»ºå›¾ç‰‡,ä¸»å‡½æ•°
+     * @param    integer $a å½“ç¼ºå°‘ç¬¬äºŒä¸ªå‚æ•°æ—¶ï¼Œæ­¤å‚æ•°å°†ç”¨ä½œç™¾åˆ†æ¯”ï¼Œ
+     *                             å¦åˆ™ä½œä¸ºå®½åº¦å€¼
+     * @param    integer $b å›¾ç‰‡ç¼©æ”¾åçš„é«˜åº¦
      */
-    function createImg($a, $b=null)
+    function createImg($a, $b = null)
     {
         $num = func_num_args();
-        if(1 == $num)
-        {
+        if (1 == $num) {
             $r = (int)$a;
-            if($r < 1)
-            {
-                die("Í¼Æ¬Ëõ·Å±ÈÀı²»µÃĞ¡ÓÚ1");
+            if ($r < 1) {
+                die("å›¾ç‰‡ç¼©æ”¾æ¯”ä¾‹ä¸å¾—å°äº1");
             }
             $this->img_scale = $r;
             $this->_setNewImgSize($r);
         }
- 
-        if(2 == $num)
-        {
+
+        if (2 == $num) {
             $w = (int)$a;
             $h = (int)$b;
-            if(0 == $w)
-            {
-                die("Ä¿±ê¿í¶È²»ÄÜÎª0");
+            if (0 == $w) {
+                die("ç›®æ ‡å®½åº¦ä¸èƒ½ä¸º0");
             }
-            if(0 == $h)
-            {
-                die("Ä¿±ê¸ß¶È²»ÄÜÎª0");
+            if (0 == $h) {
+                die("ç›®æ ‡é«˜åº¦ä¸èƒ½ä¸º0");
             }
             $this->_setNewImgSize($w, $h);
         }
- 
-        if($this->_flip_x%2!=0)
-        {
+
+        if ($this->_flip_x % 2 != 0) {
             $this->_flipH($this->h_src);
         }
- 
-        if($this->_flip_y%2!=0)
-        {
+
+        if ($this->_flip_y % 2 != 0) {
             $this->_flipV($this->h_src);
         }
         $this->_createMask();
         $this->_output();
- 
-        // ÊÍ·Å
-        if(imagedestroy($this->h_src) && imagedestroy($this->h_dst))
-        {
+
+        // é‡Šæ”¾
+        if (imagedestroy($this->h_src) && imagedestroy($this->h_dst)) {
             return true;
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
- 
+
     /**
-     * Éú³ÉË®Ó¡,µ÷ÓÃÁËÉú³ÉË®Ó¡ÎÄ×ÖºÍË®Ó¡Í¼Æ¬Á½¸ö·½·¨
+     * ç”Ÿæˆæ°´å°,è°ƒç”¨äº†ç”Ÿæˆæ°´å°æ–‡å­—å’Œæ°´å°å›¾ç‰‡ä¸¤ä¸ªæ–¹æ³•
      */
     function _createMask()
     {
-        if($this->mask_word)
-        {
-            // »ñÈ¡×ÖÌåĞÅÏ¢
+        if ($this->mask_word) {
+            // è·å–å­—ä½“ä¿¡æ¯
             $this->_setFontInfo();
- 
-            if($this->_isFull())
-            {
-                die("Ë®Ó¡ÎÄ×Ö¹ı´ó");
-            }
-            else
-            {
+
+            if ($this->_isFull()) {
+                die("æ°´å°æ–‡å­—è¿‡å¤§");
+            } else {
                 $this->h_dst = imagecreatetruecolor($this->dst_w, $this->dst_h);
-                $white = ImageColorAllocate($this->h_dst,255,255,255);
-                imagefilledrectangle($this->h_dst,0,0,$this->dst_w,$this->dst_h,$white);// Ìî³ä±³¾°É«
+                $white = ImageColorAllocate($this->h_dst, 255, 255, 255);
+                imagefilledrectangle($this->h_dst, 0, 0, $this->dst_w, $this->dst_h, $white);// å¡«å……èƒŒæ™¯è‰²
                 $this->_drawBorder();
-                imagecopyresampled( $this->h_dst, $this->h_src,
-                                    $this->start_x, $this->start_y,
-                                    $this->src_x, $this->src_y,
-                                    $this->fill_w, $this->fill_h,
-                                    $this->copy_w, $this->copy_h);
+                imagecopyresampled($this->h_dst, $this->h_src,
+                    $this->start_x, $this->start_y,
+                    $this->src_x, $this->src_y,
+                    $this->fill_w, $this->fill_h,
+                    $this->copy_w, $this->copy_h);
                 $this->_createMaskWord($this->h_dst);
             }
         }
- 
-        if($this->mask_img)
-        {
-            $this->_loadMaskImg();//¼ÓÔØÊ±£¬È¡µÃ¿í¸ß
- 
-            if($this->_isFull())
-            {
-                // ½«Ë®Ó¡Éú³ÉÔÚÔ­Í¼ÉÏÔÙ¿½
+
+        if ($this->mask_img) {
+            $this->_loadMaskImg();//åŠ è½½æ—¶ï¼Œå–å¾—å®½é«˜
+
+            if ($this->_isFull()) {
+                // å°†æ°´å°ç”Ÿæˆåœ¨åŸå›¾ä¸Šå†æ‹·
                 $this->_createMaskImg($this->h_src);
                 $this->h_dst = imagecreatetruecolor($this->dst_w, $this->dst_h);
-                $white = ImageColorAllocate($this->h_dst,255,255,255);
-                imagefilledrectangle($this->h_dst,0,0,$this->dst_w,$this->dst_h,$white);// Ìî³ä±³¾°É«
+                $white = ImageColorAllocate($this->h_dst, 255, 255, 255);
+                imagefilledrectangle($this->h_dst, 0, 0, $this->dst_w, $this->dst_h, $white);// å¡«å……èƒŒæ™¯è‰²
                 $this->_drawBorder();
-                imagecopyresampled( $this->h_dst, $this->h_src,
-                                    $this->start_x, $this->start_y,
-                                    $this->src_x, $this->src_y,
-                                    $this->fill_w, $this->start_y,
-                                    $this->copy_w, $this->copy_h);
-            }
-            else
-            {
-                // ´´½¨ĞÂÍ¼²¢¿½±´
+                imagecopyresampled($this->h_dst, $this->h_src,
+                    $this->start_x, $this->start_y,
+                    $this->src_x, $this->src_y,
+                    $this->fill_w, $this->start_y,
+                    $this->copy_w, $this->copy_h);
+            } else {
+                // åˆ›å»ºæ–°å›¾å¹¶æ‹·è´
                 $this->h_dst = imagecreatetruecolor($this->dst_w, $this->dst_h);
-                $white = ImageColorAllocate($this->h_dst,255,255,255);
-                imagefilledrectangle($this->h_dst,0,0,$this->dst_w,$this->dst_h,$white);// Ìî³ä±³¾°É«
+                $white = ImageColorAllocate($this->h_dst, 255, 255, 255);
+                imagefilledrectangle($this->h_dst, 0, 0, $this->dst_w, $this->dst_h, $white);// å¡«å……èƒŒæ™¯è‰²
                 $this->_drawBorder();
-                imagecopyresampled( $this->h_dst, $this->h_src,
-                                    $this->start_x, $this->start_y,
-                                    $this->src_x, $this->src_y,
-                                    $this->fill_w, $this->fill_h,
-                                    $this->copy_w, $this->copy_h);
+                imagecopyresampled($this->h_dst, $this->h_src,
+                    $this->start_x, $this->start_y,
+                    $this->src_x, $this->src_y,
+                    $this->fill_w, $this->fill_h,
+                    $this->copy_w, $this->copy_h);
                 $this->_createMaskImg($this->h_dst);
             }
         }
- 
-        if(empty($this->mask_word) && empty($this->mask_img))
-        {
+
+        if (empty($this->mask_word) && empty($this->mask_img)) {
             $this->h_dst = imagecreatetruecolor($this->dst_w, $this->dst_h);
-            $white = ImageColorAllocate($this->h_dst,255,255,255);
-            imagefilledrectangle($this->h_dst,0,0,$this->dst_w,$this->dst_h,$white);// Ìî³ä±³¾°É«
+            $white = ImageColorAllocate($this->h_dst, 255, 255, 255);
+            imagefilledrectangle($this->h_dst, 0, 0, $this->dst_w, $this->dst_h, $white);// å¡«å……èƒŒæ™¯è‰²
             $this->_drawBorder();
- 
-            imagecopyresampled( $this->h_dst, $this->h_src,
-                        $this->start_x, $this->start_y,
-                        $this->src_x, $this->src_y,
-                        $this->fill_w, $this->fill_h,
-                        $this->copy_w, $this->copy_h);
+
+            imagecopyresampled($this->h_dst, $this->h_src,
+                $this->start_x, $this->start_y,
+                $this->src_x, $this->src_y,
+                $this->fill_w, $this->fill_h,
+                $this->copy_w, $this->copy_h);
         }
     }
- 
+
     /**
-     * »­±ß¿ò
+     * ç”»è¾¹æ¡†
      */
     function _drawBorder()
     {
-        if(!empty($this->img_border_size))
-        {
+        if (!empty($this->img_border_size)) {
             $c = $this->_parseColor($this->img_border_color);
-            $color = ImageColorAllocate($this->h_src,$c[0], $c[1], $c[2]);
-            imagefilledrectangle($this->h_dst,0,0,$this->dst_w,$this->dst_h,$color);// Ìî³ä±³¾°É«
+            $color = ImageColorAllocate($this->h_src, $c[0], $c[1], $c[2]);
+            imagefilledrectangle($this->h_dst, 0, 0, $this->dst_w, $this->dst_h, $color);// å¡«å……èƒŒæ™¯è‰²
         }
     }
- 
+
     /**
-     * Éú³ÉË®Ó¡ÎÄ×Ö
+     * ç”Ÿæˆæ°´å°æ–‡å­—
      */
     function _createMaskWord($src)
     {
         $this->_countMaskPos();
         $this->_checkMaskValid();
- 
+
         $c = $this->_parseColor($this->mask_font_color);
         $color = imagecolorallocatealpha($src, $c[0], $c[1], $c[2], $this->mask_txt_pct);
- 
-        if(is_numeric($this->font))
-        {
+
+        if (is_numeric($this->font)) {
             imagestring($src,
-                        $this->font,
-                        $this->mask_pos_x, $this->mask_pos_y,
-                        $this->mask_word,
-                        $color);
-        }
-        else
-        {
+                $this->font,
+                $this->mask_pos_x, $this->mask_pos_y,
+                $this->mask_word,
+                $color);
+        } else {
             imagettftext($src,
-                        $this->font_size, 0,
-                        $this->mask_pos_x, $this->mask_pos_y,
-                        $color,
-                        $this->font,
-                        $this->mask_word);
+                $this->font_size, 0,
+                $this->mask_pos_x, $this->mask_pos_y,
+                $color,
+                $this->font,
+                $this->mask_word);
         }
     }
- 
+
     /**
-     * Éú³ÉË®Ó¡Í¼
+     * ç”Ÿæˆæ°´å°å›¾
      */
     function _createMaskImg($src)
     {
         $this->_countMaskPos();
         $this->_checkMaskValid();
         imagecopymerge($src,
-                        $this->h_mask,
-                        $this->mask_pos_x ,$this->mask_pos_y,
-                        0, 0,
-                        $this->mask_w, $this->mask_h,
-                        $this->mask_img_pct);
- 
+            $this->h_mask,
+            $this->mask_pos_x, $this->mask_pos_y,
+            0, 0,
+            $this->mask_w, $this->mask_h,
+            $this->mask_img_pct);
+
         imagedestroy($this->h_mask);
     }
- 
+
     /**
-     * ¼ÓÔØË®Ó¡Í¼
+     * åŠ è½½æ°´å°å›¾
      */
     function _loadMaskImg()
     {
         $mask_type = $this->_getImgType($this->mask_img);
         $this->_checkValid($mask_type);
- 
-        // file_get_contentsº¯ÊıÒªÇóphp°æ±¾>4.3.0
+
+        // file_get_contentså‡½æ•°è¦æ±‚phpç‰ˆæœ¬>4.3.0
         $src = '';
-        if(function_exists("file_get_contents"))
-        {
+        if (function_exists("file_get_contents")) {
             $src = file_get_contents($this->mask_img);
-        }
-        else
-        {
-            $handle = fopen ($this->mask_img, "r");
-            while (!feof ($handle))
-            {
+        } else {
+            $handle = fopen($this->mask_img, "r");
+            while (!feof($handle)) {
                 $src .= fgets($fd, 4096);
             }
-            fclose ($handle);
+            fclose($handle);
         }
-        if(empty($this->mask_img))
-        {
-            die("Ë®Ó¡Í¼Æ¬Îª¿Õ");
+        if (empty($this->mask_img)) {
+            die("æ°´å°å›¾ç‰‡ä¸ºç©º");
         }
         $this->h_mask = ImageCreateFromString($src);
         $this->mask_w = $this->getImgWidth($this->h_mask);
         $this->mask_h = $this->getImgHeight($this->h_mask);
     }
- 
+
     /**
-     * Í¼Æ¬Êä³ö
+     * å›¾ç‰‡è¾“å‡º
      */
     function _output()
     {
-        $img_type  = $this->img_type;
+        $img_type = $this->img_type;
         $func_name = $this->all_type[$img_type]['output'];
-        if(function_exists($func_name))
-        {
-            // ÅĞ¶Ïä¯ÀÀÆ÷,ÈôÊÇIE¾Í²»·¢ËÍÍ·
-            if(isset($_SERVER['HTTP_USER_AGENT']))
-            {
+        if (function_exists($func_name)) {
+            // åˆ¤æ–­æµè§ˆå™¨,è‹¥æ˜¯IEå°±ä¸å‘é€å¤´
+            if (isset($_SERVER['HTTP_USER_AGENT'])) {
                 $ua = strtoupper($_SERVER['HTTP_USER_AGENT']);
-                if(!preg_match('/^.*MSIE.*\)$/i',$ua))
-                {
+                if (!preg_match('/^.*MSIE.*\)$/i', $ua)) {
                     header("Content-type:$img_type");
                 }
             }
-			
-			if($this->dst_img){$func_name($this->h_dst, $this->dst_img, $this->img_display_quality);}
-			
+
+            if ($this->dst_img) {
+                $func_name($this->h_dst, $this->dst_img, $this->img_display_quality);
+            }
+
             $func_name($this->h_dst);
-        }
-        else
-        {
+        } else {
             return false;
         }
     }
- 
+
     /**
-     * ·ÖÎöÑÕÉ«
+     * åˆ†æé¢œè‰²
      *
-     * @param    string     $color    Ê®Áù½øÖÆÑÕÉ«
+     * @param    string $color åå…­è¿›åˆ¶é¢œè‰²
      */
     function _parseColor($color)
     {
         $arr = array();
-        for($ii=1; $ii<strlen ($color); $ii++)
-        {
-            $arr[] = hexdec(substr($color,$ii,2));
+        for ($ii = 1; $ii < strlen($color); $ii++) {
+            $arr[] = hexdec(substr($color, $ii, 2));
             $ii++;
         }
- 
+
         Return $arr;
     }
- 
+
     /**
-     * ¼ÆËã³öÎ»ÖÃ×ø±ê
+     * è®¡ç®—å‡ºä½ç½®åæ ‡
      */
     function _countMaskPos()
     {
-        if($this->_isFull())
-        {
-            switch($this->mask_position)
-            {
+        if ($this->_isFull()) {
+            switch ($this->mask_position) {
                 case 1:
-                    // ×óÉÏ
+                    // å·¦ä¸Š
                     $this->mask_pos_x = $this->mask_offset_x + $this->img_border_size;
                     $this->mask_pos_y = $this->mask_offset_y + $this->img_border_size;
                     break;
- 
+
                 case 2:
-                    // ×óÏÂ
+                    // å·¦ä¸‹
                     $this->mask_pos_x = $this->mask_offset_x + $this->img_border_size;
                     $this->mask_pos_y = $this->src_h - $this->mask_h - $this->mask_offset_y;
                     break;
- 
+
                 case 3:
-                    // ÓÒÉÏ
+                    // å³ä¸Š
                     $this->mask_pos_x = $this->src_w - $this->mask_w - $this->mask_offset_x;
                     $this->mask_pos_y = $this->mask_offset_y + $this->img_border_size;
                     break;
- 
+
                 case 4:
-                    // ÓÒÏÂ
+                    // å³ä¸‹
                     $this->mask_pos_x = $this->src_w - $this->mask_w - $this->mask_offset_x;
                     $this->mask_pos_y = $this->src_h - $this->mask_h - $this->mask_offset_y;
                     break;
- 
+
                 default:
-                    // Ä¬ÈÏ½«Ë®Ó¡·Åµ½ÓÒÏÂ,Æ«ÒÆÖ¸¶¨ÏñËØ
+                    // é»˜è®¤å°†æ°´å°æ”¾åˆ°å³ä¸‹,åç§»æŒ‡å®šåƒç´ 
                     $this->mask_pos_x = $this->src_w - $this->mask_w - $this->mask_offset_x;
                     $this->mask_pos_y = $this->src_h - $this->mask_h - $this->mask_offset_y;
                     break;
             }
-        }
-        else
-        {
-            switch($this->mask_position)
-            {
+        } else {
+            switch ($this->mask_position) {
                 case 1:
-                    // ×óÉÏ
+                    // å·¦ä¸Š
                     $this->mask_pos_x = $this->mask_offset_x + $this->img_border_size;
                     $this->mask_pos_y = $this->mask_offset_y + $this->img_border_size;
                     break;
- 
+
                 case 2:
-                    // ×óÏÂ
+                    // å·¦ä¸‹
                     $this->mask_pos_x = $this->mask_offset_x + $this->img_border_size;
                     $this->mask_pos_y = $this->dst_h - $this->mask_h - $this->mask_offset_y - $this->img_border_size;
                     break;
- 
+
                 case 3:
-                    // ÓÒÉÏ
+                    // å³ä¸Š
                     $this->mask_pos_x = $this->dst_w - $this->mask_w - $this->mask_offset_x - $this->img_border_size;
                     $this->mask_pos_y = $this->mask_offset_y + $this->img_border_size;
                     break;
- 
+
                 case 4:
-                    // ÓÒÏÂ
+                    // å³ä¸‹
                     $this->mask_pos_x = $this->dst_w - $this->mask_w - $this->mask_offset_x - $this->img_border_size;
                     $this->mask_pos_y = $this->dst_h - $this->mask_h - $this->mask_offset_y - $this->img_border_size;
                     break;
- 
+
                 default:
-                    // Ä¬ÈÏ½«Ë®Ó¡·Åµ½ÓÒÏÂ,Æ«ÒÆÖ¸¶¨ÏñËØ
+                    // é»˜è®¤å°†æ°´å°æ”¾åˆ°å³ä¸‹,åç§»æŒ‡å®šåƒç´ 
                     $this->mask_pos_x = $this->dst_w - $this->mask_w - $this->mask_offset_x - $this->img_border_size;
                     $this->mask_pos_y = $this->dst_h - $this->mask_h - $this->mask_offset_y - $this->img_border_size;
                     break;
             }
         }
     }
- 
+
     /**
-     * ÉèÖÃ×ÖÌåĞÅÏ¢
+     * è®¾ç½®å­—ä½“ä¿¡æ¯
      */
     function _setFontInfo()
     {
-        if(is_numeric($this->font))
-        {
-            $this->font_w  = imagefontwidth($this->font);
-            $this->font_h  = imagefontheight($this->font);
- 
-            // ¼ÆËãË®Ó¡×ÖÌåËùÕ¼¿í¸ß
-            $word_length   = strlen($this->mask_word);
-            $this->mask_w  = $this->font_w*$word_length;
-            $this->mask_h  = $this->font_h;
-        }
-        else
-        {
-            $arr = imagettfbbox ($this->font_size,0, $this->font,$this->mask_word);
-            $this->mask_w  = abs($arr[0] - $arr[2]);
-            $this->mask_h  = abs($arr[7] - $arr[1]);
+        if (is_numeric($this->font)) {
+            $this->font_w = imagefontwidth($this->font);
+            $this->font_h = imagefontheight($this->font);
+
+            // è®¡ç®—æ°´å°å­—ä½“æ‰€å å®½é«˜
+            $word_length = strlen($this->mask_word);
+            $this->mask_w = $this->font_w * $word_length;
+            $this->mask_h = $this->font_h;
+        } else {
+            $arr = imagettfbbox($this->font_size, 0, $this->font, $this->mask_word);
+            $this->mask_w = abs($arr[0] - $arr[2]);
+            $this->mask_h = abs($arr[7] - $arr[1]);
         }
     }
- 
+
     /**
-     * ÉèÖÃĞÂÍ¼³ß´ç
+     * è®¾ç½®æ–°å›¾å°ºå¯¸
      *
-     * @param    integer     $img_w   Ä¿±ê¿í¶È
-     * @param    integer     $img_h   Ä¿±ê¸ß¶È
+     * @param    integer $img_w ç›®æ ‡å®½åº¦
+     * @param    integer $img_h ç›®æ ‡é«˜åº¦
      */
-    function _setNewImgSize($img_w, $img_h=null)
+    function _setNewImgSize($img_w, $img_h = null)
     {
         $num = func_num_args();
-        if(1 == $num)
-        {
-            $this->img_scale = $img_w;// ¿í¶È×÷Îª±ÈÀı
-            $this->fill_w = round($this->src_w * $this->img_scale / 100) - $this->img_border_size*2;
-            $this->fill_h = round($this->src_h * $this->img_scale / 100) - $this->img_border_size*2;
- 
-            // Ô´ÎÄ¼şÆğÊ¼×ø±ê
-            $this->src_x  = 0;
-            $this->src_y  = 0;
+        if (1 == $num) {
+            $this->img_scale = $img_w;// å®½åº¦ä½œä¸ºæ¯”ä¾‹
+            $this->fill_w = round($this->src_w * $this->img_scale / 100) - $this->img_border_size * 2;
+            $this->fill_h = round($this->src_h * $this->img_scale / 100) - $this->img_border_size * 2;
+
+            // æºæ–‡ä»¶èµ·å§‹åæ ‡
+            $this->src_x = 0;
+            $this->src_y = 0;
             $this->copy_w = $this->src_w;
             $this->copy_h = $this->src_h;
- 
-            // Ä¿±ê³ß´ç
-            $this->dst_w   = $this->fill_w + $this->img_border_size*2;
-            $this->dst_h   = $this->fill_h + $this->img_border_size*2;
+
+            // ç›®æ ‡å°ºå¯¸
+            $this->dst_w = $this->fill_w + $this->img_border_size * 2;
+            $this->dst_h = $this->fill_h + $this->img_border_size * 2;
         }
- 
-        if(2 == $num)
-        {
-            $fill_w   = (int)$img_w - $this->img_border_size*2;
-            $fill_h   = (int)$img_h - $this->img_border_size*2;
-            if($fill_w < 0 || $fill_h < 0)
-            {
-                die("Í¼Æ¬±ß¿ò¹ı´ó£¬ÒÑ³¬¹ıÁËÍ¼Æ¬µÄ¿í¶È");
+
+        if (2 == $num) {
+            $fill_w = (int)$img_w - $this->img_border_size * 2;
+            $fill_h = (int)$img_h - $this->img_border_size * 2;
+            if ($fill_w < 0 || $fill_h < 0) {
+                die("å›¾ç‰‡è¾¹æ¡†è¿‡å¤§ï¼Œå·²è¶…è¿‡äº†å›¾ç‰‡çš„å®½åº¦");
             }
-            $rate_w = $this->src_w/$fill_w;
-            $rate_h = $this->src_h/$fill_h;
- 
-            switch($this->cut_type)
-            {
+            $rate_w = $this->src_w / $fill_w;
+            $rate_h = $this->src_h / $fill_h;
+
+            switch ($this->cut_type) {
                 case 0:
-                    // Èç¹ûÔ­Í¼´óÓÚËõÂÔÍ¼£¬²úÉúËõĞ¡£¬·ñÔò²»ËõĞ¡
-                    if($rate_w < 1 && $rate_h < 1)
-                    {
+                    // å¦‚æœåŸå›¾å¤§äºç¼©ç•¥å›¾ï¼Œäº§ç”Ÿç¼©å°ï¼Œå¦åˆ™ä¸ç¼©å°
+                    if ($rate_w < 1 && $rate_h < 1) {
                         $this->fill_w = (int)$this->src_w;
                         $this->fill_h = (int)$this->src_h;
-                    }
-                    else
-                    {
-                        if($rate_w >= $rate_h)
-                        {
+                    } else {
+                        if ($rate_w >= $rate_h) {
                             $this->fill_w = (int)$fill_w;
-                            $this->fill_h = round($this->src_h/$rate_w);
-                        }
-                        else
-                        {
-                            $this->fill_w = round($this->src_w/$rate_h);
+                            $this->fill_h = round($this->src_h / $rate_w);
+                        } else {
+                            $this->fill_w = round($this->src_w / $rate_h);
                             $this->fill_h = (int)$fill_h;
                         }
                     }
- 
-                    $this->src_x  = 0;
-                    $this->src_y  = 0;
- 
+
+                    $this->src_x = 0;
+                    $this->src_y = 0;
+
                     $this->copy_w = $this->src_w;
                     $this->copy_h = $this->src_h;
- 
-                    // Ä¿±ê³ß´ç
-                    $this->dst_w   = $this->fill_w + $this->img_border_size*2;
-                    $this->dst_h   = $this->fill_h + $this->img_border_size*2;
+
+                    // ç›®æ ‡å°ºå¯¸
+                    $this->dst_w = $this->fill_w + $this->img_border_size * 2;
+                    $this->dst_h = $this->fill_h + $this->img_border_size * 2;
                     break;
- 
-                // ×Ô¶¯²ÃÇĞ
+
+                // è‡ªåŠ¨è£åˆ‡
                 case 1:
-                    // Èç¹ûÍ¼Æ¬ÊÇËõĞ¡¼ôÇĞ²Å½øĞĞ²Ù×÷
-                    if($rate_w >= 1 && $rate_h >=1)
-                    {
-                        if($this->src_w > $this->src_h)
-                        {
-                            $src_x = round($this->src_w-$this->src_h)/2;
+                    // å¦‚æœå›¾ç‰‡æ˜¯ç¼©å°å‰ªåˆ‡æ‰è¿›è¡Œæ“ä½œ
+                    if ($rate_w >= 1 && $rate_h >= 1) {
+                        if ($this->src_w > $this->src_h) {
+                            $src_x = round($this->src_w - $this->src_h) / 2;
                             $this->setSrcCutPosition($src_x, 0);
                             $this->setRectangleCut($fill_h, $fill_h);
- 
+
                             $this->copy_w = $this->src_h;
                             $this->copy_h = $this->src_h;
-                            
-                        }
-                        elseif($this->src_w < $this->src_h)
-                        {
-                            $src_y = round($this->src_h-$this->src_w)/2;
+
+                        } elseif ($this->src_w < $this->src_h) {
+                            $src_y = round($this->src_h - $this->src_w) / 2;
                             $this->setSrcCutPosition(0, $src_y);
                             $this->setRectangleCut($fill_w, $fill_h);
- 
+
                             $this->copy_w = $this->src_w;
                             $this->copy_h = $this->src_w;
-                        }
-                        else
-                        {
+                        } else {
                             $this->setSrcCutPosition(0, 0);
                             $this->copy_w = $this->src_w;
                             $this->copy_h = $this->src_w;
                             $this->setRectangleCut($fill_w, $fill_h);
                         }
-                    }
-                    else
-                    {
+                    } else {
                         $this->setSrcCutPosition(0, 0);
                         $this->setRectangleCut($this->src_w, $this->src_h);
- 
+
                         $this->copy_w = $this->src_w;
                         $this->copy_h = $this->src_h;
                     }
- 
-                    // Ä¿±ê³ß´ç
-                    $this->dst_w   = $this->fill_w + $this->img_border_size*2;
-                    $this->dst_h   = $this->fill_h + $this->img_border_size*2;
-                    
+
+                    // ç›®æ ‡å°ºå¯¸
+                    $this->dst_w = $this->fill_w + $this->img_border_size * 2;
+                    $this->dst_h = $this->fill_h + $this->img_border_size * 2;
+
                     break;
- 
-                // ÊÖ¹¤²ÃÇĞ
+
+                // æ‰‹å·¥è£åˆ‡
                 case 2:
                     $this->copy_w = $this->fill_w;
                     $this->copy_h = $this->fill_h;
- 
-                    // Ä¿±ê³ß´ç
-                    $this->dst_w   = $this->fill_w + $this->img_border_size*2;
-                    $this->dst_h   = $this->fill_h + $this->img_border_size*2;                
-                    
+
+                    // ç›®æ ‡å°ºå¯¸
+                    $this->dst_w = $this->fill_w + $this->img_border_size * 2;
+                    $this->dst_h = $this->fill_h + $this->img_border_size * 2;
+
                     break;
                 default:
                     break;
- 
+
             }
         }
- 
-        // Ä¿±êÎÄ¼şÆğÊ¼×ø±ê
+
+        // ç›®æ ‡æ–‡ä»¶èµ·å§‹åæ ‡
         $this->start_x = $this->img_border_size;
         $this->start_y = $this->img_border_size;
     }
- 
+
     /**
-     * ¼ì²éË®Ó¡Í¼ÊÇ·ñ´óÓÚÉú³ÉºóµÄÍ¼Æ¬¿í¸ß
+     * æ£€æŸ¥æ°´å°å›¾æ˜¯å¦å¤§äºç”Ÿæˆåçš„å›¾ç‰‡å®½é«˜
      */
     function _isFull()
     {
-        return (   $this->mask_w + $this->mask_offset_x > $this->fill_w
-                || $this->mask_h + $this->mask_offset_y > $this->fill_h)
-                   ?true:false;
+        return ($this->mask_w + $this->mask_offset_x > $this->fill_w
+            || $this->mask_h + $this->mask_offset_y > $this->fill_h)
+            ? true : false;
     }
- 
+
     /**
-     * ¼ì²éË®Ó¡Í¼ÊÇ·ñ³¬¹ıÔ­Í¼
+     * æ£€æŸ¥æ°´å°å›¾æ˜¯å¦è¶…è¿‡åŸå›¾
      */
     function _checkMaskValid()
     {
-        if( $this->mask_w + $this->mask_offset_x > $this->src_w
-            || $this->mask_h + $this->mask_offset_y > $this->src_h )
-        {
-            die("Ë®Ó¡Í¼Æ¬³ß´ç´óÓÚÔ­Í¼£¬ÇëËõĞ¡Ë®Ó¡Í¼");
+        if ($this->mask_w + $this->mask_offset_x > $this->src_w
+            || $this->mask_h + $this->mask_offset_y > $this->src_h) {
+            die("æ°´å°å›¾ç‰‡å°ºå¯¸å¤§äºåŸå›¾ï¼Œè¯·ç¼©å°æ°´å°å›¾");
         }
     }
- 
+
     /**
-     * È¡µÃÍ¼Æ¬ÀàĞÍ
+     * å–å¾—å›¾ç‰‡ç±»å‹
      *
-     * @param string $file_path ÎÄ¼şÂ·¾¶
+     * @param string $file_path æ–‡ä»¶è·¯å¾„
      */
     function _getImgType($file_path)
     {
-        $type_list = array("1"=>"gif","2"=>"jpg","3"=>"png","4"=>"swf","5" => "psd","6"=>"bmp","15"=>"wbmp");
-        if(file_exists($file_path))
-        {
-            $img_info = @getimagesize ($file_path);
-            if(isset($type_list[$img_info[2]]))
-            {
+        $type_list = array("1" => "gif", "2" => "jpg", "3" => "png", "4" => "swf", "5" => "psd", "6" => "bmp", "15" => "wbmp");
+        if (file_exists($file_path)) {
+            $img_info = @getimagesize($file_path);
+            if (isset($type_list[$img_info[2]])) {
                 Return $type_list[$img_info[2]];
             }
-        }
-        else
-        {
-            die("ÎÄ¼ş²»´æÔÚ,²»ÄÜÈ¡µÃÎÄ¼şÀàĞÍ!");
+        } else {
+            die("æ–‡ä»¶ä¸å­˜åœ¨,ä¸èƒ½å–å¾—æ–‡ä»¶ç±»å‹!");
         }
     }
- 
+
     /**
-     * ¼ì²éÍ¼Æ¬ÀàĞÍÊÇ·ñºÏ·¨,µ÷ÓÃÁËarray_key_existsº¯Êı£¬´Ëº¯ÊıÒªÇó
-     * php°æ±¾´óÓÚ4.1.0
+     * æ£€æŸ¥å›¾ç‰‡ç±»å‹æ˜¯å¦åˆæ³•,è°ƒç”¨äº†array_key_existså‡½æ•°ï¼Œæ­¤å‡½æ•°è¦æ±‚
+     * phpç‰ˆæœ¬å¤§äº4.1.0
      *
-     * @param string $img_type ÎÄ¼şÀàĞÍ
+     * @param string $img_type æ–‡ä»¶ç±»å‹
      */
     function _checkValid($img_type)
     {
-        if(!array_key_exists($img_type, $this->all_type))
-        {
+        if (!array_key_exists($img_type, $this->all_type)) {
             Return false;
         }
     }
- 
+
     /**
-     * °´Ö¸¶¨Â·¾¶Éú³ÉÄ¿Â¼
+     * æŒ‰æŒ‡å®šè·¯å¾„ç”Ÿæˆç›®å½•
      *
-     * @param string $path Â·¾¶
+     * @param string $path è·¯å¾„
      */
     function _mkdirs($path)
     {
-        $adir = explode('/',$path);
+        $adir = explode('/', $path);
         $dirlist = '';
         $rootdir = array_shift($adir);
-        if(($rootdir!='.'||$rootdir!='..')&&!file_exists($rootdir))
-        {
+        if (($rootdir != '.' || $rootdir != '..') && !file_exists($rootdir)) {
             @mkdir($rootdir);
         }
-        foreach($adir as $key=>$val)
-        {
-            if($val!='.'&&$val!='..')
-            {
-                $dirlist .= "/".$val;
-                $dirpath = $rootdir.$dirlist;
-                if(!file_exists($dirpath))
-                {
+        foreach ($adir as $key => $val) {
+            if ($val != '.' && $val != '..') {
+                $dirlist .= "/" . $val;
+                $dirpath = $rootdir . $dirlist;
+                if (!file_exists($dirpath)) {
                     @mkdir($dirpath);
-                    @chmod($dirpath,0777);
+                    @chmod($dirpath, 0777);
                 }
             }
         }
     }
- 
+
     /**
-     * ´¹Ö±·­×ª
+     * å‚ç›´ç¿»è½¬
      *
-     * @param    string     $src    Í¼Æ¬Ô´
+     * @param    string $src å›¾ç‰‡æº
      */
     function _flipV($src)
     {
         $src_x = $this->getImgWidth($src);
         $src_y = $this->getImgHeight($src);
- 
+
         $new_im = imagecreatetruecolor($src_x, $src_y);
-        for ($y = 0; $y < $src_y; $y++)
-        {
+        for ($y = 0; $y < $src_y; $y++) {
             imagecopy($new_im, $src, 0, $src_y - $y - 1, 0, $y, $src_x, 1);
         }
         $this->h_src = $new_im;
     }
- 
+
     /**
-     * Ë®Æ½·­×ª
+     * æ°´å¹³ç¿»è½¬
      *
-     * @param    string     $src    Í¼Æ¬Ô´
+     * @param    string $src å›¾ç‰‡æº
      */
     function _flipH($src)
     {
         $src_x = $this->getImgWidth($src);
         $src_y = $this->getImgHeight($src);
- 
+
         $new_im = imagecreatetruecolor($src_x, $src_y);
-        for ($x = 0; $x < $src_x; $x++)
-        {
+        for ($x = 0; $x < $src_x; $x++) {
             imagecopy($new_im, $src, $src_x - $x - 1, 0, $x, 0, 1, $src_y);
         }
         $this->h_src = $new_im;
     }
 }
+
 ?>
 
 
-<?php
-//Ê¹ÓÃÊµÀı:
+    <?php
+//ä½¿ç”¨å®ä¾‹:
 ?>
 
-<?php
+    <?php
 /* require_once('lib/thumb.class.php');
  
 $t = new ThumbHandler();
@@ -1018,21 +940,21 @@ $t->setMaskPosition(1);
 $t->setMaskImgPct(80);
 $t->setDstImgBorder(4,"#dddddd");
  
-// Ö¸¶¨Ëõ·Å±ÈÀı
+// æŒ‡å®šç¼©æ”¾æ¯”ä¾‹
 $t->createImg(300,200); */
 ?>
 
-<?php
+    <?php
 /* require_once('lib/thumb.class.php');
  
 $t = new ThumbHandler();
  
-// »ù±¾Ê¹ÓÃ
+// åŸºæœ¬ä½¿ç”¨
 $t->setSrcImg("img/test.jpg");
 $t->setMaskWord("test");
 $t->setDstImgBorder(10,"#dddddd");
  
-// Ö¸¶¨Ëõ·Å±ÈÀı
+// æŒ‡å®šç¼©æ”¾æ¯”ä¾‹
 $t->createImg(50);
 ?>
 
@@ -1041,15 +963,15 @@ require_once('lib/thumb.class.php');
  
 $t = new ThumbHandler();
  
-// »ù±¾Ê¹ÓÃ
+// åŸºæœ¬ä½¿ç”¨
 $t->setSrcImg("img/test.jpg");
 $t->setMaskWord("test");
  
-// Ö¸¶¨¹Ì¶¨¿í¸ß
+// æŒ‡å®šå›ºå®šå®½é«˜
 $t->createImg(200,200); */
 ?>
 
-<?php
+    <?php
 /* require_once('lib/thumb.class.php');
  
 $t = new ThumbHandler();
@@ -1058,18 +980,18 @@ $t->setSrcImg("img/test.jpg");
 $t->setDstImg("tmp/new_test.jpg");
 $t->setMaskWord("test");
  
-// Ö¸¶¨¹Ì¶¨¿í¸ß
+// æŒ‡å®šå›ºå®šå®½é«˜
 $t->createImg(200,200); */
 ?>
 
-<?php
+    <?php
 /* require_once('lib/thumb.class.php');
  
 $t = new ThumbHandler();
  
 $t->setSrcImg("img/test.jpg");
  
-// Ö¸¶¨×ÖÌåÎÄ¼şµØÖ·
+// æŒ‡å®šå­—ä½“æ–‡ä»¶åœ°å€
 $t->setMaskFont("c:/winnt/fonts/arial.ttf");
 $t->setMaskFontSize(20);
 $t->setMaskFontColor("#ffff00");
@@ -1078,7 +1000,7 @@ $t->setDstImgBorder(99,"#dddddd");
 $t->createImg(50); */
 ?>
 
-<?php
+    <?php
 /* require_once('lib/thumb.class.php');
  
 $t = new ThumbHandler();
@@ -1093,11 +1015,11 @@ $t->setMaskPosition(1);
 $t->setMaskFontColor("#ffff00");
 $t->setMaskWord("test");
  
-// Ö¸¶¨¹Ì¶¨¿í¸ß
+// æŒ‡å®šå›ºå®šå®½é«˜
 $t->createImg(50); */
 ?>
 
-<?php
+    <?php
 /* require_once('lib/thumb.class.php');
  
 $t = new ThumbHandler();
@@ -1108,11 +1030,11 @@ $t->setMaskFontSize(20);
 $t->setMaskFontColor("#ffffff");
 $t->setMaskTxtPct(20);
 $t->setDstImgBorder(10,"#dddddd");
-$text = "ÖĞÎÄ";
+$text = "ä¸­æ–‡";
 $str = mb_convert_encoding($text, "UTF-8", "gb2312");
 $t->setMaskWord($str);
 $t->setMaskWord("test");
  
-// Ö¸¶¨¹Ì¶¨¿í¸ß
+// æŒ‡å®šå›ºå®šå®½é«˜
 $t->createImg(50); */
 ?>

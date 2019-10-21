@@ -1,5 +1,7 @@
 <?php
+
 namespace app\common\taglib;
+
 use think\template\TagLib;
 use think\Db;
 
@@ -16,7 +18,7 @@ class Tag extends TagLib
         'product' => ['attr' => 'cid,field,orderby,limit,pagesize'],
         'article' => ['attr' => 'cid,field,orderby,limit,pagesize,empty'],
         'archived' => ['close' => 1],
-        'anlink' => ['attr' => 'type,limit','close' => 1],
+        'anlink' => ['attr' => 'type,limit', 'close' => 1],
         'content' => ['attr' => 'id,field,length', 'close' => 0],
         'ann' => ['attr' => 'id,length', 'close' => 0],
         'banner' => ['attr' => 'id,limit'],
@@ -24,7 +26,7 @@ class Tag extends TagLib
         'position' => ['close' => 0]
 
     ];
-    
+
     /**
      * 获取文章列表
      */
@@ -34,13 +36,17 @@ class Tag extends TagLib
         $type_id = isset($tag['type_id']) ? $tag['type_id'] : "";
         $litpic = isset($tag['litpic']) ? $tag['litpic'] : 0;
         $limit = 10;
-        if(isset($tag['limit'])){$limit=$tag['limit'];}
+        if (isset($tag['limit'])) {
+            $limit = $tag['limit'];
+        }
         //排序
-        $orderby='id desc';
-        if(isset($tag['orderby'])){$orderby=$tag['orderby'];}
-        
+        $orderby = 'id desc';
+        if (isset($tag['orderby'])) {
+            $orderby = $tag['orderby'];
+        }
+
         $field = isset($tag['field']) ? $tag['field'] : '*';
-        
+
         $parse = <<<EOF
         <?php
             \$list = db('article');
@@ -67,11 +73,11 @@ EOF;
         $parse .= '<?php endforeach; ?>';
         return $parse;
     }
-    
+
     /**
      * 获取网站基本配置
      * @param array $tag [属性]
-     * @return 
+     * @return
      */
     public function tagWeb($tag)
     {
@@ -84,7 +90,7 @@ EOF;
 EOF;
         return $parse;
     }
-    
+
     /**
      * 添加在线留言
      * @return string
@@ -99,7 +105,7 @@ EOF;
 EOF;
         return $parse;
     }
-    
+
     /**
      * 获取当前位置
      * @return string
@@ -129,7 +135,7 @@ EOF;
 EOF;
         return $parse;
     }
-    
+
     /**
      * 获取单页栏目某一字段的值
      * @param  [type] $tag [description]
@@ -139,7 +145,7 @@ EOF;
     {
         $id = $tag['id'];
         $field = $tag['field'];
-        $length = isset($tag['length'])?$tag['length']:0;
+        $length = isset($tag['length']) ? $tag['length'] : 0;
         $parse = <<<EOF
         <?php
                 \$content = think\Db::name('category')->where(['id'=> $id])->value('$field');
@@ -151,7 +157,7 @@ EOF;
 EOF;
         return $parse;
     }
-    
+
     /**
      * 获取指定公告内容
      * @param  [type] $tag [description]
@@ -160,7 +166,7 @@ EOF;
     public function tagAnn($tag)
     {
         $id = $tag['id'];
-        $length = isset($tag['length'])?$tag['length']:0;
+        $length = isset($tag['length']) ? $tag['length'] : 0;
         $parse = <<<EOF
         <?php
                 \$content = think\Db::name('flink')->where(['type' => 2,'id'=> $id])->value('description');
@@ -172,7 +178,7 @@ EOF;
 EOF;
         return $parse;
     }
-    
+
     /**
      * 获取导航列表
      */
@@ -193,7 +199,7 @@ EOF;
         $parse .= '<?php endforeach; ?>';
         return $parse;
     }
-    
+
     /**
      * 获取文章归档列表
      */
@@ -218,7 +224,7 @@ EOF;
         $parse .= '<?php endforeach; ?>';
         return $parse;
     }
-    
+
     /**
      * 获取产品列表
      */
@@ -265,7 +271,7 @@ EOF;
         $parse .= '<?php endforeach; ?>';
         return $parse;
     }
-    
+
     /**
      * 获取文章列表
      */
@@ -324,7 +330,7 @@ EOF;
         $parse .= '<?php endforeach; ?>';
         return $parse;
     }
-    
+
     /**
      * 获取友情链接列表
      */
@@ -349,11 +355,12 @@ EOF;
         $parse .= '<?php endforeach; ?>';
         return $parse;
     }
-    
+
     /**
      * 获取banner列表
      */
-    public function tagBanner($tag,$content){
+    public function tagBanner($tag, $content)
+    {
         $pid = $tag['id'];
         $limit = isset($tag['limit']) ? $tag['limit'] : '';
         $parse = <<<EOF

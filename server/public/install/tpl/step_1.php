@@ -5,5 +5,4 @@
 		</div>
 		<div class="action"><a href="index.php?step=2" class="btn_blue">接受协议</a></div>
 	</div>
-</body>
-</html>
+</body></html>

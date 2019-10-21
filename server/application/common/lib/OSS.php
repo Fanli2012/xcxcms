@@ -1,5 +1,7 @@
 <?php
+
 namespace app\common\lib;
+
 use JohnLui\AliyunOSS;
 
 class OSS
@@ -8,7 +10,7 @@ class OSS
 
     public function __construct($isInternal = false)
     {
-        $serverAddress   = $isInternal ? config('app.ossServerInternal') : config('app.ossServer');
+        $serverAddress = $isInternal ? config('app.ossServerInternal') : config('app.ossServer');
         $this->ossClient = AliyunOSS::boot(
             $serverAddress,
             config('app.AccessKeyId'),
@@ -61,9 +63,9 @@ class OSS
      * 复制存储在阿里云OSS中的Object
      *
      * @param string $sourceBuckt 复制的源Bucket
-     * @param string $sourceKey   - 复制的的源Object的Key
-     * @param string $destBucket  - 复制的目的Bucket
-     * @param string $destKey     - 复制的目的Object的Key
+     * @param string $sourceKey - 复制的的源Object的Key
+     * @param string $destBucket - 复制的目的Bucket
+     * @param string $destKey - 复制的目的Object的Key
      *
      * @return Models\CopyObjectResult
      */
@@ -78,9 +80,9 @@ class OSS
      * 移动存储在阿里云OSS中的Object
      *
      * @param string $sourceBuckt 复制的源Bucket
-     * @param string $sourceKey   - 复制的的源Object的Key
-     * @param string $destBucket  - 复制的目的Bucket
-     * @param string $destKey     - 复制的目的Object的Key
+     * @param string $sourceKey - 复制的的源Object的Key
+     * @param string $destBucket - 复制的目的Bucket
+     * @param string $destKey - 复制的目的Object的Key
      *
      * @return Models\CopyObjectResult
      */
